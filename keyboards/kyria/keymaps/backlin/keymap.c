@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TAB,   RALT(KC_W), RALT(KC_Q), RALT(KC_P), KC_P,    KC_Y,                                                                                   KC_F,  KC_G,  KC_C,  KC_R,  KC_L,  KC_BSPC,
       KC_ESC,   KC_A,       KC_O,       KC_E,       KC_U,    KC_I,                                                                                   KC_D,  KC_H,  KC_T,  KC_N,  KC_S,  KC_DEL,
       KC_LSFT,  KC_COLN,    KC_Q,       KC_J,       KC_K,    KC_X,  XXXXXXX,            LT(_LNAVI, KC_DOWN), LT(_RNAVI, KC_UP),  XXXXXXX,            KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(KC_SCLN),
-                                 KC_LCTL, KC_LGUI, LALT_T(KC_COMM), LT(_LSYMB, KC_SPC), LT(_NUMB, KC_LEFT),  LT(_NUMB, KC_RGHT), LT(_RSYMB, KC_ENT), RALT_T(KC_DOT), KC_RGUI, KC_RCTL
+                                 KC_LCTL, KC_LGUI, LALT_T(KC_COMM), LT(_LSYMB, KC_SPC), LT(_LNUMB, KC_LEFT), LT(_RNUMB, KC_RGHT), LT(_RSYMB, KC_ENT), RALT_T(KC_DOT), KC_RGUI, KC_RCTL
     ),
 
 /* 
@@ -122,13 +122,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_LNUMB] = LAYOUT(
         KC_NO,   KC_F1, KC_F2,  KC_F3,   KC_F4,   KC_PPLS,                                     KC_PSLS, KC_1, KC_2, KC_3,  KC_4,  KC_NO,
-        KC_NO,   KC_F5, KC_F6,  KC_F7,   KC_F8,   KC_PMNS,                                     KC_PEQL, KC_5, KC_6, KC_7,  KC_8   KC_NO,
+        KC_NO,   KC_F5, KC_F6,  KC_F7,   KC_F8,   KC_PMNS,                                     KC_PEQL, KC_5, KC_6, KC_7,  KC_8,  KC_NO,
         _______, KC_F9, KC_F10, KC_F11,  KC_F12,  KC_PAST, XXXXXXX, KC_MFFD, KC_VOLU, XXXXXXX, KC_PENT, KC_9, KC_0, KC_NO, KC_NO, _______,
                                 _______, _______, _______, KC_MPLY, _______, KC_VOLD, KC_MUTE, _______, _______, _______
     ),
     [_RNUMB] = LAYOUT(
         KC_NO,   KC_F1, KC_F2,  KC_F3,   KC_F4,   KC_PPLS,                                     KC_PSLS, KC_1, KC_2, KC_3,  KC_4,  KC_NO,
-        KC_NO,   KC_F5, KC_F6,  KC_F7,   KC_F8,   KC_PMNS,                                     KC_PEQL, KC_5, KC_6, KC_7,  KC_8   KC_NO,
+        KC_NO,   KC_F5, KC_F6,  KC_F7,   KC_F8,   KC_PMNS,                                     KC_PEQL, KC_5, KC_6, KC_7,  KC_8,  KC_NO,
         _______, KC_F9, KC_F10, KC_F11,  KC_F12,  KC_PAST, KC_NO,   KC_MFFD, KC_VOLU, KC_NO,   KC_PENT, KC_9, KC_0, KC_NO, KC_NO, _______,
                                 _______, _______, _______, KC_MPLY, KC_MRWD, _______, KC_MUTE, _______, _______, _______
     ),
@@ -154,13 +154,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TG(_QWERTY),  DYN_REC_START1,  DYN_REC_START2,  KC_INS,  KC_HOME, KC_PGUP,                                     KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
         DYN_REC_STOP, DYN_MACRO_PLAY1, DYN_MACRO_PLAY2, KC_PSCR, KC_END,  KC_PGDN,                                     KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,
         _______,      KC_NO,           KC_PAUS,         KC_CAPS, KC_NLCK, KC_SLCK, XXXXXXX, _______, KC_BRIU, XXXXXXX, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   _______,
-                                                        _______, _______, _______, BL_BRTG, BL_DEC,  KC_BRID, KC_NO,   _______, _______, _______,
+                                                        _______, _______, _______, BL_BRTG, BL_DEC,  KC_BRID, KC_NO,   _______, _______, _______
     ),
     [_RNAVI] = LAYOUT(
         TG(_QWERTY),  DYN_REC_START1,  DYN_REC_START2,  KC_INS,  KC_HOME, KC_PGUP,                                     KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
         DYN_REC_STOP, DYN_MACRO_PLAY1, DYN_MACRO_PLAY2, KC_PSCR, KC_END,  KC_PGDN,                                     KC_NO,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_NO,
         _______,      KC_NO,           KC_PAUS,         KC_CAPS, KC_NLCK, KC_SLCK, XXXXXXX, BL_INC,  _______, XXXXXXX, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   _______,
-                                                        _______, _______, _______, BL_BRTG, BL_DEC,  KC_BRID, KC_NO,   _______, _______, _______,
+                                                        _______, _______, _______, BL_BRTG, BL_DEC,  KC_BRID, KC_NO,   _______, _______, _______
     ),
 
 // /*
@@ -197,6 +197,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 	return OLED_ROTATION_180;
 }
 
+// https://javl.github.io/image2cpp/
 static void render_kyria_logo(void) {
     static const char PROGMEM kyria_logo[] = {
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,192,224,240,112,120, 56, 60, 28, 30, 14, 14, 14,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 14, 14, 14, 30, 28, 60, 56,120,112,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
