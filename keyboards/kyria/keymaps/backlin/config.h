@@ -18,6 +18,9 @@
 
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
+  #define OLED_FONT_H "font.c"
+  #define OLED_FONT_WIDTH 7 // total width 126 = 6 keys x 3 chars x 7 columns
+  #define OLED_COLUMN_OFFSET 1 // 1 blank column furthest to the left (and right)
 #endif
 
 #ifdef RGBLIGHT_ENABLE
@@ -28,5 +31,5 @@
 #endif
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
-// #define SPLIT_USB_DETECT
-// #define NO_USB_STARTUP_CHECK
+#define SPLIT_USB_DETECT
+#define NO_USB_STARTUP_CHECK
