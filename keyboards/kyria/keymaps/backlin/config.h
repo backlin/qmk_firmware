@@ -19,8 +19,10 @@
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
   #define OLED_FONT_H "font.c"
+  #define OLED_FONT_START 0
+  #define OLED_FONT_END 229
   #define OLED_FONT_WIDTH 7 // total width 126 = 6 keys x 3 chars x 7 columns
-  #define OLED_COLUMN_OFFSET 1 // 1 blank column furthest to the left (and right)
+  //#define OLED_COLUMN_OFFSET 11 // 1 blank column furthest to the left (and right)
 #endif
 
 #ifdef RGBLIGHT_ENABLE
