@@ -24,12 +24,9 @@
 enum layers {
     _SVORAK = 0,
     _QWERTY,
-    _LSYMB,
-    _RSYMB,
-    _LNUMB,
-    _RNUMB,
-    _LNAVI,
-    _RNAVI
+    _SYMB,
+    _NUMB,
+    _RGB
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -37,23 +34,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* 
  * Base layer: SVORAK (Swedish Dvorak)
  *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Å  |   Ä  |   Ö  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  |  Bksp  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  Esc   |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del   |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |  . < |   Q  |   J  |   K  |   X  |      |Navigt|  |Navigt|      |   B  |   M  |   W  |   V  |   Z  | RShift |
- * |  , ;   |      |      |      |      |      |Symbol| Down |  |  Up  |Symbol|      |      |      |      |      |  - _   |
- * `----------------------+------+------+------+Space +------|  |------+Enter +------+------+------+----------------------'
- *                        | Alt  | GUI  |LCtrl |      |Numric|  |Numric|      |RCtrl | GUI  |AltGr |
- *                        |      |      | . :  |      | Left |  |Right |      | . :  |      |      |
- *                        `----------------------------------'  `----------------------------------'
+ * ,-----------------------------------------.                              ,-----------------------------------------.
+ * |  Tab |   Å  |   Ä  |   Ö  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  | Bksp |
+ * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+ * |  Esc |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del |
+ * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+ * |LShift|   .  |   Q  |   J  |   K  |   X  |      | Numb |  | Numb |      |   B  |   M  |   W  |   V  |   Z  |RShift|
+ * |  , ; |      |      |      |      |      | Space|      |  |      | Enter|      |      |      |      |      |  - _ |
+ * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+ *                      |  Alt |  GUI | LCtrl|      | Symb |  | Symb |      | RCtrl|  GUI | AltGr|
+ *                      `----------------------------------'  `----------------------------------'
  */
     [_SVORAK] = LAYOUT(
-      KC_TAB,          SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                                                                    KC_F,  KC_G,  KC_C,  KC_R,  KC_L,  KC_BSPC,
-      KC_ESC,          KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                                                                    KC_D,  KC_H,  KC_T,  KC_N,  KC_S,  KC_DEL,
-      LSFT_T(SE_COMM), KC_DOT, KC_Q,  KC_J,    KC_K, KC_X, XXXXXXX,            LT(_LNAVI, KC_LEFT), LT(_RNAVI, KC_RIGHT), XXXXXXX,            KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(SE_MINS),
-                         KC_LALT, KC_LGUI, LCTL_T(SE_DOT), LT(_LSYMB, KC_SPC), LT(_LNUMB, KC_DOWN), LT(_RNUMB, KC_UP),    LT(_RSYMB, KC_ENT), RCTL_T(SE_DOT), KC_RGUI, KC_RALT
+      KC_TAB,          SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                                             KC_F,  KC_G,  KC_C,  KC_R,  KC_L,  KC_BSPC,
+      KC_ESC,          KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                                             KC_D,  KC_H,  KC_T,  KC_N,  KC_S,  KC_DEL,
+      LSFT_T(SE_COMM), SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, MO(_NUMB),        MO(_NUMB),          XXXXXXX,   KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(SE_MINS),
+                                  KC_LALT, KC_LGUI, KC_LCTL, KC_SPC,  LT(_SYMB, KC_UP), LT(_SYMB, KC_DOWN), KC_ENT,  KC_RCTL, KC_RGUI, KC_RALT
     ),
 
 /* 
@@ -78,120 +74,64 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* 
  * Symbol Layer
- * ------------
- * Left and right layers are identical except the key used to trigger the layer.
- * This enables mapping left thumb > right thumb to a non-layer key and
- * right > left to a different non-layer key.
  *
- * The thumb cluster is mapped to function keys that are used for common
- * refactoring actions in the IntelliJ editors.
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |   no   |   {  |   }  |  [ { |  ] } |   |  |                              |   #  |   *  |   &  |   @  |   ~  |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |   no   |  \ | |  / ? |   (  |   )  |   ^  |                              |   $  |   "  |   '  |   ´  |   `  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |  no  |   <  |   >  |   %  |      |  F2  |  |  F8  |      |   =  |   !  |   ?  |  no  |  no  |        |
- * `----------------------+------+------+------+  F4  +------|  |------+  F6  +------+------+------+----------------------'
- *                        |      |      |      |      |  F1  |  |  F7  |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+ * ,-----------------------------------------.                              ,-----------------------------------------.
+ * |      |   {  |   }  |   [  |   ]  |   |  |                              |   &  |   $  |   @  |   #  |   ~  |   ´  |
+ * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+ * |      |   \  |   /  |   (  |   )  |   ^  |                              |   *  |   "  |   '  |  Up  | Right|   `  |
+ * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+ * |      |      |  no  |   <  |   >  |   %  |      | PgUp |  | PgUp |      |   !  |   ?  | Left | Down |   =  |      |
+ * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+ *                      |      |      |      |      | PgDn |  | PgDn |      |      |      |      |
+ *                      `----------------------------------'  `----------------------------------'
  */
-    [_LSYMB] = LAYOUT(
-        XXXXXXX, SE_LCBR_MAC, SE_RCBR_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                             KC_HASH, SE_ASTR, SE_AMPR, SE_AT,   SE_TILD, _______,
-        XXXXXXX, SE_SLSH,     SE_BSLS_MAC, SE_LPRN,     SE_RPRN,     SE_CIRC,                                 SE_DLR,  SE_DQUO, SE_QUOT, SE_ACUT, SE_GRV,  _______,
-        _______, _______,     XXXXXXX,     SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, KC_F2, KC_F8, XXXXXXX, SE_EQL,  KC_EXLM, SE_QUES, XXXXXXX, XXXXXXX, _______,
-                                           _______,     _______,     _______, _______, KC_F1, KC_F7, KC_F6,   _______, _______, _______
-    ),
-    [_RSYMB] = LAYOUT(
-        XXXXXXX, SE_LCBR_MAC, SE_RCBR_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                             KC_HASH, SE_ASTR, SE_AMPR, SE_AT,   SE_TILD, _______,
-        XXXXXXX, SE_SLSH,     SE_BSLS_MAC, SE_LPRN,     SE_RPRN,     SE_CIRC,                                 SE_DLR,  SE_DQUO, SE_QUOT, SE_ACUT, SE_GRV,  _______,
-        _______, _______,      XXXXXXX,    SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, KC_F2, KC_F8, XXXXXXX, SE_EQL,  KC_EXLM, SE_QUES, XXXXXXX, XXXXXXX, _______,
-                                           _______,     _______,     _______, KC_F4,   KC_F1, KC_F7, _______, _______, _______, _______
+    [_SYMB] = LAYOUT(
+        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                 SE_AMPR, SE_DLR,  SE_AT,   KC_HASH, SE_TILD, SE_ACUT,
+        _______, SE_SLSH,     SE_BSLS_MAC, SE_LPRN,     SE_RPRN,     SE_CIRC,                                     SE_ASTR, SE_DQUO, SE_QUOT, KC_UP,   KC_RGHT, SE_GRV,
+        _______, _______,     XXXXXXX,     SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, KC_PGUP, KC_PGUP, XXXXXXX, KC_EXLM, SE_QUES, KC_LEFT, KC_DOWN, SE_EQL,  _______,
+                                           _______,     _______,     _______, _______, KC_PGDN, KC_PGDN, _______, _______, _______, _______
     ),
 
 /* 
  * Numeric Layer
- * -------------
- * Left and right layers are identical except the key used to trigger the layer.
- * This enables mapping left thumb > right thumb to a non-layer key and
- * right > left to a different non-layer key.
  *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Rec1  |  F1  |  F2  |  F3  |  F4  |   +  |                              |   /  |  1 ! |  2 @ |  3 # |  4 $ |  Rec2  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |  Play1 |  F5  |  F6  |  F7  |  F8  |   -  |                              |   =  |  5 % |  6 ^ |  7 & |  8 * |  Play2 |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  F9  |  F10 |  F11 |  F12 |   *  |      | Next |  | Vol+ |      |   .  |  9 ( |  0 ) |  no  |  no  |        |
- * `----------------------+------+------+------+ Play +------|  |------+ Mute +------+------+------+----------------------'
- *                        |      |      |      |      | Prev |  | Vol- |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+ * ,-----------------------------------------.                              ,-----------------------------------------.
+ * |      |  F5  |  F6  |  F7  |  F8  |  F9  |                              |   7  |   8  |   9  |   +  | Vol+ |      |
+ * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                              |   4  |   5  |   6  |   -  | Vol- |      |
+ * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+ * |      |  F9  |  F10 |  F11 |  F12 |  no  |      |      |  |      |      |   1  |   2  |   3  |   *  | Mute |      |
+ * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+ *                      |      |      |      |      |      |  |      |      |   0  |   .  |   /  |
+ *                      `----------------------------------'  `----------------------------------'
  */
-    [_LNUMB] = LAYOUT(
-        DM_REC1, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_PPLS,                                     KC_7, KC_8,   KC_9,    KC_PPLS, XXXXXXX, _______,
-        DM_PLY1, KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_PMNS,                                     KC_4, KC_5,   KC_6,    KC_PMNS, XXXXXXX, _______,
-        _______, DM_REC1, DM_REC2, DM_RSTP, DM_PLY1, DM_PLY2, XXXXXXX, KC_MFFD, KC_VOLU, XXXXXXX, KC_1, KC_2,   KC_3,    KC_PAST, XXXXXXX, _______,
-                                   _______, _______, _______, KC_MPLY, _______, KC_VOLD, KC_MUTE, KC_0, SE_DOT, KC_PSLS
-    ),
-    [_RNUMB] = LAYOUT(
-        DM_REC1, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_PPLS,                                     KC_7, KC_8,   KC_9,    KC_PPLS, XXXXXXX, _______,
-        DM_PLY1, KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_PMNS,                                     KC_4, KC_5,   KC_6,    KC_PMNS, XXXXXXX, _______,
-        _______, DM_REC1, DM_REC2, DM_PLY1, DM_PLY2, XXXXXXX, XXXXXXX, KC_MFFD, KC_VOLU, XXXXXXX, KC_1, KC_2,   KC_3,    KC_PAST, XXXXXXX, _______,
-                                   _______, _______, _______, KC_MPLY, KC_MRWD, _______, KC_MUTE, KC_0, SE_DOT, KC_PSLS                            
+    [_NUMB] = LAYOUT(
+        _______, KC_F5, KC_F6,  KC_F7,  KC_F8,  KC_F9,                                             KC_7, KC_8, KC_9, KC_PPLS, CB_VOLU, _______,
+        _______, KC_F1, KC_F2,  KC_F3,  KC_F4,  KC_F5,                                             KC_4, KC_5, KC_6, KC_PMNS, CB_VOLD, _______,
+        _______, KC_F9, KC_F10, KC_F10, KC_F10, XXXXXXX,   XXXXXXX, TG(_RGB), TG(_RGB), XXXXXXX,   KC_1, KC_2, KC_3, KC_PAST, KC_MUTE, _______,
+                                _______, _______, _______, _______, _______,  _______,  _______, KC_0, SE_DOT, KC_PSLS
     ),
 
 /* 
  * Navigation Layer
- * ----------------
- * Left and right layers are identical except the key used to trigger the layer.
- * This enables mapping left thumb > right thumb to a non-layer key and
- * right > left to a different non-layer key.
  *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * | Qwerty |  RGB |  RGB |  RGB |  RGB |  no  |                              |Mouse1| MLeft| MDown| MUp  |MRight| Mouse2 |
- * |        | hue+ | sat+ |speed+| mode+|      |                              |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |   no   | hue- | sat- |speed-| mode-|  no  |                              |  no  | Left | Down |  Up  | Right|   no   |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |Insert|PrntSc|CapLck|NumLck|ScrLck|      | Val+ |  |Brght+|      |  no  | Home | PgDn | PgUp | End  |        |
- * `----------------------+------+------+------+  RGB +------|  |------+  no  +------+------+------+----------------------'
- *                        |      |      |      |Toggle| Val- |  |Brght-|      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+ * ,-----------------------------------------.                              ,-----------------------------------------.
+ * |Qwerty| Mode+|Speed+| Hue+ | Sat+ | Val+ |                              | Home |  End |  no  |  no  |Mouse2|  no  |
+ * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+ * |      | Mode-|Speed-| Hue- | Sat- | Val- |                              | PgUp | PgDn |Mouse1| MUp  |MRight|  no  |
+ * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+ * |      |Insert|PrntSc|CapLck|NumLck|ScrLck|      |Brght+|  |  Off |      |  no  |  no  | MLeft| Mdown|  no  |      |
+ * `--------------------+------+------+------+  RGB +------|  |------+  Off +------+------+------+--------------------'
+ *                      |      |      |      |Toggle|Brght-|  |  Off |      |      |      |      |
+ *                      `----------------------------------'  `----------------------------------'
  */
-    [_LNAVI] = LAYOUT(
-        TG(_QWERTY), RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD,  XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_END,  _______,
-        XXXXXXX,     RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, XXXXXXX,                                     XXXXXXX, KC_PGUP, KC_HOME, KC_UP,   KC_RGHT, _______,
-        _______,     KC_INS,  KC_PSCR, KC_CAPS, KC_NLCK,  KC_SLCK, XXXXXXX, _______, KC_BRIU, XXXXXXX, XXXXXXX, KC_PGDN, KC_LEFT, KC_DOWN, XXXXXXX, _______,
-                                       _______, _______,  _______, RGB_TOG, RGB_VAD, KC_BRID, XXXXXXX, _______, _______, _______
-    ),
-    [_RNAVI] = LAYOUT(
-        TG(_QWERTY), RGB_HUI, RGB_SAI, RGB_SPI, RGB_MOD,  XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_END,  _______,
-        XXXXXXX,     RGB_HUD, RGB_SAD, RGB_SPD, RGB_RMOD, XXXXXXX,                                     XXXXXXX, KC_PGUP, KC_HOME, KC_UP,   KC_RGHT, _______,
-        _______,     KC_INS,  KC_PSCR, KC_CAPS, KC_NLCK,  KC_SLCK, XXXXXXX, RGB_VAI, _______, XXXXXXX, XXXXXXX, KC_PGDN, KC_LEFT, KC_DOWN, XXXXXXX, _______,
-                                       _______, _______,  _______, RGB_TOG, RGB_VAD, KC_BRID, XXXXXXX, _______, _______, _______
+    [_RGB] = LAYOUT(
+        TG(_QWERTY), RGB_MOD,  RGB_SPI, RGB_HUI, RGB_SAI, RGB_VAI,                                          KC_HOME, KC_END,  XXXXXXX, XXXXXXX, KC_BTN2, XXXXXXX,
+        _______,     RGB_RMOD, RGB_SPD, RGB_HUD, RGB_SAD, RGB_VAD,                                          KC_PGUP, KC_PGDN, KC_BTN1, KC_MS_U, KC_MS_R, XXXXXXX,
+        _______,     KC_INS,  KC_PSCR, KC_CAPS, KC_NLCK,  KC_SLCK,   XXXXXXX, KC_BRIU, TG(_RGB), XXXXXXX,   XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, XXXXXXX, _______,
+                                         _______, _______,  _______, RGB_TOG, KC_BRID, TG(_RGB), TG(_RGB), _______, _______, _______
     ),
 
-    // KC_BTN1, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_BTN2,
-
-// /*
-//  * Layer template
-//  *
-//  * ,-------------------------------------------.                              ,-------------------------------------------.
-//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-//  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
-//  * |        |      |      |      |      |      |                              |      |      |      |      |      |        |
-//  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
-//  * |        |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |        |
-//  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
-//  *                        |      |      |      |      |      |  |      |      |      |      |      |
-//  *                        |      |      |      |      |      |  |      |      |      |      |      |
-//  *                        `----------------------------------'  `----------------------------------'
-//  */
-//     [_LAYERINDEX] = LAYOUT(
-//       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-//       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-//       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-//                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-//     ),
 };
 
 /*
@@ -359,16 +299,13 @@ static void render_navigation_right(void) {
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         switch (get_highest_layer(layer_state)) {
-            case _LNAVI:
-            case _RNAVI:
+            case _RGB:
                 render_navigation_left();
                 break;
-            case _LNUMB:
-            case _RNUMB:
+            case _NUMB:
                 render_numeric_left();
                 break;
-            case _LSYMB:
-            case _RSYMB:
+            case _SYMB:
                 render_symbols_left();
                 break;
             case _QWERTY:
@@ -382,16 +319,13 @@ void oled_task_user(void) {
     }
 
 		switch (get_highest_layer(layer_state)) {
-				case _LNAVI:
-				case _RNAVI:
+				case _RGB:
             render_navigation_right();
 						break;
-				case _LNUMB:
-				case _RNUMB:
+				case _NUMB:
 						render_numeric_right();
 						break;
-				case _LSYMB:
-				case _RSYMB:
+				case _SYMB:
 						render_symbols_right();
 						break;
 				case _QWERTY:
