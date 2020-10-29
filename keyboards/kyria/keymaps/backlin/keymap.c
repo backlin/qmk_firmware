@@ -48,27 +48,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SVORAK] = LAYOUT(
       KC_TAB,          SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                                             KC_F,  KC_G,  KC_C,  KC_R,  KC_L,  KC_BSPC,
       KC_ESC,          KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                                             KC_D,  KC_H,  KC_T,  KC_N,  KC_S,  KC_DEL,
-      LSFT_T(SE_COMM), SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, MO(_NUMB),        MO(_NUMB),          XXXXXXX,   KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(SE_MINS),
-                                  KC_LALT, KC_LGUI, KC_LCTL, KC_SPC,  LT(_SYMB, KC_UP), LT(_SYMB, KC_DOWN), KC_ENT,  KC_RCTL, KC_RGUI, KC_RALT
+      LSFT_T(SE_COMM), SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, MO(_NUMB),          MO(_NUMB),        XXXXXXX,   KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(SE_MINS),
+                                  KC_LALT, KC_LGUI, KC_LCTL, KC_SPC,  LT(_SYMB, KC_DOWN), LT(_SYMB, KC_UP), KC_ENT,  KC_RCTL, KC_RGUI, KC_RALT
     ),
 
 /* 
  * Alternative base layer: QWERTY (Swedish)
  *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä    |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |   Z  |   X  |   C  |   V  |   B  |      |      |  |      |      |   N  |   M  |  , ; | Bksp |  Del |        |
- * `----------------------+------+------+------+      +------|  |------+      +------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+ * ,-----------------------------------------.                              ,-----------------------------------------.
+ * |      |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å  |
+ * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+ * |      |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä  |
+ * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+ * |      |   Z  |   X  |   C  |   V  |   B  |      |      |  |      |      |   N  |   M  |  , ; | Bksp |  Del |      |
+ * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+ *                      |      |      |      |      |      |  |      |      |      |      |      |
+ *                      `----------------------------------'  `----------------------------------'
  */
     [_QWERTY] = LAYOUT(
-      _______, KC_Q, KC_W, KC_E, KC_R, KC_T,                                     KC_Y, KC_U, KC_I, KC_O, KC_P, SE_AA,
-      _______, KC_A, KC_S, KC_D, KC_F, KC_G,                                     KC_H, KC_J, KC_K, KC_L, SE_OSLH, SE_AE,
-      _______, KC_Z, KC_X, KC_C, KC_V, KC_B, XXXXXXX, _______, _______, XXXXXXX, KC_N, KC_M, SE_COMM, KC_BSPC, KC_DEL, _______,
+      _______, KC_Q, KC_W, KC_E, KC_R, KC_T,                                     KC_Y, KC_U, KC_I,    KC_O,    KC_P,    SE_AA,
+      _______, KC_A, KC_S, KC_D, KC_F, KC_G,                                     KC_H, KC_J, KC_K,    KC_L,    SE_OSLH, SE_AE,
+      _______, KC_Z, KC_X, KC_C, KC_V, KC_B, XXXXXXX, _______, _______, XXXXXXX, KC_N, KC_M, SE_COMM, KC_BSPC, KC_DEL,  _______,
                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
