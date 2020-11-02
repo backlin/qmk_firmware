@@ -365,41 +365,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return update_tri_layer_state(state, _SYMB, _NUMB, _FUNC);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case SYMBOLS:
-      if (record->event.pressed) {
-				show_slave = true;
-        layer_on(_SYMB);
-        update_tri_layer(_SYMB, _NUMB, _FUNC);
-      } else {
-        layer_off(_SYMB);
-        update_tri_layer(_SYMB, _NUMB, _FUNC);
-      }
-      return false;
-    case SYM_ALT:
-      if (record->event.pressed) {
-				show_slave = false;
-        layer_on(_SYMB2);                      // Note: Should use _SYMB2 here
-        update_tri_layer(_SYMB, _NUMB, _FUNC); // but not here (intentional).
-      } else {
-        layer_off(_SYMB2);
-        update_tri_layer(_SYMB, _NUMB, _FUNC);
-      }
-      return false;
-    case NUMBERS:
-      if (record->event.pressed) {
-        layer_on(_NUMB);
-        update_tri_layer(_SYMB, _NUMB, _FUNC);
-      } else {
-        layer_off(_NUMB);
-        update_tri_layer(_SYMB, _NUMB, _FUNC);
-      }
-      return false;
-    }
-  return true;
-}
-
 void oled_task_user(void) {
 	if (!is_keyboard_master()) {
 		oled_write_P(PSTR("svorak slave\n"), false);
@@ -427,19 +392,12 @@ void oled_task_user(void) {
 			}
 			break;
 		case _SYMB:
-			if (show_slave) {
-				oled_write_P(PSTR("symbol(1) slave\n"), false);
-			} else {
-				oled_write_P(PSTR("symbol(1) master\n"), false);
-			}
+			show_slave = true;
+			oled_write_P(PSTR("symbol(1) slave\n"), false);
+			break;
 		case _SYMB2:
-			if (show_slave) {
-				oled_write_P(PSTR("symbol(2) slave\n"), false);
-				//render_symbols_right();
-			} else {
-				oled_write_P(PSTR("symbol(2) master\n"), false);
-				//render_symbols_left();
-			}
+			show_slave = false;
+			oled_write_P(PSTR("symbol(2) slave\n"), false);
 			break;
 		case _QWERTY:
 			if (show_slave) {
