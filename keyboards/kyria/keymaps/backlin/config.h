@@ -1,4 +1,4 @@
-/* Copyright 2020 Daniel Reibl <janos.daniel.reibl@protonmail.com>
+/* Copyright 2019 Thomas Baart <thomas@splitkb.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,4 +15,23 @@
  */
 
 #pragma once
-#define UNICODE_SELECTED_MODES UC_MAC, UC_LNX
+
+#ifdef OLED_DRIVER_ENABLE
+  #define OLED_DISPLAY_128X64
+  #define OLED_FONT_H "font.c"
+  #define OLED_FONT_START 0
+  #define OLED_FONT_END 229
+  #define OLED_FONT_WIDTH 7 // total width 126 = 6 keys x 3 chars x 7 columns
+  //#define OLED_COLUMN_OFFSET 11 // 1 blank column furthest to the left (and right)
+#endif
+
+#ifdef RGBLIGHT_ENABLE
+  #define RGBLIGHT_ANIMATIONS
+  #define RGBLIGHT_HUE_STEP 8
+  #define RGBLIGHT_SAT_STEP 8
+  #define RGBLIGHT_VAL_STEP 8
+#endif
+
+// If you are using an Elite C rev3 on the slave side, uncomment the lines below:
+#define SPLIT_USB_DETECT
+#define NO_USB_STARTUP_CHECK
