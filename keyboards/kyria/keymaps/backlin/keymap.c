@@ -119,17 +119,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * |  Esc |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del |
  * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |LShift| LCtrl|   Q  |   J  |   K  |   X  |      |  Alt |  |  Alt |      |   B  |   M  |   W  |   V  |   Z  |RShift|
- * |  , ; |   .  |      |      |      |      | Space|      |  |      | Enter|      |      |      |      |      |  - _ |
+ * |LShift| LCtrl|   Q  |   J  |   K  |   X  |      |Magnet|  |  Alt |      |   B  |   M  |   W  |   V  |   Z  |RShift|
+ * |  , ; |   .  |      |      |      |      | Space| Func |  |      | Enter|      |      |      |      |      |  - _ |
  * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
- *                      | Ctrl | Numb | Symb |      | Ctrl |  | Ctrl |      | Symb | Hyper| Ctrl |
+ *                      | LAlt | LCmd | Symb |      | Numb |  | Hyper|      | Symb | RCmd | RAlt |
  *                      `----------------------------------'  `----------------------------------'
  */
     [_SVORAK] = LAYOUT(
       KC_TAB,          SE_AA,          SE_AE, SE_OSLH, KC_P, KC_Y,                                         KC_F,  KC_G,  KC_C,  KC_R,  KC_L,  KC_BSPC,
       KC_ESC,          KC_A,           KC_O,  KC_E,    KC_U, KC_I,                                         KC_D,  KC_H,  KC_T,  KC_N,  KC_S,  KC_DEL,
-      LSFT_T(SE_COMM), LCTL_T(SE_DOT), KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, KC_LALT, KC_RALT, XXXXXXX,   KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(SE_MINS),
-                                          KC_LCTL, NUMBERS, SYMBOLS, KC_SPC,  KC_LCMD, KC_RCMD, KC_ENT, SYMBOL2, HYPER, KC_RCTL
+      LSFT_T(SE_COMM), LCTL_T(SE_DOT), KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, MAG_FUN, KC_RALT, XXXXXXX,   KC_B,  KC_M,  KC_W,  KC_V,  KC_Z,  RSFT_T(SE_MINS),
+                                          KC_LALT, KC_LCMD, SYMBOLS, KC_SPC,  NUMBERS, HYPER,   KC_ENT, SYMBOL2, KC_RCMD, KC_RALT
     ),
 
 /* 
