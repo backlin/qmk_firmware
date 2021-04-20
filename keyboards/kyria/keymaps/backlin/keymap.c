@@ -43,6 +43,9 @@
 #define CB_DELT LSA(KC_D)  // Capital delta
 #define CB_MDDT A(KC_Q)    // Mid dot
 #define CB_APRX A(KC_X)
+#define SFT_COM LSFT_T(SE_COMM)
+#define SFT_MIN RSFT_T(SE_MINS)
+#define NUMBERS MO(_NUMB)
 
 #define MOD_MASK_RSHIFT MOD_BIT(KC_RSHIFT)  // NOT IN USE
 
@@ -69,9 +72,7 @@ enum custom_keycodes {
     MAG_2_3,
     MAG_3_3,
 
-    REPLAY,  // Replay eager macro
-
-    CB_2222  // For Factorio sandbox
+    REPLAY  // Replay eager macro
 };
 
 extern rgblight_config_t rgblight_config;
@@ -94,10 +95,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      `----------------------------------'  `----------------------------------'
  */
     [_SVORAK] = LAYOUT(
-        KC_TAB,          SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC,
-        KC_ESC,          KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
-        LSFT_T(SE_COMM), SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, FREE,      GIT_CMP, XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, RSFT_T(SE_MINS),
-                                    KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  MO(_NUMB), KC_RCTL, KC_ENT, MO(_ARW2), MO(_ARW3), MO(_ARW1)
+        KC_TAB,  SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                         KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC,
+        KC_ESC,  KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                         KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
+		SFT_COM, SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP, XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, SFT_MIN,
+                            KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, KC_RCTL, KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
     ),
 
 /* 
@@ -119,28 +120,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, KC_A, KC_S, KC_D, KC_F, KC_G,                                     KC_H, KC_J, KC_K,   KC_L,    SE_OSLH, SE_AE,
       _______, KC_Z, KC_X, KC_C, KC_V, KC_B, XXXXXXX, _______, _______, XXXXXXX, KC_N, KC_M, SE_DOT, KC_BSPC, KC_DEL,  _______,
                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-*/
-
-/* 
- * Factorio
- *
- * ,-----------------------------------------.                              ,-----------------------------------------.
- * |  Tab |   Q  | 20 m2|   -  |   +  |  Alt |                              |   6  |   7  |   8  |   9  |   0  |      |
- * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |  Esc |   A  |   W  |   E  |   R  |   T  |                              |   1  |   2  |   3  |   4  |   5  |      |
- * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * | Shift|   Z  |   S  |   D  |   F  |   G  |      | Copy |  |      |      |      |      |      |      |      |      |
- * `--------------------+------+------+------+ Space+------|  |------+      +------+------+------+--------------------'
- *                      | Blue |Destrc| Ctrl |      |  Cut |  |      |      |      |      |      |
- *                      `----------------------------------'  `----------------------------------'
- */
-/*
-    [_FACTORIO] = LAYOUT(
-        _______, KC_Q, CB_2222, KC_PMNS, KC_PPLS, KC_LALT,                                      KC_6, KC_7, KC_8, KC_9, KC_0, _______,
-        _______, KC_A, KC_W,    KC_E,    KC_R,    KC_T,                                         KC_1, KC_2, KC_3, KC_4, KC_5, _______,
-        _______, KC_Z, KC_S,    KC_D,    KC_F,    KC_G,   XXXXXXX, G(KC_C), _______, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
-                               A(KC_B), A(KC_D), KC_LCTL, _______, G(KC_X), _______, _______, _______, _______, _______
     ),
 */
 
@@ -196,10 +175,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      `----------------------------------'  `----------------------------------'
  */
     [_NUMB] = LAYOUT(
-        _______,  KC_BTN1, KC_BTN3, _______, CB_SCRF, _______,                                           CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
-				_______,  KC_MS_L, KC_MS_U, KC_BTN2, CB_SCRC, _______,                                           SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
-        SFT_HACK, _______, KC_MS_D, KC_MS_R, _______, _______,   XXXXXXX, _______, _______,   XXXXXXX,   SE_SLSH, KC_1, KC_2, KC_3, KC_PPLS, _______,
-                           _______, _______, MO(_FUNC), _______, _______, _______, A(KC_ENT), KC_0, SE_DOT, S(SE_DOT)
+        _______,  KC_BTN1, KC_BTN3, _______, CB_SCRF, _______,                                          CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
+		_______,  KC_MS_L, KC_MS_U, KC_BTN2, CB_SCRC, _______,                                          SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
+        SFT_HACK, _______, KC_MS_D, KC_MS_R, _______, _______,   XXXXXXX, _______, _______,  XXXXXXX,   SE_SLSH, KC_1, KC_2, KC_3, KC_PPLS, _______,
+                           _______, _______, MO(_FUNC), _______, _______, _______, REPLAY,   KC_0, SE_DOT, S(SE_DOT)
     ),
     [_FUNC] = LAYOUT(
         _______,   RGB_SPD,  RGB_SPI, RGB_HUD, RGB_HUI, _______,                                       _______, KC_F7, KC_F8, KC_F9, _______, _______, 
@@ -248,7 +227,7 @@ void process_magnet(uint8_t state) {
 		case 64: tap_code(KC_G);    break; // Right 1/3
 		case 80: tap_code(KC_E);    tap_code(KC_SPC); break; // Center 2/3 (left 1/3 & right 1/3)
 		case 96: tap_code(KC_T);    break; // Right 2/3
-        // clang-format on
+            // clang-format on
     }
 
     set_mods(original_mods);
@@ -258,70 +237,235 @@ void process_magnet(uint8_t state) {
 uint8_t magnet_state;
 
 // Eager Macros ----------------------------------------------------------------
+// In contrast to a regular macro are these dynamic and picked up automatically
+// as you type.
 
-#define SUFFIX_LENGTH 20
+typedef enum { input_prefix, input_suffix } InputState;
+InputState input_state;
+
+#define N_PREFIXES 2
+#define MAX_SUFFIX_LENGTH 20
 #define SEPARATOR SE_DOT
-#define MACRO_LENGTH
+#define MAX_STORED_TOKENS 2
 
-const uint16_t  project_prefix[]  = {KC_F, KC_O, KC_R, KC_M, KC_U, KC_L, KC_A, KC_T, KC_E, SE_MINS};
-const uint16_t  retailer_prefix[] = {KC_R, KC_E, KC_T, KC_A, KC_I, KC_L, KC_E, KC_R, S(SE_MINS)};
-const uint16_t* prefixes[]        = {project_prefix, retailer_prefix};
-const uint8_t   prefix_n[2]       = {10, 9};
+const uint16_t  project_prefix[]     = {KC_F, KC_O, KC_R, KC_M, KC_U, KC_L, KC_A, KC_T, KC_E, SE_MINS};
+const uint16_t  retailer_prefix[]    = {KC_R, KC_E, KC_T, KC_A, KC_I, KC_L, KC_E, KC_R, S(SE_MINS)};
+const uint16_t* prefixes[N_PREFIXES] = {project_prefix, retailer_prefix};
+const uint8_t   prefix_n[N_PREFIXES] = {10, 9};
 
-struct EagerMacro {
-    int prefix_i;
-    int suffix_n;
-    uint16_t[] suffix;
-};
-EagerMacro* macro_state[MACRO_LENGTH];
-int         macro_state_n;
-EagerMacro* current_macro;
+typedef struct MacroToken {
+    uint8_t  prefix_i;
+    uint8_t  suffix_n;
+    uint16_t suffix[MAX_SUFFIX_LENGTH];
+} MacroToken;
 
-void replay_eager_macro() {
-    int* codes;
-    int  n;
+bool       first_token;
+uint8_t    n_stored_tokens;
+MacroToken stored_tokens[MAX_STORED_TOKENS];
 
-    for (int i = 0; i < macro_state_n; i++) {
+uint8_t     current_prefix_i;
+uint8_t     current_prefix_n;
+MacroToken* current_token;
+
+void init_macro_prefix(uint16_t keycode) {
+    oled_write_P(PSTR("init macro\n"), false);
+    for (int i = 0; i < N_PREFIXES; i++) {
+        if (keycode == prefixes[i][0]) {
+            current_prefix_i = i;
+            current_prefix_n = 1;
+            oled_write_P(PSTR("init macro ok\n"), false);
+            return;
+        }
+    }
+    oled_write_P(PSTR("init macro fail\n"), false);
+}
+
+void append_token(uint8_t prefix_i) {
+    oled_write_P(PSTR("append token\n"), false);
+
+    if (n_stored_tokens >= MAX_STORED_TOKENS) {
+        return;
+    }
+}
+
+void wait_for_new_prefix(void) {
+    oled_write_P(PSTR("awaiting prefix\n"), false);
+    input_state      = input_prefix;
+    current_prefix_n = 0;
+}
+
+void end_token_store(void) {
+    oled_write_P(PSTR("end store\n"), false);
+    first_token = true;
+    wait_for_new_prefix();
+}
+
+void update_macro_prefix(uint16_t keycode) {
+    oled_write_P(PSTR("update prefix\n"), false);
+
+    if (current_prefix_n == 0) {
+        init_macro_prefix(keycode);
+        return;
+    }
+	
+	switch (keycode) {
+	case SE_MINS:
+		oled_write_P(PSTR("se_mins\n"), false);
+		break;
+	case S(SE_MINS):
+		oled_write_P(PSTR("s(se_mins)\n"), false);
+		break;
+	case SFT_MIN:
+		oled_write_P(PSTR("sft_min\n"), false);
+		break;
+	}
+
+    if (keycode != prefixes[current_prefix_i][current_prefix_n]) {
+        // Unexpected char
+        oled_write_P(PSTR("unexpected\n"), false);
+        end_token_store();
+        init_macro_prefix(keycode);
+        return;
+    }
+
+    current_prefix_n++;
+
+    if (current_prefix_n < prefix_n[current_prefix_i]) {
+        // Not done
+        const char len[] = {48 + (current_prefix_n % 10)};
+        oled_write_P(PSTR("prefix not done "), false);
+        oled_write(len, false);
+        oled_write_P(PSTR("\n"), false);
+        return;
+    }
+
+    if (first_token || n_stored_tokens >= MAX_STORED_TOKENS) {
+        n_stored_tokens = 0;  // clear stored tokens
+    }
+
+    current_token           = &stored_tokens[n_stored_tokens];
+    current_token->prefix_i = current_prefix_i;
+    current_token->suffix_n = 0;
+    n_stored_tokens++;
+    first_token = false;
+    input_state = input_suffix;
+    oled_write_P(PSTR("awaiting suffix\n"), false);
+}
+
+void update_macro_suffix(uint16_t keycode) {
+    oled_write_P(PSTR("update suffix\n"), false);
+
+    switch (keycode) {
+        case KC_A ... KC_Z:
+        case KC_1 ... KC_0:  // 1 -- 9, 0
+        case SE_MINS:
+            if (current_token->suffix_n < MAX_SUFFIX_LENGTH) {
+                current_token->suffix[current_token->suffix_n] = keycode;
+                current_token->suffix_n++;
+                oled_write_P(PSTR("add char\n"), false);
+            } else {
+                oled_write_P(PSTR("no more room\n"), false);
+            }
+            break;
+        case SEPARATOR:
+            oled_write_P(PSTR("got separator\n"), false);
+            wait_for_new_prefix();
+            break;
+        default:
+            oled_write_P(PSTR("unexpected\n"), false);
+            end_token_store();
+    }
+}
+
+void update_macro(uint16_t keycode) {
+    if (first_token) {
+        oled_write_P(PSTR("first token ("), false);
+    } else {
+        oled_write_P(PSTR("next token ("), false);
+    }
+    oled_write_char(48 + n_stored_tokens % 10, false);
+    oled_write_P(PSTR(")\n"), false);
+
+    uint16_t cased_keycode = keycode;
+    switch (keycode) {
+        case KC_LSHIFT:
+        case KC_RSHIFT:
+        case SFT_COM:
+		case NUMBERS:
+            oled_write_P(PSTR("ignored mod\n"), false);
+            return;
+		case SFT_MIN:
+            oled_write_P(PSTR("shift mins\n"), false);
+			cased_keycode = SE_MINS;
+    }
+
+    if (get_mods() & MOD_MASK_SHIFT) {
+            oled_write_P(PSTR("shifted\n"), false);
+			cased_keycode = S(cased_keycode);
+    }
+
+    if (input_state == input_prefix) {
+        update_macro_prefix(cased_keycode);
+    } else {
+        update_macro_suffix(cased_keycode);
+    }
+}
+
+void replay_macro(void) {
+    oled_write_P(PSTR("replay_macro\n"), false);
+    uint8_t original_mods = get_mods();
+    set_mods(0);
+
+    const uint16_t* codes;
+    uint8_t         n;
+
+    for (int i = 0; i < n_stored_tokens; i++) {
         if (i > 0) {
             tap_code(SEPARATOR);
         }
 
-        codes = prefixes[macros_state[i]->prefix_i];
-        n     = prefix_n[macros_state[i]->prefix_i];
+        codes = prefixes[stored_tokens[i].prefix_i];
+        n     = prefix_n[stored_tokens[i].prefix_i];
+        for (int j = 0; j < n; j++) {
+            if (codes[j] == S(codes[j])) {
+                register_code(KC_LSFT);
+                tap_code(codes[j]);
+                unregister_code(KC_LSFT);
+            } else {
+                tap_code(codes[j]);
+            }
+        }
+
+        codes = stored_tokens[i].suffix;
+        n     = stored_tokens[i].suffix_n;
         for (int j = 0; j < n; j++) {
             tap_code(codes[j]);
         }
-
-        codes = macros_state[i]->suffix;
-        n     = macro_state[i]->suffix_n;
-        for (int j = 0; j < n; j++) {
-            tap_code(codes[j]);
-        }
     }
+    set_mods(original_mods);
+
+    first_token = true;
 }
 
-bool process_eager_macro(uint16_t keycode) {
-    if (keycode == REPLAY) {
-        replay_eager_macro();
-        return true;
-    }
-
-    if (keycode == SEPARATOR) {
-        store_eager_macro();
-    }
-
-    return false;
+void keyboard_post_init_user(void) {
+    oled_write_P(PSTR("init keeb\n"), false);
+    input_state      = input_prefix;
+    first_token      = true;
+    current_prefix_n = 0;
 }
+
+// Process input ---------------------------------------------------------------
 
 bool show_slave;
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    // set_single_persistent_default_layer(_SVORAK);
     if (record->event.pressed) {
         // when key is pressed
+        oled_clear();
+        update_macro(keycode);
 
-        if (process_eager_macro(keycode)) {
-            // replayed macro
+        if (keycode == REPLAY) {
+            replay_macro();
             return true;
         }
 
@@ -365,11 +509,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             case MAG_1_3: magnet_state |= 16; process_magnet(magnet_state); break;
             case MAG_2_3: magnet_state |= 32; process_magnet(magnet_state); break;
             case MAG_3_3: magnet_state |= 64; process_magnet(magnet_state); break;
-            // clang-format on
-
-            case CB_2222:
-                SEND_STRING(SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2) SS_TAP(X_BTN2));
-                break;
+                // clang-format on
 
             case KC_LCTRL:
             case KC_LALT:
@@ -390,7 +530,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             case MAG_1_3: magnet_state &= ~16; break;
             case MAG_2_3: magnet_state &= ~32; break;
             case MAG_3_3: magnet_state &= ~64; break;
-            // clang-format on
+                // clang-format on
         }
     }
     return true;
@@ -407,6 +547,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_
 
 // clang-format off
 
+/*
 // generated by Makefile
 static void render_svorak_left(void) {
   static const char PROGMEM svorak_left[] = {
@@ -436,7 +577,7 @@ static void render_svorak_right(void) {
   };
   oled_write_P(svorak_right, false);
 }
-
+*/
 /*
 // generated by Makefile
 static void render_qwerty_left(void) {
@@ -468,7 +609,7 @@ static void render_qwerty_right(void) {
   oled_write_P(qwerty_right, false);
 }
 */
-
+/*
 // generated by Makefile
 static void render_symbols_left(void) {
   static const char PROGMEM symbols_left[] = {
@@ -543,7 +684,7 @@ static void render_rgb_left(void) {
   };
   oled_write(rgb_left, false);
 }
-
+*/
 /*
 // generated by Makefile
 static void render_rgb_right(void) {
@@ -561,7 +702,7 @@ static void render_rgb_right(void) {
 }
 */
 // clang-format on
-
+/*
 void oled_task_user(void) {
     if (!is_keyboard_master()) {
         oled_write_P(PSTR("rgb+f1:12   hyper\n\nnum  sound+magnet\n"), false);
@@ -604,5 +745,5 @@ void oled_task_user(void) {
             }
     }
 }
-
+*/
 #endif
