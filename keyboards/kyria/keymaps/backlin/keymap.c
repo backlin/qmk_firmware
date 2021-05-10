@@ -18,7 +18,6 @@
 #include "keymap_swedish.h"
 
 #define FREE XXXXXXX
-#define GIT_CMP HYPR(KC_G)  // GoLand compare with branch
 
 // Print screen (Mac)
 #define CB_SCRC S(C(G(KC_4)))  // Region to clipboard
@@ -28,8 +27,9 @@
 #define CB_VOLU LSA(KC_VOLU)
 #define CB_VOLD LSA(KC_VOLD)
 
-// Magnet center
-#define MAG_CTR LCA(KC_SPC)
+// Magnet
+#define MAG_CTR LCA(KC_SPC) // center
+#define MAG_FUL LCA(KC_ENT) // full
 
 // Shift hack to enable left shift to behave as expected when right shift (arrow 2) is held
 #define SFT_HACK LSFT_T(S(SE_COMM))
@@ -72,7 +72,8 @@ enum custom_keycodes {
     MAG_2_3,
     MAG_3_3,
 
-    REPLAY  // Replay eager macro
+    GIT_CMP,  // GoLand compare with branch
+    REPLAY    // Replay eager macro
 };
 
 extern rgblight_config_t rgblight_config;
@@ -88,17 +89,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * |  Esc |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del |
  * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |LShift|  . : |   Q  |   J  |   K  |   X  |      |Layout|  | Hyper|      |   B  |   M  |   W  |   V  |   Z  |RShift|
+ * |LShift|  . : |   Q  |   J  |   K  |   X  |      |Replay|  |  Git |      |   B  |   M  |   W  |   V  |   Z  |RShift|
  * |  , ; |      |      |      |      |      | Space|      |  |      | Enter|      |      |      |      |      |  - _ |
  * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
- *                      | LAlt | LCmd | Numb |      | Ctrl |  | Ctrl |      |Arrow2|Arrow3|Arrow1|
+ *                      | Ctrl |  Alt |  Cmd |      |Numpad|  | Func |      |Arrow1|Arrow2|Arrow3|
  *                      `----------------------------------'  `----------------------------------'
  */
     [_SVORAK] = LAYOUT(
-        KC_TAB,  SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                         KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC,
-        KC_ESC,  KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                         KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
-		SFT_COM, SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP, XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, SFT_MIN,
-                            KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, KC_RCTL, KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
+        KC_TAB,  SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC,
+        KC_ESC,  KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
+		SFT_COM, SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, SFT_MIN,
+                            KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
     ),
 
 /* 
@@ -136,29 +137,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      |      |      |      |      | Func |  |Magnet|      |      |      |      |
  *                      `----------------------------------'  `----------------------------------'
  */
-    [_ARW1] = LAYOUT( // Symbols + arrows
+    [_ARW1] = LAYOUT( // Normal arrows
         _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT, SE_QUOT, CB_TILD, _______,
         _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
         _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, KC_LEFT, KC_DOWN, KC_PPLS, _______,
                                                    _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
-    [_ARW2] = LAYOUT( // Symbols + arrows
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, CB_TILD,    A(KC_BSPC),
+    [_ARW2] = LAYOUT( // Step whole words
+        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, KC_PGUP,    A(KC_BSPC),
         _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, A(KC_LEFT), KC_DOWN, KC_PPLS,     _______,
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, A(KC_LEFT), KC_DOWN, KC_PGDN,    _______,
                                                    _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
-    [_ARW3] = LAYOUT(
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, CB_TILD,    G(KC_BSPC),
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, G(KC_LEFT), KC_PGDN, KC_PPLS,    _______,
+    [_ARW3] = LAYOUT( // Step whole line
+        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, G(KC_UP),   G(KC_BSPC),
+        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_UP,   G(KC_RGHT), C(KC_K),
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, G(KC_LEFT), KC_DOWN, G(KC_DOWN), _______,
                                                    _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
     [_MAGN] = LAYOUT(
-        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                     _______, _______, _______, MAG_2_3, MAG_3_3, _______,
-        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                     _______, MAG_CTR, MAG_1_3, MAG_TOP, MAG_RGT, _______,
-        _______, _______, _______, KC_BRID, KC_BRIU, _______, XXXXXXX, _______, _______, XXXXXXX, _______, _______, MAG_LFT, MAG_BTM, _______, _______,
-                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        _______, RGB_SPD,  RGB_SPI, RGB_HUD, RGB_HUI, _______,                                       _______, _______,    _______, MAG_2_3, MAG_3_3,    _______,
+        _______, RGB_RMOD, RGB_MOD, RGB_SAD, RGB_SAI, _______,                                       _______, G(KC_PPLS), MAG_1_3, MAG_TOP, MAG_RGT,    _______,
+        _______, RGB_TOG,  RGB_TOG, RGB_VAD, RGB_VAI, _______,   XXXXXXX, _______, _______, XXXXXXX, _______, G(SE_MINS), MAG_LFT, MAG_BTM, G(KC_PPLS), G(SE_MINS),
+                                      _______, _______, _______, MAG_CTR, _______, _______, MAG_FUL, _______, _______, _______
     ),
 
 /* 
@@ -175,16 +176,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      `----------------------------------'  `----------------------------------'
  */
     [_NUMB] = LAYOUT(
-        _______,  KC_BTN1, KC_BTN3, _______, CB_SCRF, _______,                                          CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
-		_______,  KC_MS_L, KC_MS_U, KC_BTN2, CB_SCRC, _______,                                          SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
-        SFT_HACK, _______, KC_MS_D, KC_MS_R, _______, _______,   XXXXXXX, _______, _______,  XXXXXXX,   SE_SLSH, KC_1, KC_2, KC_3, KC_PPLS, _______,
-                           _______, _______, MO(_FUNC), _______, _______, _______, REPLAY,   KC_0, SE_DOT, S(SE_DOT)
+        _______,  KC_BTN1, KC_BTN3, _______, CB_SCRF, _______,                                         CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
+		_______,  KC_MS_L, KC_MS_U, KC_BTN2, CB_SCRC, _______,                                         SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
+        SFT_HACK, _______, KC_MS_D, KC_MS_R, _______, _______,   XXXXXXX, _______, _______, XXXXXXX,   SE_SLSH, KC_1, KC_2, KC_3, KC_PPLS, _______,
+                           _______, _______, MO(_FUNC), _______, _______, _______, _______, KC_0, SE_DOT, S(SE_DOT)
     ),
     [_FUNC] = LAYOUT(
-        _______,   RGB_SPD,  RGB_SPI, RGB_HUD, RGB_HUI, _______,                                       _______, KC_F7, KC_F8, KC_F9, _______, _______, 
-        TG(_FUNC), RGB_RMOD, RGB_MOD, RGB_SAD, RGB_SAI, _______,                                       _______, KC_F4, KC_F5, KC_F6, _______, _______, 
-        _______,   RGB_TOG,  RGB_TOG, RGB_VAD, RGB_VAI, _______, XXXXXXX, _______, _______, XXXXXXX,   _______, KC_F1, KC_F2, KC_F3, _______, _______, 
-                                      _______, _______, _______, _______, _______, _______, TO(_FUNC), KC_F10, KC_F11, KC_F12
+        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         _______, KC_F7, KC_F8, KC_F9, _______, _______, 
+        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         _______, KC_F4, KC_F5, KC_F6, _______, _______, 
+        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, KC_F1, KC_F2, KC_F3, _______, _______, 
+                                     _______, _______, _______, _______, _______, _______, _______, KC_F10, KC_F11, KC_F12
     ),
 
 /* 
@@ -268,61 +269,39 @@ uint8_t     current_prefix_n;
 MacroToken* current_token;
 
 void init_macro_prefix(uint16_t keycode) {
-    oled_write_P(PSTR("init macro\n"), false);
     for (int i = 0; i < N_PREFIXES; i++) {
         if (keycode == prefixes[i][0]) {
             current_prefix_i = i;
             current_prefix_n = 1;
-            oled_write_P(PSTR("init macro ok\n"), false);
             return;
         }
     }
-    oled_write_P(PSTR("init macro fail\n"), false);
 }
 
 void append_token(uint8_t prefix_i) {
-    oled_write_P(PSTR("append token\n"), false);
-
     if (n_stored_tokens >= MAX_STORED_TOKENS) {
         return;
     }
 }
 
 void wait_for_new_prefix(void) {
-    oled_write_P(PSTR("awaiting prefix\n"), false);
     input_state      = input_prefix;
     current_prefix_n = 0;
 }
 
 void end_token_store(void) {
-    oled_write_P(PSTR("end store\n"), false);
     first_token = true;
     wait_for_new_prefix();
 }
 
 void update_macro_prefix(uint16_t keycode) {
-    oled_write_P(PSTR("update prefix\n"), false);
-
     if (current_prefix_n == 0) {
         init_macro_prefix(keycode);
         return;
     }
-	
-	switch (keycode) {
-	case SE_MINS:
-		oled_write_P(PSTR("se_mins\n"), false);
-		break;
-	case S(SE_MINS):
-		oled_write_P(PSTR("s(se_mins)\n"), false);
-		break;
-	case SFT_MIN:
-		oled_write_P(PSTR("sft_min\n"), false);
-		break;
-	}
 
     if (keycode != prefixes[current_prefix_i][current_prefix_n]) {
         // Unexpected char
-        oled_write_P(PSTR("unexpected\n"), false);
         end_token_store();
         init_macro_prefix(keycode);
         return;
@@ -333,7 +312,6 @@ void update_macro_prefix(uint16_t keycode) {
     if (current_prefix_n < prefix_n[current_prefix_i]) {
         // Not done
         const char len[] = {48 + (current_prefix_n % 10)};
-        oled_write_P(PSTR("prefix not done "), false);
         oled_write(len, false);
         oled_write_P(PSTR("\n"), false);
         return;
@@ -349,12 +327,9 @@ void update_macro_prefix(uint16_t keycode) {
     n_stored_tokens++;
     first_token = false;
     input_state = input_suffix;
-    oled_write_P(PSTR("awaiting suffix\n"), false);
 }
 
 void update_macro_suffix(uint16_t keycode) {
-    oled_write_P(PSTR("update suffix\n"), false);
-
     switch (keycode) {
         case KC_A ... KC_Z:
         case KC_1 ... KC_0:  // 1 -- 9, 0
@@ -362,27 +337,17 @@ void update_macro_suffix(uint16_t keycode) {
             if (current_token->suffix_n < MAX_SUFFIX_LENGTH) {
                 current_token->suffix[current_token->suffix_n] = keycode;
                 current_token->suffix_n++;
-                oled_write_P(PSTR("add char\n"), false);
-            } else {
-                oled_write_P(PSTR("no more room\n"), false);
             }
             break;
         case SEPARATOR:
-            oled_write_P(PSTR("got separator\n"), false);
             wait_for_new_prefix();
             break;
         default:
-            oled_write_P(PSTR("unexpected\n"), false);
             end_token_store();
     }
 }
 
 void update_macro(uint16_t keycode) {
-    if (first_token) {
-        oled_write_P(PSTR("first token ("), false);
-    } else {
-        oled_write_P(PSTR("next token ("), false);
-    }
     oled_write_char(48 + n_stored_tokens % 10, false);
     oled_write_P(PSTR(")\n"), false);
 
@@ -391,17 +356,14 @@ void update_macro(uint16_t keycode) {
         case KC_LSHIFT:
         case KC_RSHIFT:
         case SFT_COM:
-		case NUMBERS:
-            oled_write_P(PSTR("ignored mod\n"), false);
+        case NUMBERS:
             return;
-		case SFT_MIN:
-            oled_write_P(PSTR("shift mins\n"), false);
-			cased_keycode = SE_MINS;
+        case SFT_MIN:
+            cased_keycode = SE_MINS;
     }
 
     if (get_mods() & MOD_MASK_SHIFT) {
-            oled_write_P(PSTR("shifted\n"), false);
-			cased_keycode = S(cased_keycode);
+        cased_keycode = S(cased_keycode);
     }
 
     if (input_state == input_prefix) {
@@ -412,7 +374,6 @@ void update_macro(uint16_t keycode) {
 }
 
 void replay_macro(void) {
-    oled_write_P(PSTR("replay_macro\n"), false);
     uint8_t original_mods = get_mods();
     set_mods(0);
 
@@ -448,7 +409,11 @@ void replay_macro(void) {
 }
 
 void keyboard_post_init_user(void) {
-    oled_write_P(PSTR("init keeb\n"), false);
+    if (!is_keyboard_master()) {
+		oled_write_P(PSTR("init master\n"), false);
+	} else {
+		oled_write_P(PSTR("init slave\n"), false);
+	}
     input_state      = input_prefix;
     first_token      = true;
     current_prefix_n = 0;
@@ -464,12 +429,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         oled_clear();
         update_macro(keycode);
 
-        if (keycode == REPLAY) {
-            replay_macro();
-            return true;
-        }
-
         switch (keycode) {
+            case REPLAY:
+                replay_macro();
+                return true;
+
             case CB_CIRC:
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_RBRC);
@@ -510,6 +474,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             case MAG_2_3: magnet_state |= 32; process_magnet(magnet_state); break;
             case MAG_3_3: magnet_state |= 64; process_magnet(magnet_state); break;
                 // clang-format on
+
+            case GIT_CMP: {
+                uint8_t original_mods = get_mods();
+                set_mods(MOD_MASK_CSAG);
+                SEND_STRING("g" SS_DELAY(300) "master" SS_TAP(X_ENT));
+                set_mods(original_mods);
+                break;
+            }
 
             case KC_LCTRL:
             case KC_LALT:
