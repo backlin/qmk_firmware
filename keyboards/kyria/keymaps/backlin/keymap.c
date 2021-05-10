@@ -151,8 +151,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_ARW3] = LAYOUT( // Step whole line
         _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, G(KC_UP),   G(KC_BSPC),
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_UP,   G(KC_RGHT), C(KC_K),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, G(KC_LEFT), KC_DOWN, G(KC_DOWN), _______,
+        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, G(KC_LEFT), KC_PGDN, G(KC_DOWN), _______,
                                                    _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
     [_MAGN] = LAYOUT(
@@ -409,7 +409,7 @@ void replay_macro(void) {
 }
 
 void keyboard_post_init_user(void) {
-    if (!is_keyboard_master()) {
+    if (is_keyboard_master()) {
 		oled_write_P(PSTR("init master\n"), false);
 	} else {
 		oled_write_P(PSTR("init slave\n"), false);
@@ -478,7 +478,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             case GIT_CMP: {
                 uint8_t original_mods = get_mods();
                 set_mods(MOD_MASK_CSAG);
-                SEND_STRING("g" SS_DELAY(300) "master" SS_TAP(X_ENT));
+				tap_code(KC_G);
+				if (!(original_mods & MOD_MASK_SHIFT)) {
+					set_mods(0);
+					SEND_STRING(SS_DELAY(300) "master" SS_TAP(X_ENT));
+				}
                 set_mods(original_mods);
                 break;
             }
