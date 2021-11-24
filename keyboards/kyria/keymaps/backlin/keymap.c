@@ -51,6 +51,7 @@
 
 enum layers {
     _SVORAK = 0,  // Layout
+    _SWE,
     _ARW2,
     _ARW1,
     _ARW3,
@@ -85,21 +86,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Base layer: SVORAK (Swedish Dvorak)
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
- * |  Tab |   Å  |   Ä  |   Ö  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  | Bksp |
+ * |  Tab |  ,Å  |  ^Ä  |  $Ö  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  | Bksp |
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * |  Esc |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del |
  * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |LShift|  . : |   Q  |   J  |   K  |   X  |      |Replay|  |  Git |      |   B  |   M  |   W  |   V  |   Z  |RShift|
- * |  , ; |      |      |      |      |      | Space|      |  |      | Enter|      |      |      |      |      |  - _ |
- * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+ * |LShift|  . : |   Q  |   J  |   K  |   X  |      |Replay|  |  Git |      |   B  |   M  |   W  |   V  |   Z  |  - _ |
+ * `--------------------+------+------+------+ Space+------|  |------+ Enter+------+------+------+--------------------'
  *                      | Ctrl |  Alt |  Cmd |      |Numpad|  | Func |      |Arrow1|Arrow2|Arrow3|
  *                      `----------------------------------'  `----------------------------------'
  */
     [_SVORAK] = LAYOUT(
-        KC_TAB,  SE_AA,  SE_AE, SE_OSLH, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC,
-        KC_ESC,  KC_A,   KC_O,  KC_E,    KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
-		SFT_COM, SE_DOT, KC_Q,  KC_J,    KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, SFT_MIN,
-                            KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
+        KC_TAB,  SE_COMM, SE_CIRC, CB_DLR, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
+        KC_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
+		KC_LSFT, SE_DOT,  KC_Q,    KC_J,   KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, SE_MINS,
+                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
+    ),
+    [_SWE] = LAYOUT(
+        _______, SE_AA,   SE_AE,   SE_OSLH, _______, _______,                                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
+		_______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+                            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 /* 
@@ -128,37 +134,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Symbol and arrow layers
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
- * |      |   /  |   \  |   [  |   ]  |   |  |                              |   !  |   ?  |   ´  |   '  |   ~  |      |
+ * |      |   /  |   \  |   [  |   ]  |   |  |                              |   !  |   ?  |   '  |   ´  |   ~  |      |
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * |      |   {  |   }  |   (  |   )  |   @  |                              |   *  |   "  |   `  |  up  | right|      |
  * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |      |      |   =  |   <  |   >  |   %  |      |      |  |      |      |   &  |   #  | left | down |   +  |      |
+ * |      |      |   =  |   <  |   >  |   %  |      |      |  |      |      |   #  |   &  | left | down |   +  |  , ; |
  * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
  *                      |      |      |      |      | Func |  |Magnet|      |      |      |      |
  *                      `----------------------------------'  `----------------------------------'
  */
     [_ARW1] = LAYOUT( // Normal arrows
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT, SE_QUOT, CB_TILD, _______,
+        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_QUOT, SE_ACUT, CB_TILD, _______,
         _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, KC_LEFT, KC_DOWN, KC_PPLS, _______,
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_HASH, SE_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, SE_COMM,
                                                    _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
     [_ARW2] = LAYOUT( // Step whole words
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, KC_PGUP,    A(KC_BSPC),
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, A(KC_LEFT), KC_DOWN, KC_PGDN,    _______,
-                                                   _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
+        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                 KC_EXLM, SE_QUES, SE_QUOT,    SE_ACUT, CB_TILD,    A(KC_BSPC),
+        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                       SE_ASTR, SE_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, SE_HASH, SE_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    SE_COMM,
+                                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
-    [_ARW3] = LAYOUT( // Step whole line
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_ACUT,    SE_QUOT, G(KC_UP),   G(KC_BSPC),
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_AMPR, SE_HASH, G(KC_LEFT), KC_PGDN, G(KC_DOWN), _______,
-                                                   _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
+	[_ARW3] = LAYOUT( // Step whole line
+		_______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                             KC_EXLM, SE_QUES, SE_QUOT,    SE_ACUT, CB_TILD,    G(KC_BSPC),
+        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                       SE_ASTR, SE_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, SE_HASH, SE_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    SE_COMM,
+                                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_MAGN] = LAYOUT(
-        _______, RGB_SPD,  RGB_SPI, RGB_HUD, RGB_HUI, _______,                                       _______, _______,    _______, MAG_2_3, MAG_3_3,    _______,
-        _______, RGB_RMOD, RGB_MOD, RGB_SAD, RGB_SAI, _______,                                       _______, G(KC_PPLS), MAG_1_3, MAG_TOP, MAG_RGT,    _______,
-        _______, RGB_TOG,  RGB_TOG, RGB_VAD, RGB_VAI, _______,   XXXXXXX, _______, _______, XXXXXXX, _______, G(SE_MINS), MAG_LFT, MAG_BTM, G(KC_PPLS), G(SE_MINS),
+        _______, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG,  RGB_MOD,                                         _______, _______,    _______, MAG_2_3, MAG_3_3, _______,
+        _______, RGB_HUD, RGB_SAD, RGB_VAD, TG(_SWE), RGB_RMOD,                                        _______, G(KC_PPLS), MAG_1_3, MAG_TOP, MAG_RGT, _______,
+        _______, RGB_SPD, RGB_SPI, _______, _______,  _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, G(SE_MINS), MAG_LFT, MAG_BTM, _______, _______,
                                       _______, _______, _______, MAG_CTR, _______, _______, MAG_FUL, _______, _______, _______
     ),
 
@@ -170,20 +176,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * |      |      |   Symbols   |      |      |                              |   *  |   4  |   5  |   6  |   $  |      |
  * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |      |   :  |      |      |      |      |      |      |  |      |      |   /  |   1  |   2  |   3  |   +  |      |
+ * |      |      |      |      |      |      |      |      |  |      |      |   #  |   1  |   2  |   3  |   +  |      |
  * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
  *                      |      |      |      |      |      |  |      |      |   0  |   .  |   :  |
  *                      `----------------------------------'  `----------------------------------'
  */
     [_NUMB] = LAYOUT(
-        _______,  KC_BTN1, KC_BTN3, _______, CB_SCRF, _______,                                         CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
-		_______,  KC_MS_L, KC_MS_U, KC_BTN2, CB_SCRC, _______,                                         SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
-        SFT_HACK, _______, KC_MS_D, KC_MS_R, _______, _______,   XXXXXXX, _______, _______, XXXXXXX,   SE_SLSH, KC_1, KC_2, KC_3, KC_PPLS, _______,
-                           _______, _______, MO(_FUNC), _______, _______, _______, _______, KC_0, SE_DOT, S(SE_DOT)
+        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
+		_______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
+        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______, XXXXXXX,   SE_HASH, KC_1, KC_2, KC_3, KC_PPLS, _______,
+                                                            _______, _______, _______, _______, _______, _______, _______, KC_0, SE_DOT, S(SE_DOT)
     ),
     [_FUNC] = LAYOUT(
-        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         _______, KC_F7, KC_F8, KC_F9, _______, _______, 
-        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         _______, KC_F4, KC_F5, KC_F6, _______, _______, 
+        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______, 
+        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______, 
         _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, KC_F1, KC_F2, KC_F3, _______, _______, 
                                      _______, _______, _______, _______, _______, _______, _______, KC_F10, KC_F11, KC_F12
     ),
@@ -200,6 +206,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
  *                      |      |      |      |      |      |  |      |      |      |      |      |
  *                      `----------------------------------'  `----------------------------------'
+ */
+ /*
+    [_TEMPL] = LAYOUT(
+        _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
+		_______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+                            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+    ),
  */
 };
 // clang-format on
