@@ -14,44 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include QMK_KEYBOARD_H
 #include "keymap_swedish.h"
 
-#define FREE XXXXXXX
+#define NUMBERS MO(_NUMB)  // Aliased to simplify handling in macros
 
-// Print screen (Mac)
-#define CB_SCRC S(C(G(KC_4)))  // Region to clipboard
-#define CB_SCRF S(G(KC_4))     // Region to file
-
-// Small volume increment (Mac)
-#define CB_VOLU LSA(KC_VOLU)
-#define CB_VOLD LSA(KC_VOLD)
-
-// Magnet
-#define MAG_CTR LCA(KC_SPC) // center
-#define MAG_FUL LCA(KC_ENT) // full
-
-// Shift hack to enable left shift to behave as expected when right shift (arrow 2) is held
-#define SFT_HACK LSFT_T(S(SE_COMM))
-
-// Rarely used symbols (Mac)
-#define CB_PRGF 192
-#define CB_DGRE LSA(KC_Q)
-#define CB_MU A(KC_Y)
-#define CB_PI A(KC_P)
-#define CB_SIGM LSA(KC_S)  // Capital sigma
-#define CB_DELT LSA(KC_D)  // Capital delta
-#define CB_MDDT A(KC_Q)    // Mid dot
-#define CB_APRX A(KC_X)
-#define SFT_COM LSFT_T(SE_COMM)
-#define SFT_MIN RSFT_T(SE_MINS)
-#define NUMBERS MO(_NUMB)
-
-#define MOD_MASK_RSHIFT MOD_BIT(KC_RSHIFT)  // NOT IN USE
+//#define MOD_MASK_RSHIFT MOD_BIT(KC_RSHIFT)  // NOT IN USE
 
 enum layers {
     _SVORAK = 0,  // Layout
-    _SWE,
     _ARW2,
     _ARW1,
     _ARW3,
@@ -77,12 +49,12 @@ enum custom_keycodes {
     REPLAY    // Replay eager macro
 };
 
-extern rgblight_config_t rgblight_config;
+//extern rgblight_config_t rgblight_config;
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* 
+/*
  * Base layer: SVORAK (Swedish Dvorak)
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
@@ -96,19 +68,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      `----------------------------------'  `----------------------------------'
  */
     [_SVORAK] = LAYOUT(
-        KC_TAB,  SE_COMM, SE_CIRC, CB_DLR, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
-        KC_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
-		KC_LSFT, SE_DOT,  KC_Q,    KC_J,   KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, SE_MINS,
-                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
-    ),
-    [_SWE] = LAYOUT(
-        _______, SE_AA,   SE_AE,   SE_OSLH, _______, _______,                                         _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
-		_______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
-                            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
+        KC_ESC,  KC_A,     KC_O,    KC_E,    KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
+        KC_LSFT, CB_DOT,   KC_Q,    KC_J,    KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, CB_MINS,
+                                KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
     ),
 
-/* 
+/*
  * Alternative base layer: QWERTY (Swedish)
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
@@ -123,14 +89,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 /*
     [_QWERTY] = LAYOUT(
-      _______, KC_Q, KC_W, KC_E, KC_R, KC_T,                                     KC_Y, KC_U, KC_I,   KC_O,    KC_P,    SE_AA,
-      _______, KC_A, KC_S, KC_D, KC_F, KC_G,                                     KC_H, KC_J, KC_K,   KC_L,    SE_OSLH, SE_AE,
-      _______, KC_Z, KC_X, KC_C, KC_V, KC_B, XXXXXXX, _______, _______, XXXXXXX, KC_N, KC_M, SE_DOT, KC_BSPC, KC_DEL,  _______,
+      _______, KC_Q, KC_W, KC_E, KC_R, KC_T,                                     KC_Y, KC_U, KC_I,   KC_O,    KC_P,    CB_ARNG,
+      _______, KC_A, KC_S, KC_D, KC_F, KC_G,                                     KC_H, KC_J, KC_K,   KC_L,    CB_ODIA, CB_ADIA,
+      _______, KC_Z, KC_X, KC_C, KC_V, KC_B, XXXXXXX, _______, _______, XXXXXXX, KC_N, KC_M, CB_DOT, KC_BSPC, KC_DEL,  _______,
                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 */
 
-/* 
+/*
  * Symbol and arrow layers
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
@@ -144,31 +110,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      `----------------------------------'  `----------------------------------'
  */
     [_ARW1] = LAYOUT( // Normal arrows
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   KC_EXLM, SE_QUES, SE_QUOT, SE_ACUT, CB_TILD, _______,
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, SE_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, SE_HASH, SE_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, SE_COMM,
-                                                   _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
+        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       KC_EXLM, CB_QUES, CB_QUOT, CB_ACUT, CB_TILD, _______,
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                         CB_ASTR, CB_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, CB_HASH, CB_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, CB_COMM,
+                                     _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
     [_ARW2] = LAYOUT( // Step whole words
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                 KC_EXLM, SE_QUES, SE_QUOT,    SE_ACUT, CB_TILD,    A(KC_BSPC),
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                       SE_ASTR, SE_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, SE_HASH, SE_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    SE_COMM,
-                                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    A(KC_BSPC),
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    CB_COMM,
+                                     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
-	[_ARW3] = LAYOUT( // Step whole line
-		_______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                             KC_EXLM, SE_QUES, SE_QUOT,    SE_ACUT, CB_TILD,    G(KC_BSPC),
-        _______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                       SE_ASTR, SE_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, SE_HASH, SE_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    SE_COMM,
+    [_ARW3] = LAYOUT( // Step whole line
+        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    G(KC_BSPC),
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    CB_COMM,
                                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_MAGN] = LAYOUT(
-        _______, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG,  RGB_MOD,                                         _______, _______,    _______, MAG_2_3, MAG_3_3, _______,
-        _______, RGB_HUD, RGB_SAD, RGB_VAD, TG(_SWE), RGB_RMOD,                                        _______, G(KC_PPLS), MAG_1_3, MAG_TOP, MAG_RGT, _______,
-        _______, RGB_SPD, RGB_SPI, _______, _______,  _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, G(SE_MINS), MAG_LFT, MAG_BTM, _______, _______,
-                                      _______, _______, _______, MAG_CTR, _______, _______, MAG_FUL, _______, _______, _______
+        _______, RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, RGB_MOD,                                         _______, _______,    _______, MAG_2_3, MAG_3_3, _______,
+        _______, RGB_HUD, RGB_SAD, RGB_VAD, _______, RGB_RMOD,                                        _______, G(KC_PPLS), MAG_1_3, MAG_TOP, MAG_RGT, _______,
+        _______, RGB_SPD, RGB_SPI, _______, _______, _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, G(CB_MINS), MAG_LFT, MAG_BTM, _______, _______,
+                                     _______, _______, _______, MAG_CTR, _______, _______, MAG_FUL, _______, _______, _______
     ),
 
-/* 
+/*
  * Launch apps and Numpad
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
@@ -182,19 +148,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                      `----------------------------------'  `----------------------------------'
  */
     [_NUMB] = LAYOUT(
-        _______, SE_SLSH,     SE_BSLS_MAC, SE_LBRC,     SE_RBRC,     SE_PIPE_MAC,                                   CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
-		_______, SE_LCBR_MAC, SE_RCBR_MAC, SE_LPRN,     SE_RPRN,     SE_AT,                                         SE_ASTR, KC_4, KC_5, KC_6, SE_DLR,  _______,
-        _______, S(SE_DOT),   SE_EQL,      SE_LESS_MAC, SE_GRTR_MAC, KC_PERC, XXXXXXX, _______, _______, XXXXXXX,   SE_HASH, KC_1, KC_2, KC_3, KC_PPLS, _______,
-                                                            _______, _______, _______, _______, _______, _______, _______, KC_0, SE_DOT, S(SE_DOT)
+        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                         CB_ASTR, KC_4, KC_5, KC_6, CB_DLR,  _______,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX,   CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, _______,
+                                                            _______, _______, _______, _______, _______, _______, _______, KC_0, CB_DOT, S(CB_DOT)
     ),
     [_FUNC] = LAYOUT(
-        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______, 
-        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______, 
-        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, KC_F1, KC_F2, KC_F3, _______, _______, 
+        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______,
+        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______,
+        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, KC_F1, KC_F2, KC_F3, _______, _______,
                                      _______, _______, _______, _______, _______, _______, _______, KC_F10, KC_F11, KC_F12
     ),
 
-/* 
+/*
  * Template
  *
  * ,-----------------------------------------.                              ,-----------------------------------------.
@@ -211,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_TEMPL] = LAYOUT(
         _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
-		_______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
                             _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
  */
@@ -226,22 +192,22 @@ void process_magnet(uint8_t state) {
 
     switch (state) {
         // clang-format off
-		case  1: tap_code(KC_LEFT); break; // Left
-		case  2: tap_code(KC_RGHT); break; // Right
-		case  3: tap_code(KC_ENT);  break; // Full (left & right)
-		case  4: tap_code(KC_UP);   break; // Top
-		case  5: tap_code(KC_U);    break; // Top left
-		case  6: tap_code(KC_I);    break; // Top right
-		case  8: tap_code(KC_DOWN); break; // Bottom
-		case  9: tap_code(KC_J);    break; // Bottom left
-		case 10: tap_code(KC_K);    break; // Bottom right
-		case 12: tap_code(KC_LEFT); tap_code(KC_SPC); break; // Center 1/2 (top & bottom)
-		case 16: tap_code(KC_D);    break; // Left 1/3
-		case 32: tap_code(KC_F);    break; // Mid 1/3
-		case 48: tap_code(KC_E);    break; // Left 2/3
-		case 64: tap_code(KC_G);    break; // Right 1/3
-		case 80: tap_code(KC_E);    tap_code(KC_SPC); break; // Center 2/3 (left 1/3 & right 1/3)
-		case 96: tap_code(KC_T);    break; // Right 2/3
+        case  1: tap_code(KC_LEFT); break; // Left
+        case  2: tap_code(KC_RGHT); break; // Right
+        case  3: tap_code(KC_ENT);  break; // Full (left & right)
+        case  4: tap_code(KC_UP);   break; // Top
+        case  5: tap_code(KC_U);    break; // Top left
+        case  6: tap_code(KC_I);    break; // Top right
+        case  8: tap_code(KC_DOWN); break; // Bottom
+        case  9: tap_code(KC_J);    break; // Bottom left
+        case 10: tap_code(KC_K);    break; // Bottom right
+        case 12: tap_code(KC_LEFT); tap_code(KC_SPC); break; // Center 1/2 (top & bottom)
+        case 16: tap_code(KC_D);    break; // Left 1/3
+        case 32: tap_code(KC_F);    break; // Mid 1/3
+        case 48: tap_code(KC_E);    break; // Left 2/3
+        case 64: tap_code(KC_G);    break; // Right 1/3
+        case 80: tap_code(KC_E);    tap_code(KC_SPC); break; // Center 2/3 (left 1/3 & right 1/3)
+        case 96: tap_code(KC_T);    break; // Right 2/3
             // clang-format on
     }
 
@@ -260,11 +226,11 @@ InputState input_state;
 
 #define N_PREFIXES 2
 #define MAX_SUFFIX_LENGTH 20
-#define SEPARATOR SE_DOT
+#define SEPARATOR CB_DOT
 #define MAX_STORED_TOKENS 2
 
-const uint16_t  project_prefix[]     = {KC_F, KC_O, KC_R, KC_M, KC_U, KC_L, KC_A, KC_T, KC_E, SE_MINS};
-const uint16_t  retailer_prefix[]    = {KC_R, KC_E, KC_T, KC_A, KC_I, KC_L, KC_E, KC_R, S(SE_MINS)};
+const uint16_t  project_prefix[]     = {KC_F, KC_O, KC_R, KC_M, KC_U, KC_L, KC_A, KC_T, KC_E, CB_MINS};
+const uint16_t  retailer_prefix[]    = {KC_R, KC_E, KC_T, KC_A, KC_I, KC_L, KC_E, KC_R, S(CB_MINS)};
 const uint16_t* prefixes[N_PREFIXES] = {project_prefix, retailer_prefix};
 const uint8_t   prefix_n[N_PREFIXES] = {10, 9};
 
@@ -347,7 +313,7 @@ void update_macro_suffix(uint16_t keycode) {
     switch (keycode) {
         case KC_A ... KC_Z:
         case KC_1 ... KC_0:  // 1 -- 9, 0
-        case SE_MINS:
+        case CB_MINS:
             if (current_token->suffix_n < MAX_SUFFIX_LENGTH) {
                 current_token->suffix[current_token->suffix_n] = keycode;
                 current_token->suffix_n++;
@@ -369,11 +335,8 @@ void update_macro(uint16_t keycode) {
     switch (keycode) {
         case KC_LSHIFT:
         case KC_RSHIFT:
-        case SFT_COM:
         case NUMBERS:
             return;
-        case SFT_MIN:
-            cased_keycode = SE_MINS;
     }
 
     if (get_mods() & MOD_MASK_SHIFT) {
@@ -424,10 +387,10 @@ void replay_macro(void) {
 
 void keyboard_post_init_user(void) {
     if (is_keyboard_master()) {
-		oled_write_P(PSTR("init master\n"), false);
-	} else {
-		oled_write_P(PSTR("init slave\n"), false);
-	}
+        oled_write_P(PSTR("init master\n"), false);
+    } else {
+        oled_write_P(PSTR("init slave\n"), false);
+    }
     input_state      = input_prefix;
     first_token      = true;
     current_prefix_n = 0;
@@ -492,11 +455,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             case GIT_CMP: {
                 uint8_t original_mods = get_mods();
                 set_mods(MOD_MASK_CSAG);
-				tap_code(KC_G);
-				if (!(original_mods & MOD_MASK_SHIFT)) {
-					set_mods(0);
-					SEND_STRING(SS_DELAY(300) "master" SS_TAP(X_ENT));
-				}
+                tap_code(KC_G);
+                if (!(original_mods & MOD_MASK_SHIFT)) {
+                    set_mods(0);
+                    SEND_STRING(SS_DELAY(300) "master" SS_TAP(X_ENT));
+                }
                 set_mods(original_mods);
                 break;
             }
@@ -525,215 +488,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
     return true;
 };
-
-    /*
-    layer_state_t layer_state_set_user(layer_state_t state) {
-        return update_tri_layer_state(state, _ARW1, _ARW2, _ARW3);
-    }
-    */
-
-#ifdef OLED_DRIVER_ENABLE
-oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
-
-// clang-format off
-
-/*
-// generated by Makefile
-static void render_svorak_left(void) {
-  static const char PROGMEM svorak_left[] = {
-    1, 2, 3, 32, 32, 134, 32, 132, 32, 148, 32, 112, 32, 121, 10,
-    10,
-    4, 5, 6, 32, 32, 97, 32, 111, 32, 101, 32, 117, 32, 105, 10,
-    10,
-    32, 16, 17, 32, 32, 138, 32, 113, 32, 106, 32, 107, 32, 120, 10,
-    32, 44, 59, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 18, 19,
-    32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 92, 115, 10,
-    32, 32, 32, 32, 32, 32, 32, 32, 22, 32, 35, 32, 49, 32, 32, 32, 20, 21, 0,
-  };
-  oled_write_P(svorak_left, false);
-}
-
-// generated by Makefile
-static void render_svorak_right(void) {
-  static const char PROGMEM svorak_right[] = {
-    32, 32, 32, 32, 102, 32, 103, 32, 99, 32, 114, 32, 108, 32, 32, 7, 8, 9,
-    10,
-    32, 32, 32, 32, 100, 32, 104, 32, 116, 32, 110, 32, 115, 32, 32, 11, 14, 15,
-    10,
-    32, 32, 32, 32, 98, 32, 109, 32, 119, 32, 118, 32, 122, 32, 32, 16, 17, 10,
-    18, 19, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 45, 95, 10,
-    32, 32, 92, 110, 10,
-    20, 21, 32, 32, 32, 49, 32, 35, 32, 22, 10, 0,
-  };
-  oled_write_P(svorak_right, false);
-}
-*/
-/*
-// generated by Makefile
-static void render_qwerty_left(void) {
-  static const char PROGMEM qwerty_left[] = {
-    1, 2, 3, 32, 32, 113, 32, 119, 32, 101, 32, 114, 32, 116, 10,
-    10,
-    4, 5, 6, 32, 32, 97, 32, 115, 32, 100, 32, 102, 32, 103, 10,
-    10,
-    32, 16, 17, 32, 32, 122, 32, 120, 32, 99, 32, 118, 32, 98, 10,
-    32, 44, 59, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 18, 19,
-    32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 92, 115, 10,
-    32, 32, 32, 32, 32, 32, 32, 32, 22, 32, 35, 32, 49, 32, 32, 32, 20, 21, 0,
-  };
-  oled_write_P(qwerty_left, false);
-}
-
-// generated by Makefile
-static void render_qwerty_right(void) {
-  static const char PROGMEM qwerty_right[] = {
-    32, 32, 32, 32, 121, 32, 117, 32, 105, 32, 111, 32, 112, 32, 32, 134, 10,
-    10,
-    32, 32, 32, 32, 104, 32, 106, 32, 107, 32, 108, 32, 148, 32, 32, 132, 10,
-    10,
-    32, 32, 32, 32, 110, 32, 109, 32, 138, 7, 8, 9, 11, 14, 15, 16, 17, 10,
-    18, 19, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 45, 95, 10,
-    32, 32, 92, 110, 10,
-    20, 21, 32, 32, 32, 49, 32, 35, 32, 22, 10, 0,
-  };
-  oled_write_P(qwerty_right, false);
-}
-*/
-/*
-// generated by Makefile
-static void render_symbols_left(void) {
-  static const char PROGMEM symbols_left[] = {
-    1, 2, 3, 32, 32, 47, 32, 92, 32, 91, 32, 93, 32, 124, 10,
-    10,
-    4, 5, 6, 32, 32, 123, 32, 125, 32, 40, 32, 41, 32, 64, 10,
-    10,
-    32, 16, 17, 32, 32, 61, 32, 150, 32, 60, 32, 62, 32, 37, 10,
-    32, 44, 59, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 18, 19,
-    32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 92, 115, 10,
-    32, 32, 32, 32, 32, 32, 32, 32, 22, 32, 35, 32, 49, 32, 32, 32, 20, 21, 0,
-  };
-  oled_write_P(symbols_left, false);
-}
-
-// generated by Makefile
-static void render_symbols_right(void) {
-  static const char PROGMEM symbols_right[] = {
-    32, 32, 32, 32, 35, 32, 38, 32, 36, 32, 94, 32, 126, 32, 32, 7, 8, 9,
-    10,
-    32, 32, 32, 32, 42, 32, 34, 32, 39, 32, 130, 32, 131, 32, 32, 11, 14, 15,
-    10,
-    32, 32, 32, 32, 33, 32, 63, 32, 128, 32, 129, 32, 43, 32, 32, 16, 17, 10,
-    18, 19, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 45, 95, 10,
-    32, 32, 92, 110, 10,
-    20, 21, 32, 32, 32, 49, 32, 35, 32, 22, 10, 0,
-  };
-  oled_write_P(symbols_right, false);
-}
-
-// generated by Makefile
-static void render_numeric_right(void) {
-  static const char PROGMEM numeric_right[] = {
-    32, 32, 32, 32, 149, 32, 55, 32, 56, 32, 57, 32, 133, 32, 32, 7, 8, 9,
-    10,
-    32, 32, 32, 32, 42, 32, 52, 32, 53, 32, 54, 32, 96, 32, 32, 11, 14, 15,
-    10,
-    32, 32, 32, 32, 31, 32, 49, 32, 50, 32, 51, 32, 43, 32, 32, 16, 17, 10,
-    18, 19, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 45, 95, 10,
-    32, 32, 92, 110, 10,
-    20, 21, 32, 32, 32, 48, 32, 46, 32, 58, 10, 0,
-  };
-  oled_write_P(numeric_right, false);
-}
-
-// generated by Makefile
-static void render_func_right(void) {
-  static const char PROGMEM func_right[] = {
-    135, 136, 43, 65, 78, 79, 65, 80, 81, 65, 82, 83, 144, 144, 151, 152, 43, 10,
-    10,
-    32, 32, 45, 65, 72, 73, 65, 74, 75, 65, 76, 77, 145, 145, 32, 32, 45, 10,
-    10,
-    32, 32, 137, 65, 66, 67, 65, 68, 69, 65, 70, 71, 144, 146, 32, 16, 17, 10,
-    18, 19, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 45, 95, 10,
-    32, 176, 177, 178, 10,
-    20, 21, 84, 85, 86, 84, 87, 88, 84, 89, 90, 10, 0,
-  };
-  oled_write_P(func_right, false);
-}
-
-// Not auto-generated
-static void render_rgb_left(void) {
-  const char rgb_left[] = {
-    1, 2, 3, 32, 32, 115, 112, 101, 101, 100, 32, 48 + (rgblight_config.speed % 10), 32, 32, 104, 117, 101, 10,
-    10,
-    4, 5, 6, 32, 32, 109, 111, 100, 101, 32, 48 + rgblight_config.mode / 10, 48 + rgblight_config.mode % 10, 32, 32, 115, 97, 116, 10,
-    10,
-    32, 16, 17, 32, 32, 116, 111, 103, 103, 108, 101, 32, 32, 32, 118, 97, 108, 10,
-    32, 44, 59, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 18, 19,
-    32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 92, 115, 10,
-    32, 32, 32, 32, 32, 32, 32, 32, 22, 32, 35, 32, 49, 32, 32, 32, 20, 21, 0,
-  };
-  oled_write(rgb_left, false);
-}
-*/
-/*
-// generated by Makefile
-static void render_rgb_right(void) {
-  static const char PROGMEM rgb_right[] = {
-    32, 32, 32, 32, 32, 32, 32, 32, 32, 109, 51, 32, 109, 50, 10,
-    10,
-    32, 32, 32, 32, 32, 32, 32, 109, 49, 32, 130, 32, 131, 10,
-    10,
-    32, 32, 32, 32, 32, 32, 32, 32, 128, 32, 129, 10,
-    18, 19, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 45, 95, 10,
-    32, 32, 92, 110, 10,
-    20, 21, 32, 32, 32, 49, 32, 35, 32, 22, 10, 0,
-  };
-  oled_write_P(rgb_right, false);
-}
-*/
-// clang-format on
-/*
-void oled_task_user(void) {
-    if (!is_keyboard_master()) {
-        oled_write_P(PSTR("rgb+f1:12   hyper\n\nnum  sound+magnet\n"), false);
-        return;
-    }
-
-    switch (get_highest_layer(layer_state)) {
-        case _FUNC:
-            if (show_slave) {
-                render_func_right();
-            } else {
-                render_rgb_left();
-            }
-            break;
-        case _NUMB:
-            if (show_slave) {
-                render_numeric_right();
-            } else {
-                render_symbols_left();
-            }
-            break;
-        case _ARW1:
-        case _ARW2:
-        case _ARW3:
-            if (show_slave) {
-                render_symbols_right();
-            } else {
-                render_symbols_left();
-            }
-            break;
-        case _MAGN:
-            oled_write_P(PSTR("sound & magnet\n\n\n\n\n\n\n\n"), false);
-            break;
-        case _SVORAK:
-        default:
-            if (show_slave) {
-                render_svorak_right();
-            } else {
-                render_svorak_left();
-            }
-    }
-}
-*/
-#endif
