@@ -24,8 +24,8 @@
 
 enum layers {
     _SVORAK = 0,  // Layout
-    _ARW2,
     _ARW1,
+    _ARW2,
     _ARW3,
     _NUMB,
     _FUNC,
@@ -49,82 +49,58 @@ enum custom_keycodes {
     REPLAY    // Replay eager macro
 };
 
-//extern rgblight_config_t rgblight_config;
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/*
- * Base layer: SVORAK (Swedish Dvorak)
- *
- * ,-----------------------------------------.                              ,-----------------------------------------.
- * |  Tab |  ,Å  |  ^Ä  |  $Ö  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  | Bksp |
- * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |  Esc |   A  |   O  |   E  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del |
- * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |LShift|  . : |   Q  |   J  |   K  |   X  |      |Replay|  |  Git |      |   B  |   M  |   W  |   V  |   Z  |  - _ |
- * `--------------------+------+------+------+ Space+------|  |------+ Enter+------+------+------+--------------------'
- *                      | Ctrl |  Alt |  Cmd |      |Numpad|  | Func |      |Arrow1|Arrow2|Arrow3|
- *                      `----------------------------------'  `----------------------------------'
- */
+//
+// Base layer: SVORAK (Swedish Dvorak)
+//
+// ,-----------------------------------------.                              ,-----------------------------------------.
+// |  Tab |   ,  |   ^  |   $  |   P  |   Y  |                              |   F  |   G  |   C  |   R  |   L  | Bksp |
+// |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+// |  Esc |  AÅ  |  OÄ  |  EÖ  |   U  |   I  |                              |   D  |   H  |   T  |   N  |   S  |  Del |
+// |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+// |LShift|  . : |   Q  |   J  |   K  |   X  |      |Replay|  |  Git |      |   B  |   M  |   W  |   V  |   Z  |RShift|
+// `--------------------+------+------+------+ Space+------|  |------+ Enter+------+------+------+--------------------'
+//                      | Ctrl |  Alt |  Cmd |      |Numpad|  | Func |      |Arrow1|Arrow2|Arrow3|
+//                      `----------------------------------'  `----------------------------------'
+//
     [_SVORAK] = LAYOUT(
-        KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
-        KC_ESC,  KC_A,     KC_O,    KC_E,    KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
-        KC_LSFT, CB_DOT,   KC_Q,    KC_J,    KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, CB_MINS,
-                                KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
+        KC_TAB,  CB_COMM, CB_CIRC, CB_DLR, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
+        KC_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
+        KC_LSFT, CB_DOT,  KC_Q,    KC_J,   KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, KC_RSFT,
+                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
     ),
 
-/*
- * Alternative base layer: QWERTY (Swedish)
- *
- * ,-----------------------------------------.                              ,-----------------------------------------.
- * |      |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |   Å  |
- * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |      |   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  |   Ö  |   Ä  |
- * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |      |   Z  |   X  |   C  |   V  |   B  |      |      |  |      |      |   N  |   M  |  , ; | Bksp |  Del |      |
- * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
- *                      |      |      |      |      |      |  |      |      |      |      |      |
- *                      `----------------------------------'  `----------------------------------'
- */
-/*
-    [_QWERTY] = LAYOUT(
-      _______, KC_Q, KC_W, KC_E, KC_R, KC_T,                                     KC_Y, KC_U, KC_I,   KC_O,    KC_P,    CB_ARNG,
-      _______, KC_A, KC_S, KC_D, KC_F, KC_G,                                     KC_H, KC_J, KC_K,   KC_L,    CB_ODIA, CB_ADIA,
-      _______, KC_Z, KC_X, KC_C, KC_V, KC_B, XXXXXXX, _______, _______, XXXXXXX, KC_N, KC_M, CB_DOT, KC_BSPC, KC_DEL,  _______,
-                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-*/
-
-/*
- * Symbol and arrow layers
- *
- * ,-----------------------------------------.                              ,-----------------------------------------.
- * |      |   /  |   \  |   [  |   ]  |   |  |                              |   !  |   ?  |   '  |   ´  |   ~  |      |
- * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |      |   {  |   }  |   (  |   )  |   @  |                              |   *  |   "  |   `  |  up  | right|      |
- * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |      |      |   =  |   <  |   >  |   %  |      |      |  |      |      |   #  |   &  | left | down |   +  |  , ; |
- * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
- *                      |      |      |      |      | Func |  |Magnet|      |      |      |      |
- *                      `----------------------------------'  `----------------------------------'
- */
+//
+// Symbol and arrow layers
+//
+// ,-----------------------------------------.                              ,-----------------------------------------.
+// |      |   /  |   \  |   [  |   ]  |   |  |                              |   !  |   ?  |   '  |   ´  |   ~  |      |
+// |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+// |      |   {  |   }  |   (  |   )  |   @  |                              |   *  |   "  |   `  |  up  | right|      |
+// |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+// |      |      |   =  |   <  |   >  |   %  |      |      |  |      |      |   #  |   &  | left | down |   +  |   -  |
+// `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+//                      |      |      |      |      | Func |  |Magnet|      |      |      |      |
+//                      `----------------------------------'  `----------------------------------'
+//
     [_ARW1] = LAYOUT( // Normal arrows
-        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       KC_EXLM, CB_QUES, CB_QUOT, CB_ACUT, CB_TILD, _______,
+        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       KC_EXLM, CB_QUES, CB_QUOT, CB_ACUT, CB_TILD, _______,
         _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                         CB_ASTR, CB_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, CB_HASH, CB_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, CB_COMM,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, CB_HASH, CB_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, CB_MINS,
                                      _______, _______, _______, _______, _______, MO(_MAGN), _______, _______, _______, _______
     ),
     [_ARW2] = LAYOUT( // Step whole words
-        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    A(KC_BSPC),
+        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    A(KC_BSPC),
         _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    CB_COMM,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    CB_MINS,
                                      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_ARW3] = LAYOUT( // Step whole line
-        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    G(KC_BSPC),
+        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    G(KC_BSPC),
         _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    CB_COMM,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    CB_MINS,
                                                    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_MAGN] = LAYOUT(
@@ -134,24 +110,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                      _______, _______, _______, MAG_CTR, _______, _______, MAG_FUL, _______, _______, _______
     ),
 
-/*
- * Launch apps and Numpad
- *
- * ,-----------------------------------------.                              ,-----------------------------------------.
- * |      |      |      |      |      |      |                              |   °  |   7  |   8  |   9  |   ^  |      |
- * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |      |      |   Symbols   |      |      |                              |   *  |   4  |   5  |   6  |   $  |      |
- * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |  |      |      |   #  |   1  |   2  |   3  |   +  |      |
- * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
- *                      |      |      |      |      |      |  |      |      |   0  |   .  |   :  |
- *                      `----------------------------------'  `----------------------------------'
- */
+//
+// Launch apps and Numpad
+//
+// ,-----------------------------------------.                              ,-----------------------------------------.
+// |      |      |      |      |      |      |                              |   °  |   7  |   8  |   9  |   ^  |      |
+// |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+// |      |      |   Symbols   |      |      |                              |   *  |   4  |   5  |   6  |   $  |      |
+// |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+// |      |      |      |      |      |      |      |      |  |      |      |   #  |   1  |   2  |   3  |   +  |   -  |
+// `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+//                      |      |      |      |      |      |  |      |      |   0  |   .  |   :  |
+//                      `----------------------------------'  `----------------------------------'
+//
     [_NUMB] = LAYOUT(
         _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
         _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                         CB_ASTR, KC_4, KC_5, KC_6, CB_DLR,  _______,
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX,   CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, _______,
-                                                            _______, _______, _______, _______, _______, _______, _______, KC_0, CB_DOT, S(CB_DOT)
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX,   CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, CB_MINS,
+                                     _______, _______, _______, _______, _______, _______, _______, KC_0, CB_DOT, S(CB_DOT)
     ),
     [_FUNC] = LAYOUT(
         _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______,
@@ -160,27 +136,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                      _______, _______, _______, _______, _______, _______, _______, KC_F10, KC_F11, KC_F12
     ),
 
-/*
- * Template
- *
- * ,-----------------------------------------.                              ,-----------------------------------------.
- * |      |      |      |      |      |      |                              |      |      |      |      |      |      |
- * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |      |      |      |      |      |      |                              |      |      |      |      |      |      |
- * |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |      |
- * `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
- *                      |      |      |      |      |      |  |      |      |      |      |      |
- *                      `----------------------------------'  `----------------------------------'
- */
- /*
-    [_TEMPL] = LAYOUT(
-        _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
-                            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
- */
+//
+// Template
+//
+// ,-----------------------------------------.                              ,-----------------------------------------.
+// |      |      |      |      |      |      |                              |      |      |      |      |      |      |
+// |------+------+------+------+------+------|                              |------+------+------+------+------+------|
+// |      |      |      |      |      |      |                              |      |      |      |      |      |      |
+// |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
+// |      |      |      |      |      |      |      |      |  |      |      |      |      |      |      |      |      |
+// `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
+//                      |      |      |      |      |      |  |      |      |      |      |      |
+//                      `----------------------------------'  `----------------------------------'
+//
+//
+//  [_TEMPL] = LAYOUT(
+//      _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
+//      _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
+//      _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+//                          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+//  ),
+//
 };
 // clang-format on
 
@@ -216,6 +192,99 @@ void process_magnet(uint8_t state) {
 }
 
 uint8_t magnet_state;
+
+// Swedish characters Å Ä Ö ------------------------------------------------------------
+
+#define LEAD_A_DOWN 1
+#define LEAD_O_DOWN 2
+#define LAG_O_DOWN 4
+#define LAG_E_DOWN 8
+#define LAG_O_UP 16
+#define LAG_E_UP 32
+#define LEAD_A_UP 64
+#define LEAD_O_UP 128
+
+#define A_DOWN 1
+#define O_DOWN 2
+#define E_DOWN 4
+#define A_UP 8
+#define O_UP 16
+#define E_UP 32
+
+uint8_t swedish_state;
+bool    swedish_active;
+
+// process_swedish reinterprets sequences of key events as Swedish characters,
+// enabling them to be typed quickly when not present in the layout.
+//
+//    A down, O down, O up, A up -> Å
+//    A down, E down, E up, A up -> Ä
+//    O down, E down, E up, O up -> Ö
+//
+// The trick is especially suitable with a Dvorak layout since the keys {A, O, E} are
+// then placed next to each other on the home row.
+void process_swedish(uint8_t event) {
+    switch (event) {
+        case A_DOWN:
+            swedish_state = LEAD_A_DOWN;
+            return;
+
+        case O_DOWN:
+            if (swedish_state == LEAD_A_DOWN) {
+                swedish_state |= LAG_O_DOWN;
+                return;
+            }
+            swedish_state = LEAD_O_DOWN;
+            return;
+
+        case E_DOWN:
+            if (swedish_state == LEAD_A_DOWN || swedish_state == LEAD_O_DOWN) {
+                swedish_state |= LAG_E_DOWN;
+                return;
+            }
+            break;
+
+        case O_UP:
+            if (swedish_state == (LEAD_A_DOWN | LAG_O_DOWN)) {
+                tap_code(KC_BSPC);  // Erase O
+                if (!swedish_active) {
+                    tap_code(KC_BSPC);  // Erase A
+                }
+                tap_code(CB_ARNG);  // Send Å
+                swedish_state  = LEAD_A_DOWN;
+                swedish_active = true;
+                return;
+            }
+            break;
+
+        case E_UP:
+            if (swedish_state == (LEAD_A_DOWN | LAG_E_DOWN)) {
+                tap_code(KC_BSPC);  // Erase E
+                if (!swedish_active) {
+                    tap_code(KC_BSPC);  // Erase A
+                }
+                tap_code(CB_ADIA);  // Send Ä
+                swedish_state  = LEAD_A_DOWN;
+                swedish_active = true;
+                return;
+            }
+            if (swedish_state == (LEAD_O_DOWN | LAG_E_DOWN)) {
+                tap_code(KC_BSPC);  // Erase E
+                if (!swedish_active) {
+                    tap_code(KC_BSPC);  // Erase O
+                }
+                tap_code(CB_ODIA);  // Send Ö
+                swedish_state  = LEAD_O_DOWN;
+                swedish_active = true;
+                return;
+            }
+            break;
+    }
+
+    // Clear
+    swedish_state  = 0;
+    swedish_active = false;
+}
 
 // Eager Macros ----------------------------------------------------------------
 // In contrast to a regular macro are these dynamic and picked up automatically
@@ -387,9 +456,9 @@ void replay_macro(void) {
 
 void keyboard_post_init_user(void) {
     if (is_keyboard_master()) {
-        oled_write_P(PSTR("init master\n"), false);
+        oled_write_P(PSTR("master\n"), false);
     } else {
-        oled_write_P(PSTR("init slave\n"), false);
+        oled_write_P(PSTR("slave\n"), false);
     }
     input_state      = input_prefix;
     first_token      = true;
@@ -397,8 +466,6 @@ void keyboard_post_init_user(void) {
 }
 
 // Process input ---------------------------------------------------------------
-
-bool show_slave;
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
@@ -443,6 +510,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 break;
 
             // clang-format off
+            case KC_A: process_swedish(A_DOWN); break;
+            case KC_O: process_swedish(O_DOWN); break;
+            case KC_E: process_swedish(E_DOWN); break;
+
             case MAG_LFT: magnet_state |=  1; process_magnet(magnet_state); break;
             case MAG_RGT: magnet_state |=  2; process_magnet(magnet_state); break;
             case MAG_TOP: magnet_state |=  4; process_magnet(magnet_state); break;
@@ -463,19 +534,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 set_mods(original_mods);
                 break;
             }
-
-            case KC_LCTRL:
-            case KC_LALT:
-                show_slave = false;
-                break;
-            case KC_RCTRL:
-            case KC_RALT:
-                show_slave = true;
-                break;
         }
     } else {  // when Key is released
         switch (keycode) {
             // clang-format off
+            case KC_A: process_swedish(A_UP); break;
+            case KC_O: process_swedish(O_UP); break;
+            case KC_E: process_swedish(E_UP); break;
+
             case MAG_LFT: magnet_state &=  ~1; break;
             case MAG_RGT: magnet_state &=  ~2; break;
             case MAG_TOP: magnet_state &=  ~4; break;
@@ -488,3 +554,68 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
     return true;
 };
+
+    // Display ---------------------------------------------------------------
+
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_180; }
+
+void oled_task_user(void) {
+    if (is_keyboard_master()) {
+        // QMK Logo and version information
+        // clang-format off
+        static const char PROGMEM qmk_logo[] = {
+            0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+            0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+            0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
+        // clang-format on
+
+        oled_write_P(qmk_logo, false);
+        oled_write_P(PSTR("Kyria rev1.0\n\n"), false);
+
+        // Host Keyboard Layer Status
+        oled_write_P(PSTR("Layer: "), false);
+        switch (get_highest_layer(layer_state | default_layer_state)) {
+            case _SVORAK:
+                oled_write_P(PSTR("Svorak\n"), false);
+                break;
+            case _ARW1:
+            case _ARW2:
+            case _ARW3:
+                oled_write_P(PSTR("Symbols\n"), false);
+                break;
+            case _NUMB:
+                oled_write_P(PSTR("Numbers\n"), false);
+                break;
+            case _FUNC:
+                oled_write_P(PSTR("Function\n"), false);
+                break;
+            case _MAGN:
+                oled_write_P(PSTR("Magnet\n"), false);
+                break;
+            default:
+                oled_write_P(PSTR("Undefined\n"), false);
+        }
+
+        // Write host Keyboard LED Status to OLEDs
+        led_t led_usb_state = host_keyboard_led_state();
+        oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
+        oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
+        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
+    } else {
+        // clang-format off
+        static const char PROGMEM kyria_logo[] = {
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,192,224,240,112,120, 56, 60, 28, 30, 14, 14, 14,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 14, 14, 14, 30, 28, 60, 56,120,112,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  0,  0,192,224,240,124, 62, 31, 15,  7,  3,  1,128,192,224,240,120, 56, 60, 28, 30, 14, 14,  7,  7,135,231,127, 31,255,255, 31,127,231,135,  7,  7, 14, 14, 30, 28, 60, 56,120,240,224,192,128,  1,  3,  7, 15, 31, 62,124,240,224,192,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,240,252,255, 31,  7,  1,  0,  0,192,240,252,254,255,247,243,177,176, 48, 48, 48, 48, 48, 48, 48,120,254,135,  1,  0,  0,255,255,  0,  0,  1,135,254,120, 48, 48, 48, 48, 48, 48, 48,176,177,243,247,255,254,252,240,192,  0,  0,  1,  7, 31,255,252,240,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,255,255,255,  0,  0,  0,  0,  0,254,255,255,  1,  1,  7, 30,120,225,129,131,131,134,134,140,140,152,152,177,183,254,248,224,255,255,224,248,254,183,177,152,152,140,140,134,134,131,131,129,225,120, 30,  7,  1,  1,255,255,254,  0,  0,  0,  0,  0,255,255,255,  0,  0,  0,  0,255,255,  0,  0,192,192, 48, 48,  0,  0,240,240,  0,  0,  0,  0,  0,  0,240,240,  0,  0,240,240,192,192, 48, 48, 48, 48,192,192,  0,  0, 48, 48,243,243,  0,  0,  0,  0,  0,  0, 48, 48, 48, 48, 48, 48,192,192,  0,  0,  0,  0,  0,
+            0,  0,  0,255,255,255,  0,  0,  0,  0,  0,127,255,255,128,128,224,120, 30,135,129,193,193, 97, 97, 49, 49, 25, 25,141,237,127, 31,  7,255,255,  7, 31,127,237,141, 25, 25, 49, 49, 97, 97,193,193,129,135, 30,120,224,128,128,255,255,127,  0,  0,  0,  0,  0,255,255,255,  0,  0,  0,  0, 63, 63,  3,  3, 12, 12, 48, 48,  0,  0,  0,  0, 51, 51, 51, 51, 51, 51, 15, 15,  0,  0, 63, 63,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 48, 48, 63, 63, 48, 48,  0,  0, 12, 12, 51, 51, 51, 51, 51, 51, 63, 63,  0,  0,  0,  0,  0,
+            0,  0,  0,  0, 15, 63,255,248,224,128,  0,  0,  3, 15, 63,127,255,239,207,141, 13, 12, 12, 12, 12, 12, 12, 12, 30,127,225,128,  0,  0,255,255,  0,  0,128,225,127, 30, 12, 12, 12, 12, 12, 12, 12, 13,141,207,239,255,127, 63, 15,  3,  0,  0,128,224,248,255, 63, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  0,  0,  3,  7, 15, 62,124,248,240,224,192,128,  1,  3,  7, 15, 30, 28, 60, 56,120,112,112,224,224,225,231,254,248,255,255,248,254,231,225,224,224,112,112,120, 56, 60, 28, 30, 15,  7,  3,  1,128,192,224,240,248,124, 62, 15,  7,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  3,  7, 15, 14, 30, 28, 60, 56,120,112,112,112,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,112,112,112,120, 56, 60, 28, 30, 14, 15,  7,  3,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+        };
+        // clang-format on
+        oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
+    }
+}
+#endif

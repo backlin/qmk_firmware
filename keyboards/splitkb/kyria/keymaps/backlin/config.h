@@ -17,7 +17,6 @@
 #pragma once
 
 #ifdef RGBLIGHT_ENABLE
-#    define RGBLIGHT_ANIMATIONS
 #    define RGBLIGHT_HUE_STEP  8
 #    define RGBLIGHT_SAT_STEP  8
 #    define RGBLIGHT_VAL_STEP  8
@@ -32,10 +31,6 @@
 #    define OLED_FONT_WIDTH 7 // total width 126 = 6 keys x 3 chars x 7 columns
 #endif
 
-//If you are using an Elite C rev3 on the slave side, uncomment the lines below:
-#define SPLIT_USB_DETECT
-#define NO_USB_STARTUP_CHECK
-
 #define CB_SCRC S(C(G(KC_4))) // Print screen region to clipboard
 #define CB_SCRF S(G(KC_4))    // Print screen region to file
 #define CB_VOLU LSA(KC_VOLU)  // Small volume increment
@@ -43,6 +38,7 @@
 #define MAG_CTR LCA(KC_SPC)   // Magnet center
 #define MAG_FUL LCA(KC_ENT)   // Magnet full
 
+// clang-format off
 #define CB_APRX A(KC_X)
 #define CB_DGRE LSA(KC_Q)
 #define CB_DOT  SE_DOT
@@ -60,12 +56,12 @@
 #define CB_HASH SE_HASH
 #define CB_LABK SE_LABK
 #define CB_RABK SE_RABK
-#define CB_LBRC S(A(KC_8))
-#define CB_RBRC S(A(KC_9))
-#define CB_LCBR SE_LCBR
-#define CB_RCBR SE_RCBR
-#define CB_LPRN SE_LPRN
-#define CB_RPRN SE_RPRN
+#define CB_LBRC A(KC_8)    //SE_LBRC
+#define CB_RBRC A(KC_9)    //SE_RBRC
+#define CB_LCBR S(A(KC_8)) //SE_LCBR
+#define CB_RCBR S(A(KC_9)) //SE_RCBR
+#define CB_LPRN S(KC_8)    //SE_LPRN
+#define CB_RPRN S(KC_9)    //SE_RPRN
 #define CB_MINS SE_MINS
 #define CB_ODIA SE_ODIA
 #define CB_PIPE SE_PIPE
@@ -73,3 +69,6 @@
 #define CB_QUES SE_QUES
 #define CB_QUOT SE_QUOT
 #define CB_SLSH SE_SLSH
+#define CB_BSLS S(A(KC_7))
+// clang-format on
+
