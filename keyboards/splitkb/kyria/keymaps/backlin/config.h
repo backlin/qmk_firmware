@@ -64,7 +64,7 @@
 #define CB_RPRN S(KC_9)    //SE_RPRN
 #define CB_MINS SE_MINS
 #define CB_ODIA SE_ODIA
-#define CB_PIPE SE_PIPE
+#define CB_PIPE A(KC_7) //SE_PIPE
 #define CB_PRGF 192
 #define CB_QUES SE_QUES
 #define CB_QUOT SE_QUOT
