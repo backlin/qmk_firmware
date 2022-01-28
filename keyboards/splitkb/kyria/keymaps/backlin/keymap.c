@@ -20,23 +20,35 @@
 
 #define NUMBERS MO(_NUMB)  // Aliased to simplify handling in macros
 
-//#define MOD_MASK_RSHIFT MOD_BIT(KC_RSHIFT)  // NOT IN USE
-
-enum layers {
-    _SVORAK = 0,
-    _DVORAK,
-    _ARW1,
-    _ARW2,
-    _ARW3,
-    _NUMB,
-    _FUNC,
-    _MAGN
-};
+enum layers { _SVORAK = 0, _GOLAND, _ARW1, _ARW2, _ARW3, _NUMB, _FUNC, _MAGN };
 
 enum custom_keycodes {
-    CB_CIRC = SAFE_RANGE,
-    CB_TILD,
-    CB_GRV,  // Backtick without hitting space
+    // CLEVER DIACRITIC MARKS:
+    // Default: Behaves like macro mark+space.
+    // Shift: Behaves like mark alone.
+    //
+    // This simplifies entering them in terminal and code, at the expense of writing
+    // French etc. (which I rarely do).
+    CB_CIRC = SAFE_RANGE,  // ^
+    CB_TILD,               // ~
+    CB_GRV,                // `
+
+    // CLEVER SPACE:
+    // Default: Behaves like normal space.
+    // If first stoke after activating symbol layer: Behaves like underescore.
+    //
+    // This simplifies entering snake case without adding underscores after symbols.
+    // If the spacebar was always mapped to underscore in the symbol layer you'd often
+    // end up with things like
+    //    myVariable =_42   instead of   myVariable = 42
+    //    blah blah:_blah   instead of   blah blah: blah
+    SPACE,
+    SYMBOLS,
+
+    GOLAND1,  // GoLand debugger shortcuts
+    GOLAND2,
+    GIT_CMP,  // GoLand compare with branch (default: master, shifted: user chooses)
+    REPLAY    // Replay eager macro
 
     MAG_LFT,
     MAG_RGT,
@@ -45,9 +57,6 @@ enum custom_keycodes {
     MAG_1_3,
     MAG_2_3,
     MAG_3_3,
-
-    GIT_CMP,  // GoLand compare with branch
-    REPLAY    // Replay eager macro
 };
 
 // clang-format off
@@ -68,12 +77,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //
     [_SVORAK] = LAYOUT(
         KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
-        KC_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                                           KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
-        KC_LSFT, CB_DOT,  KC_Q,    KC_J,   KC_K, KC_X,   XXXXXXX, REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, CB_COMM,
-                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPC,  NUMBERS, MO(_FUNC), KC_ENT, MO(_ARW1), MO(_ARW2), MO(_ARW3)
+        KC_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                                            KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
+        KC_LSFT, CB_DOT,  KC_Q,    KC_J,   KC_K, KC_X,   XXXXXXX,  REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, CB_COMM,
+                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPACE, NUMBERS, MO(_FUNC), KC_ENT, SYMBOLS, MO(_ARW2), MO(_ARW3)
     ),
-    [_DVORAK] = LAYOUT(
-        _______, KC_F8,   KC_F7,   S(KC_F8), _______, _______,                                          _______, _______, _______, _______, _______, _______,
+    [_GOLAND] = LAYOUT(
+        _______, GOLAND1, GOLAND2, S(KC_F8), _______, _______,                                          _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______,  _______, _______,                                          _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______,  _______, _______,   _______, _______,  _______, _______,   _______, _______, _______, _______, _______, _______,
                                       _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______
@@ -93,22 +102,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                      `----------------------------------'  `----------------------------------'
 //
     [_ARW1] = LAYOUT( // Normal arrows
-        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                          KC_EXLM, CB_QUES, CB_QUOT, CB_ACUT, CB_TILD, _______,
-        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                            CB_ASTR, CB_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX,    _______, _______,   XXXXXXX, CB_HASH, CB_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, CB_MINS,
-                                     _______, _______, _______, S(CB_MINS), _______, MO(_MAGN), _______, _______, _______, _______
+        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       KC_EXLM, CB_QUES, CB_QUOT, CB_ACUT, CB_TILD, _______,
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                         CB_ASTR, CB_DQUO, CB_GRV,  KC_UP,   KC_RGHT, _______,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______,   XXXXXXX, CB_HASH, CB_AMPR, KC_LEFT, KC_DOWN, KC_PPLS, CB_MINS,
+                                     _______, _______, _______, SPACE,   _______, MO(_MAGN), _______, _______, _______, _______
     ),
     [_ARW2] = LAYOUT( // Step whole words
-        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                        KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    A(KC_BSPC),
-        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                          CB_ASTR, CB_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX,    _______, _______, XXXXXXX, CB_HASH, CB_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    CB_MINS,
-                                     _______, _______, _______, S(CB_MINS), _______, _______, _______, _______, _______, _______
+        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    A(KC_BSPC),
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    CB_MINS,
+                                     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_ARW3] = LAYOUT( // Step whole line
-        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                        KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    G(KC_BSPC),
-        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                          CB_ASTR, CB_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX,    _______, _______, XXXXXXX, CB_HASH, CB_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    CB_MINS,
-                                              _______, _______, S(CB_MINS), _______, _______, _______, _______, _______, _______, _______
+        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    G(KC_BSPC),
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_PGUP, G(KC_RGHT), C(KC_K),
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, G(KC_LEFT), KC_PGDN, KC_PPLS,    CB_MINS,
+                                              _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
     [_MAGN] = LAYOUT(
         _______, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, RGB_MOD,                                         _______, _______,    _______, MAG_2_3, MAG_3_3, _______,
@@ -118,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 //
-// Launch apps and Numpad
+// Numpad
 //
 // ,-----------------------------------------.                              ,-----------------------------------------.
 // |      |      |      |      |      |      |                              |   °  |   7  |   8  |   9  |   ^  |      |
@@ -127,20 +136,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
 // |      |      |      |      |      |      |      |      |  |      |      |   #  |   1  |   2  |   3  |   +  |   -  |
 // `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
-//                      |      |      |      |      |      |  |      |      |   0  |   .  |   :  |
+//                      |      |      |      |      |Goland|  |Goland|      |   0  |   .  |   :  |
 //                      `----------------------------------'  `----------------------------------'
 //
     [_NUMB] = LAYOUT(
-        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                       CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
-        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                         CB_ASTR, KC_4, KC_5, KC_6, CB_DLR,  _______,
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX,   CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, CB_MINS,
-                                     _______, _______, _______, _______, _______, _______, _______, KC_0, CB_DOT, S(CB_DOT)
+        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                         CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                           CB_ASTR, KC_4, KC_5, KC_6, CB_DLR,  _______,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______,     XXXXXXX, CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, CB_MINS,
+                                     _______, _______, _______, _______, _______, TG(_GOLAND), _______, KC_0, CB_DOT, S(CB_DOT)
     ),
     [_FUNC] = LAYOUT(
-        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______,
-        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______,
-        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______, _______, XXXXXXX,   _______, KC_F1, KC_F2, KC_F3, _______, _______,
-                                     _______, _______, _______, _______, _______, _______, _______, KC_F10, KC_F11, KC_F12
+        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                           CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______,
+        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                           CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______,
+        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______,     _______, XXXXXXX, _______, KC_F1, KC_F2, KC_F3, _______, _______,
+                                     _______, _______, _______, _______, TG(_GOLAND), _______, _______, KC_F10, KC_F11, KC_F12
     ),
 
 //
@@ -245,11 +254,7 @@ void process_swedish(uint8_t event) {
             return;
 
         case E_DOWN:
-            if (
-                swedish_state == LEAD_A_DOWN ||
-                swedish_state == LEAD_O_DOWN ||
-                swedish_state == (LEAD_A_DOWN | LAG_O_DOWN)
-            ) {
+            if (swedish_state == LEAD_A_DOWN || swedish_state == LEAD_O_DOWN || swedish_state == (LEAD_A_DOWN | LAG_O_DOWN)) {
                 swedish_state |= LAG_E_DOWN;
                 return;
             }
@@ -273,7 +278,7 @@ void process_swedish(uint8_t event) {
                 tap_code(KC_BSPC);  // Erase E
                 tap_code(KC_BSPC);  // Erase O
                 tap_code(KC_BSPC);  // Erase A
-                layer_invert(_DVORAK);
+                layer_invert(_GOLAND);
                 break;
             }
             if (swedish_state == (LEAD_A_DOWN | LAG_E_DOWN)) {
@@ -469,10 +474,20 @@ void keyboard_post_init_user(void) {
 
 // Process input ---------------------------------------------------------------
 
+uint8_t space_state;
+#define SPACE_NEXT 0
+#define UNDERSCORE_NEXT 1
+#define SPACE_DOWN 2
+#define UNDERSCORE_DOWN 3
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
         // when key is pressed
         update_macro(keycode);
+
+        if (space_state == UNDERSCORE_NEXT && keycode != SPACE) {
+            space_state = SPACE_NEXT;
+        }
 
         switch (keycode) {
             case REPLAY:
@@ -480,6 +495,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 return true;
 
             case CB_CIRC:
+                // TODO: Reimplement with set_mod_mask
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_RBRC);
                 } else {
@@ -490,6 +506,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 }
                 break;
             case CB_TILD:
+                // TODO: Reimplement with set_mod_mask
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_RBRC);
                 } else {
@@ -500,6 +517,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 }
                 break;
             case CB_GRV:
+                // TODO: Reimplement with set_mod_mask
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_EQL);
                 } else {
@@ -509,6 +527,52 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                     tap_code(KC_SPC);
                 }
                 break;
+            case SPACE:
+                if (space_state == UNDERSCORE_NEXT) {
+                    uint8_t original_mods = get_mods();
+                    set_mods(MOD_MASK_SHIFT);
+                    register_code(SE_MINS);
+                    set_mods(original_mods);
+                    space_state = UNDERSCORE_DOWN;
+                } else {
+                    register_code(KC_SPACE);
+                    space_state = SPACE_DOWN;
+                }
+                break;
+            case SYMBOLS:
+                layer_on(_ARW1);
+                // Only update state if space bar is up
+                if (space_state == SPACE_NEXT) {
+                    space_state = UNDERSCORE_NEXT;
+                }
+                break;
+
+            case GOLAND1: {
+                uint8_t original_mods = get_mods();
+                if (original_mods & MOD_MASK_SHIFT) {
+                    // Run to cursor
+                    set_mods(MOD_MASK_ALT);
+                    tap_code(KC_F9);
+                    set_mods(original_mods);
+                } else {
+                    // Step into
+                    tap_code(KC_F7);
+                }
+                break;
+            }
+            case GOLAND2: {
+                uint8_t original_mods = get_mods();
+                if (original_mods & MOD_MASK_SHIFT) {
+                    // Continue
+                    set_mods(MOD_MASK_AG);
+                    tap_code(KC_R);
+                    set_mods(original_mods);
+                } else {
+                    // Step
+                    tap_code(KC_F8);
+                }
+                break;
+            }
 
             // clang-format off
             case KC_A: process_swedish(A_DOWN); break;
@@ -538,6 +602,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
     } else {  // when Key is released
         switch (keycode) {
+            case SPACE:
+                switch (space_state) {
+                    case UNDERSCORE_DOWN:
+                        unregister_code(SE_MINS);
+                    case SPACE_DOWN:
+                        unregister_code(KC_SPACE);
+                }
+                if (space_state == UNDERSCORE_DOWN && layer_state_is(_ARW1)) {
+                    space_state = UNDERSCORE_NEXT;
+                } else {
+                    space_state = SPACE_NEXT;
+                }
+                break;
+            case SYMBOLS:
+                layer_off(_ARW1);
+                break;
+
             // clang-format off
             case KC_A: process_swedish(A_UP); break;
             case KC_O: process_swedish(O_UP); break;
@@ -577,15 +658,49 @@ void oled_task_user(void) {
         // Host Keyboard Layer Status
         switch (get_highest_layer(layer_state | default_layer_state)) {
             case _SVORAK:
-                oled_write_P(PSTR("Svorak\n\n\n"), false);
+                oled_write_P(PSTR("Svorak\n"), false);
+                switch (space_state) {
+                    case SPACE_NEXT:
+                        oled_write_P(PSTR("Space next\n\n"), false);
+                        break;
+                    case SPACE_DOWN:
+                        oled_write_P(PSTR("Space down\n\n"), false);
+                        break;
+                    case UNDERSCORE_NEXT:
+                        oled_write_P(PSTR("Underscore next\n\n"), false);
+                        break;
+                    case UNDERSCORE_DOWN:
+                        oled_write_P(PSTR("Underscore down\n\n"), false);
+                        break;
+                    default:
+                        oled_write_P(PSTR("Space unknown\n\n"), false);
+                        break;
+                }
                 break;
-            case _DVORAK:
-                oled_write_P(PSTR("GoLand Dvorak\n(Next, In, Out)\n\n"), false);
+            case _GOLAND:
+                oled_write_P(PSTR("GoLand Dvorak\n(In, Next, Out)\n To, Continue\n"), false);
                 break;
             case _ARW1:
             case _ARW2:
             case _ARW3:
-                oled_write_P(PSTR("Symbols\n\n\n"), false);
+                oled_write_P(PSTR("Symbols\n"), false);
+                switch (space_state) { // copied from above
+                    case SPACE_NEXT:
+                        oled_write_P(PSTR("Space next\n\n"), false);
+                        break;
+                    case SPACE_DOWN:
+                        oled_write_P(PSTR("Space down\n\n"), false);
+                        break;
+                    case UNDERSCORE_NEXT:
+                        oled_write_P(PSTR("Underscore next\n\n"), false);
+                        break;
+                    case UNDERSCORE_DOWN:
+                        oled_write_P(PSTR("Underscore down\n\n"), false);
+                        break;
+                    default:
+                        oled_write_P(PSTR("Space unknown\n\n"), false);
+                        break;
+                }
                 break;
             case _NUMB:
                 oled_write_P(PSTR("Numbers\n\n\n"), false);
