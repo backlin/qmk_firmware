@@ -43,12 +43,13 @@ enum custom_keycodes {
     //    myVariable =_42   instead of   myVariable = 42
     //    blah blah:_blah   instead of   blah blah: blah
     SPACE,
-    SYMBOLS,
+    SYMBOL1,
+    SYMBOL2,
 
     GOLAND1,  // GoLand debugger shortcuts
     GOLAND2,
     GIT_CMP,  // GoLand compare with branch (default: master, shifted: user chooses)
-    REPLAY    // Replay eager macro
+    REPLAY,   // Replay eager macro
 
     MAG_LFT,
     MAG_RGT,
@@ -56,7 +57,7 @@ enum custom_keycodes {
     MAG_BTM,
     MAG_1_3,
     MAG_2_3,
-    MAG_3_3,
+    MAG_3_3
 };
 
 // clang-format off
@@ -72,14 +73,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // |------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+------|
 // |LShift|  . : |   Q  |   J  |   K  |   X  |      |Replay|  |  Git |      |   B  |   M  |   W  |   V  |   Z  |  - _ |
 // `--------------------+------+------+------+ Space+------|  |------+ Enter+------+------+------+--------------------'
-//                      | Ctrl |  Alt |  Cmd |      |Numpad|  | Func |      |Arrow1|Arrow2|Arrow3|
+//                      | Ctrl |  Alt |  Cmd |   _- |Numpad|  | Func |      |Arrow1|Arrow2|Arrow3|
 //                      `----------------------------------'  `----------------------------------'
 //
     [_SVORAK] = LAYOUT(
         KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P, KC_Y,                                           KC_F, KC_G, KC_C, KC_R, KC_L, KC_BSPC, // Opposite dir is KC_DEL
         KC_ESC,  KC_A,    KC_O,    KC_E,   KC_U, KC_I,                                            KC_D, KC_H, KC_T, KC_N, KC_S, KC_DEL,
         KC_LSFT, CB_DOT,  KC_Q,    KC_J,   KC_K, KC_X,   XXXXXXX,  REPLAY,  GIT_CMP,   XXXXXXX,   KC_B, KC_M, KC_W, KC_V, KC_Z, CB_COMM,
-                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPACE, NUMBERS, MO(_FUNC), KC_ENT, SYMBOLS, MO(_ARW2), MO(_ARW3)
+                              KC_LCTL, KC_LALT, KC_LCMD, KC_SPACE, NUMBERS, MO(_FUNC), KC_ENT, SYMBOL1, SYMBOL2, MO(_ARW3)
     ),
     [_GOLAND] = LAYOUT(
         _______, GOLAND1, GOLAND2, S(KC_F8), _______, _______,                                          _______, _______, _______, _______, _______, _______,
@@ -111,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    A(KC_BSPC),
         _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, CB_DQUO, CB_GRV,     KC_UP,   A(KC_RGHT), A(KC_DEL),
         _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, CB_AMPR, A(KC_LEFT), KC_DOWN, KC_PPLS,    CB_MINS,
-                                     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+                                     _______, _______, _______, SPACE,   _______, _______, _______, _______, _______, _______
     ),
     [_ARW3] = LAYOUT( // Step whole line
         _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     KC_EXLM, CB_QUES, CB_QUOT,    CB_ACUT, CB_TILD,    G(KC_BSPC),
@@ -140,16 +141,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                      `----------------------------------'  `----------------------------------'
 //
     [_NUMB] = LAYOUT(
-        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                         CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
-        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                           CB_ASTR, KC_4, KC_5, KC_6, CB_DLR,  _______,
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______,     XXXXXXX, CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, CB_MINS,
-                                     _______, _______, _______, _______, _______, TG(_GOLAND), _______, KC_0, CB_DOT, S(CB_DOT)
+        _______, CB_SLSH,   KC_BSLS, CB_LBRC, CB_RBRC, CB_PIPE,                                     CB_DGRE, KC_7, KC_8, KC_9, CB_CIRC, _______,
+        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,                                       CB_ASTR, KC_4, KC_5, KC_6, CB_DLR,  _______,
+        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, XXXXXXX, _______, _______, XXXXXXX, CB_HASH, KC_1, KC_2, KC_3, KC_PPLS, CB_MINS,
+                                     _______, _______, _______, _______, _______, _______, _______, KC_0, CB_DOT, S(CB_DOT)
     ),
     [_FUNC] = LAYOUT(
-        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                           CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______,
-        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                           CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______,
-        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______,     _______, XXXXXXX, _______, KC_F1, KC_F2, KC_F3, _______, _______,
-                                     _______, _______, _______, _______, TG(_GOLAND), _______, _______, KC_F10, KC_F11, KC_F12
+        _______, _______, KC_MPLY, KC_MPRV, KC_MNXT, KC_MPLY,                                         CB_SCRF, KC_F7, KC_F8, KC_F9, _______, _______,
+        _______, _______, KC_MUTE, CB_VOLD, CB_VOLU, KC_MUTE,                                         CB_SCRC, KC_F4, KC_F5, KC_F6, _______, _______,
+        _______, _______, _______, KC_BRID, KC_BRIU, _______,   XXXXXXX, _______,   _______, XXXXXXX, _______, KC_F1, KC_F2, KC_F3, _______, _______,
+                             _______, TO(_GOLAND), TO(_SVORAK), _______, TO(_NUMB), _______, _______, KC_F10, KC_F11, KC_F12
     ),
 
 //
@@ -164,7 +165,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // `--------------------+------+------+------+      +------|  |------+      +------+------+------+--------------------'
 //                      |      |      |      |      |      |  |      |      |      |      |      |
 //                      `----------------------------------'  `----------------------------------'
-//
 //
 //  [_TEMPL] = LAYOUT(
 //      _______, _______, _______, _______, _______, _______,                                         _______, _______, _______, _______, _______, _______,
@@ -208,106 +208,6 @@ void process_magnet(uint8_t state) {
 }
 
 uint8_t magnet_state;
-
-// Swedish characters Å Ä Ö ------------------------------------------------------------
-
-#define LEAD_A_DOWN 1
-#define LEAD_O_DOWN 2
-#define LAG_O_DOWN 4
-#define LAG_E_DOWN 8
-#define LAG_O_UP 16
-#define LAG_E_UP 32
-#define LEAD_A_UP 64
-#define LEAD_O_UP 128
-
-#define A_DOWN 1
-#define O_DOWN 2
-#define E_DOWN 4
-#define A_UP 8
-#define O_UP 16
-#define E_UP 32
-
-uint8_t swedish_state;
-bool    swedish_active;
-
-// process_swedish reinterprets sequences of key events as Swedish characters,
-// enabling them to be typed quickly when not present in the layout.
-//
-//    A down, O down, O up, A up -> Å
-//    A down, E down, E up, A up -> Ä
-//    O down, E down, E up, O up -> Ö
-//
-// The trick is especially suitable with a Dvorak layout since the keys {A, O, E} are
-// then placed next to each other on the home row.
-void process_swedish(uint8_t event) {
-    switch (event) {
-        case A_DOWN:
-            swedish_state = LEAD_A_DOWN;
-            return;
-
-        case O_DOWN:
-            if (swedish_state == LEAD_A_DOWN) {
-                swedish_state |= LAG_O_DOWN;
-                return;
-            }
-            swedish_state = LEAD_O_DOWN;
-            return;
-
-        case E_DOWN:
-            if (swedish_state == LEAD_A_DOWN || swedish_state == LEAD_O_DOWN || swedish_state == (LEAD_A_DOWN | LAG_O_DOWN)) {
-                swedish_state |= LAG_E_DOWN;
-                return;
-            }
-            break;
-
-        case O_UP:
-            if (swedish_state == (LEAD_A_DOWN | LAG_O_DOWN)) {
-                tap_code(KC_BSPC);  // Erase O
-                if (!swedish_active) {
-                    tap_code(KC_BSPC);  // Erase A
-                }
-                tap_code(CB_ARNG);  // Send Å
-                swedish_state  = LEAD_A_DOWN;
-                swedish_active = true;
-                return;
-            }
-            break;
-
-        case E_UP:
-            if (swedish_state == (LEAD_A_DOWN | LAG_O_DOWN | LAG_E_DOWN)) {
-                tap_code(KC_BSPC);  // Erase E
-                tap_code(KC_BSPC);  // Erase O
-                tap_code(KC_BSPC);  // Erase A
-                layer_invert(_GOLAND);
-                break;
-            }
-            if (swedish_state == (LEAD_A_DOWN | LAG_E_DOWN)) {
-                tap_code(KC_BSPC);  // Erase E
-                if (!swedish_active) {
-                    tap_code(KC_BSPC);  // Erase A
-                }
-                tap_code(CB_ADIA);  // Send Ä
-                swedish_state  = LEAD_A_DOWN;
-                swedish_active = true;
-                return;
-            }
-            if (swedish_state == (LEAD_O_DOWN | LAG_E_DOWN)) {
-                tap_code(KC_BSPC);  // Erase E
-                if (!swedish_active) {
-                    tap_code(KC_BSPC);  // Erase O
-                }
-                tap_code(CB_ODIA);  // Send Ö
-                swedish_state  = LEAD_O_DOWN;
-                swedish_active = true;
-                return;
-            }
-            break;
-    }
-
-    // Clear
-    swedish_state  = 0;
-    swedish_active = false;
-}
 
 // Eager Macros ----------------------------------------------------------------
 // In contrast to a regular macro are these dynamic and picked up automatically
@@ -477,15 +377,17 @@ void keyboard_post_init_user(void) {
 uint8_t space_state;
 #define SPACE_NEXT 0
 #define UNDERSCORE_NEXT 1
-#define SPACE_DOWN 2
-#define UNDERSCORE_DOWN 3
+#define DASH_NEXT 2
+#define SPACE_DOWN 3
+#define UNDERSCORE_DOWN 4
+#define DASH_DOWN 5
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
         // when key is pressed
         update_macro(keycode);
 
-        if (space_state == UNDERSCORE_NEXT && keycode != SPACE) {
+        if (space_state != SPACE_NEXT && keycode != SPACE) {
             space_state = SPACE_NEXT;
         }
 
@@ -494,8 +396,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 replay_macro();
                 return true;
 
+            // Note: These are implemented as exact stroke sequences and not using using
+            // set_mod_mask because the latter does not produce the desired result.
             case CB_CIRC:
-                // TODO: Reimplement with set_mod_mask
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_RBRC);
                 } else {
@@ -506,7 +409,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 }
                 break;
             case CB_TILD:
-                // TODO: Reimplement with set_mod_mask
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_RBRC);
                 } else {
@@ -517,7 +419,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 }
                 break;
             case CB_GRV:
-                // TODO: Reimplement with set_mod_mask
                 if (get_mods() & MOD_MASK_SHIFT) {
                     tap_code(KC_EQL);
                 } else {
@@ -527,23 +428,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                     tap_code(KC_SPC);
                 }
                 break;
+
             case SPACE:
-                if (space_state == UNDERSCORE_NEXT) {
+                switch (space_state) {
+                case UNDERSCORE_NEXT: {
                     uint8_t original_mods = get_mods();
                     set_mods(MOD_MASK_SHIFT);
                     register_code(SE_MINS);
                     set_mods(original_mods);
                     space_state = UNDERSCORE_DOWN;
-                } else {
+                    break;
+                }
+                case DASH_NEXT: {
+                    register_code(SE_MINS);
+                    space_state = DASH_DOWN;
+                    break;
+                }
+                default: {
                     register_code(KC_SPACE);
                     space_state = SPACE_DOWN;
+                   }
                 }
                 break;
-            case SYMBOLS:
+            case SYMBOL1:
                 layer_on(_ARW1);
                 // Only update state if space bar is up
                 if (space_state == SPACE_NEXT) {
                     space_state = UNDERSCORE_NEXT;
+                }
+                break;
+            case SYMBOL2:
+                layer_on(_ARW2);
+                // Only update state if space bar is up
+                if (space_state == SPACE_NEXT) {
+                    space_state = DASH_NEXT;
                 }
                 break;
 
@@ -575,10 +493,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
 
             // clang-format off
-            case KC_A: process_swedish(A_DOWN); break;
-            case KC_O: process_swedish(O_DOWN); break;
-            case KC_E: process_swedish(E_DOWN); break;
-
             case MAG_LFT: magnet_state |=  1; process_magnet(magnet_state); break;
             case MAG_RGT: magnet_state |=  2; process_magnet(magnet_state); break;
             case MAG_TOP: magnet_state |=  4; process_magnet(magnet_state); break;
@@ -605,25 +519,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             case SPACE:
                 switch (space_state) {
                     case UNDERSCORE_DOWN:
+                    case DASH_DOWN:
                         unregister_code(SE_MINS);
+                        break;
                     case SPACE_DOWN:
                         unregister_code(KC_SPACE);
+                        break;
                 }
                 if (space_state == UNDERSCORE_DOWN && layer_state_is(_ARW1)) {
                     space_state = UNDERSCORE_NEXT;
+                } else if (space_state == DASH_DOWN && layer_state_is(_ARW2)) {
+                    space_state = DASH_NEXT;
                 } else {
                     space_state = SPACE_NEXT;
                 }
                 break;
-            case SYMBOLS:
+            case SYMBOL1:
                 layer_off(_ARW1);
+                break;
+            case SYMBOL2:
+                layer_off(_ARW2);
                 break;
 
             // clang-format off
-            case KC_A: process_swedish(A_UP); break;
-            case KC_O: process_swedish(O_UP); break;
-            case KC_E: process_swedish(E_UP); break;
-
             case MAG_LFT: magnet_state &=  ~1; break;
             case MAG_RGT: magnet_state &=  ~2; break;
             case MAG_TOP: magnet_state &=  ~4; break;
@@ -672,6 +590,12 @@ void oled_task_user(void) {
                     case UNDERSCORE_DOWN:
                         oled_write_P(PSTR("Underscore down\n\n"), false);
                         break;
+                    case DASH_NEXT:
+                        oled_write_P(PSTR("Dash next\n\n"), false);
+                        break;
+                    case DASH_DOWN:
+                        oled_write_P(PSTR("Dash down\n\n"), false);
+                        break;
                     default:
                         oled_write_P(PSTR("Space unknown\n\n"), false);
                         break;
@@ -697,6 +621,12 @@ void oled_task_user(void) {
                     case UNDERSCORE_DOWN:
                         oled_write_P(PSTR("Underscore down\n\n"), false);
                         break;
+                    case DASH_NEXT:
+                        oled_write_P(PSTR("Dash next\n\n"), false);
+                        break;
+                    case DASH_DOWN:
+                        oled_write_P(PSTR("Dash down\n\n"), false);
+                        break;
                     default:
                         oled_write_P(PSTR("Space unknown\n\n"), false);
                         break;
@@ -706,20 +636,14 @@ void oled_task_user(void) {
                 oled_write_P(PSTR("Numbers\n\n\n"), false);
                 break;
             case _FUNC:
-                oled_write_P(PSTR("Track, Play :: F1-12\nVolume, Mute\nBrightness\n"), false);
+                oled_write_P(PSTR("Track, Play | F1-12\nVolume, Mute\nBrightness\nSticky layers\n"), false);
                 break;
             case _MAGN:
-                oled_write_P(PSTR("RGB :: Magnet\n\n\n"), false);
+                oled_write_P(PSTR("RGB | Magnet\n\n\n"), false);
                 break;
             default:
                 oled_write_P(PSTR("Undefined\n"), false);
         }
-
-        // Write host Keyboard LED Status to OLEDs
-        led_t led_usb_state = host_keyboard_led_state();
-        oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
     } else {
         // clang-format off
         static const char PROGMEM kyria_logo[] = {
