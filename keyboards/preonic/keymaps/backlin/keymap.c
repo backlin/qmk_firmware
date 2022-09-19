@@ -20,6 +20,7 @@
 
 enum preonic_layers {
   _SVORAK,
+  _QWERTY,
   _SYM1,
   _SYM2,
   _SYM3,
@@ -30,6 +31,9 @@ enum preonic_keycodes {
     SYM1, // Symbols and arrows
     SYM2, // Symbols and word step arrows
     SYM3, // Symbols and line step arrows
+
+    LFN,
+    RFN,
 
     // CLEVER DIACRITIC MARKS:
     // Default: Behaves like macro mark+space.
@@ -58,11 +62,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |      |   1! |  2"  |  3#  |  4€  |  5%  |  6&  |  7/  |  8(  |  9)  |  0=  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   Å  |   Ä  |   Ö  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  |   +  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  -_  |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|  .:  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |  .;  |
+ * | Tab  |   Å  |   Ä  |   Ö  |   P  |   Y  |   +  |   F  |   G  |   C  |   R  |   L  |
+ * |------+------+------+------+------+-------------|------+------+------+------+------+
+ * | Esc  |   A  |   O  |   E  |   U  |   I  |  -_  |   D  |   H  |   T  |   N  |   S  |
+ * |------+------+------+------+------+------|------|------+------+------+------+------+
+ * | Shift|  .:  |   Q  |   J  |   K  |   X  |  .;  |   B  |   M  |   W  |   V  |   Z  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Ctrl |  Fn  | Alt  | GUI  |    Space    |    Enter    | Sym1 | Sym2 | Sym3 |  Fn  |
  * `-----------------------------------------------------------------------------------'
@@ -74,26 +78,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
   KC_LCTL, MO(_FN), KC_LALT, KC_LGUI, KC_SPC,           KC_ENT,           SYM1,    SYM2,    SYM3,    MO(_FN)
 ),
+[_QWERTY] = LAYOUT_preonic_2x2u(
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    CB_ARNG,
+  _______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    CB_ODIA, CB_ADIA,
+  _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    CB_COMM, CB_DOT,  CB_MINS, KC_PPLS,
+  _______, _______, _______, _______, _______,          KC_ENT,           _______, _______, _______, _______
+),
 
 /* Symbols
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |   ^  |  Del |
+ * |      |   ^  |   $  |      |      |      |      |      |      |      |      |  Del |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   /  |   \  |   [  |   ]  |   |  |   $  |   ?  |   !  | Bksp |  Up  |  Del |
+ * |      |   /  |   \  |   [  |   ]  |   |  |   #  |   ?  |   !  | Bksp |  Up  |  Del |
  * |------+------+------+------+------+-------------+------+------+------+      +------|
- * |      |   {  |   }  |   (  |   )  |   @  |   *  |   "  |   '  | Left   Down   Right|
+ * |      |   {  |   }  |   (  |   )  |   @  |      |   '  |   "  | Left   Down   Right|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   :  |   =  |   <  |   >  |   %  |   #  |   &  |   ´  |   `  |   +  |   ~  | Allows quick ":=" and "`+"
+ * |      |   :  |   =  |   <  |   >  |   %  |      |   *  |   &  |   `  |   ´  |   ~  | Allows quick ":=" and "`+`"
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |             |             |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_SYM1] = LAYOUT_preonic_2x2u(
-  _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______, CB_CIRC, KC_DEL,
-  _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE, A(KC_4), CB_QUES, KC_EXLM, BSP_WRD, KC_UP,   DEL_WRD,
-  _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,   CB_ASTR, CB_DQUO, CB_QUOT, KC_LEFT, KC_DOWN, KC_RGHT,
-  _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, CB_HASH, CB_AMPR, CB_ACUT, CB_GRV, KC_PPLS, CB_TILD,
+  _______, CB_CIRC, A(KC_4),   _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
+  _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE, CB_HASH, CB_QUES, KC_EXLM, BSP_WRD, KC_UP,   DEL_WRD,
+  _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,   _______, CB_QUOT, CB_DQUO, KC_LEFT, KC_DOWN, KC_RGHT,
+  _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, _______, CB_ASTR, CB_AMPR, CB_GRV,  CB_ACUT, CB_TILD,
   _______, _______,   _______, _______, _______,          _______,          _______, _______, _______, _______
 ),
 [_SYM2] = LAYOUT_preonic_2x2u(
@@ -125,11 +136,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_FN] = LAYOUT_preonic_2x2u(
-  KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-  XXXXXXX, XXXXXXX, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, MAG_CTR, MAG_TOP, MAG_FUL, KC_MPRV, KC_MPLY, KC_MNXT,
-  QK_BOOT, XXXXXXX, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, MAG_LFT, MAG_BTM, MAG_RGT, KC_VOLD, KC_MUTE, CB_VOLU,
-  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MAG_1_3, MAG_2_3, MAG_3_3, KC_BRID, KC_PGUP, KC_BRIU,
-  _______, _______, _______, _______, LCAG(KC_LEFT),    LCAG(KC_RGHT),    GIT_CMP, KC_HOME, KC_PGDN, KC_END
+  KC_F12,      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+  TG(_QWERTY), XXXXXXX, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, MAG_CTR, MAG_TOP, MAG_FUL, KC_MPRV, KC_MPLY, KC_MNXT,
+  QK_BOOT,     XXXXXXX, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, MAG_LFT, MAG_BTM, MAG_RGT, KC_VOLD, KC_MUTE, CB_VOLU,
+  _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MAG_1_3, MAG_2_3, MAG_3_3, KC_BRID, KC_PGUP, KC_BRIU,
+  _______,     _______, _______, _______, LCAG(KC_LEFT),    LCAG(KC_RGHT),    GIT_CMP, XXXXXXX, KC_PGDN, XXXXXXX
 )
 
 };
