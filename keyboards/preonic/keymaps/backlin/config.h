@@ -49,6 +49,7 @@
 
 
 #define TAPPING_TOGGLE 2
+#define CB_NUM TT(_NUM)
 
 #define CB_SCRC S(C(G(KC_4))) // Print screen region to clipboard
 #define CB_SCRF S(G(KC_4))    // Print screen region to file

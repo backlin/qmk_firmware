@@ -18,34 +18,26 @@
 #include "keymap_swedish.h"
 #include "muse.h"
 
-enum preonic_layers {
-  _SVORAK,
-  _QWERTY,
-  _SYM1,
-  _SYM2,
-  _SYM3,
-  _FN
-};
-
 enum preonic_keycodes {
-    SYM1, // Symbols and arrows
-    SYM2, // Symbols and word step arrows
-    SYM3, // Symbols and line step arrows
-
-    LFN,
-    RFN,
-
     // CLEVER DIACRITIC MARKS:
     // Default: Behaves like macro mark+space.
     // Shift: Behaves like mark alone.
     //
     // This simplifies entering them in terminal and code, at the expense of writing
     // French etc. (which I rarely do).
-    CB_CIRC = SAFE_RANGE,  // ^
-    CB_TILD,               // ~
-    CB_GRV,                // `
+    CB_CIRC = SAFE_RANGE, // ^
+    CB_TILD,              // ~
+    CB_GRV,               // `
 
-    GIT_CMP,  // GoLand compare with branch (default: master, shifted: user chooses)
+    GIT_CMP, // GoLand compare with branch (default: master, shifted: user chooses)
+
+    SYM1, // Symbols and arrows
+    SYM2, // Symbols and word step arrows
+    LFN,
+    RFN,
+
+    QWERTY,
+    CB_BOOT,
 
     MAG_LFT,
     MAG_RGT,
@@ -56,94 +48,118 @@ enum preonic_keycodes {
     MAG_3_3
 };
 
+// clang-format off
+enum preonic_layers {
+    _SVORAK,
+    _QWERTY,
+    _NUM,
+    _SYM1,
+    _SYM2,
+    _FN
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Svorak
  * ,-----------------------------------------------------------------------------------.
- * |      |   1! |  2"  |  3#  |  4€  |  5%  |  6&  |  7/  |  8(  |  9)  |  0=  | Bksp |
+ * | Tab  |   Å  |   Ä  |   Ö  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  -_  |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|  .:  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |  ,;  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   Å  |   Ä  |   Ö  |   P  |   Y  |   +  |   F  |   G  |   C  |   R  |   L  |
- * |------+------+------+------+------+-------------|------+------+------+------+------+
- * | Esc  |   A  |   O  |   E  |   U  |   I  |  -_  |   D  |   H  |   T  |   N  |   S  |
- * |------+------+------+------+------+------|------|------+------+------+------+------+
- * | Shift|  .:  |   Q  |   J  |   K  |   X  |  .;  |   B  |   M  |   W  |   V  |   Z  |
+ * |  Num |  1!  |  2"  |  3#  |  4€  |  5%  |  6&  |  7/  |  8(  |  9)  |  0=  |   +  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |  Fn  | Alt  | GUI  |    Space    |    Enter    | Sym1 | Sym2 | Sym3 |  Fn  |
+ * | Ctrl |  Fn  | Alt  | GUI  |    Space    |    Enter    | Sym1 | Sym2 |  Fn  |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_SVORAK] = LAYOUT_preonic_2x2u(
-  XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-  KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_PPLS,
+  KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
   KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
   KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
-  KC_LCTL, MO(_FN), KC_LALT, KC_LGUI, KC_SPC,           KC_ENT,           SYM1,    SYM2,    SYM3,    MO(_FN)
+  CB_NUM,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_PPLS,
+  KC_LCTL, LFN,     KC_LALT, KC_LGUI, KC_SPC,           KC_ENT,           SYM1,    SYM2,    RFN,     XXXXXXX
 ),
 [_QWERTY] = LAYOUT_preonic_2x2u(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    CB_ARNG,
   _______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    CB_ODIA, CB_ADIA,
-  _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    CB_COMM, CB_DOT,  CB_MINS, KC_PPLS,
-  _______, _______, _______, _______, _______,          KC_ENT,           _______, _______, _______, _______
+  _______, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    CB_COMM, CB_DOT,  CB_MINS, KC_BSPC,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______,          _______,          _______, _______, _______, _______
 ),
 
 /* Symbols
  * ,-----------------------------------------------------------------------------------.
- * |      |   ^  |   $  |      |      |      |      |      |      |      |      |  Del |
+ * |      |   /  |   \  |   [  |   ]  |   |  |      |   ?  |   !  | BKSP |  DEL |  Del |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |   {  |   }  |   (  |   )  |   @  |      |   "  |   '  | LEFT |  Up  | RIGHT|
+ * |------+------+------+------+------+------|------+------+------+------+      +------|
+ * |      |   :  |   =  |   <  |   >  |   %  |      |   *  |   &  | Left   Down   Right| Allows quick ":=" (golang)
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |   /  |   \  |   [  |   ]  |   |  |   #  |   ?  |   !  | Bksp |  Up  |  Del |
- * |------+------+------+------+------+-------------+------+------+------+      +------|
- * |      |   {  |   }  |   (  |   )  |   @  |      |   '  |   "  | Left   Down   Right|
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |   :  |   =  |   <  |   >  |   %  |      |   *  |   &  |   `  |   ´  |   ~  | Allows quick ":=" and "`+`"
+ * |      |   ^  |   $  |      |      |      |      |   #  |   +  |   `  |   ´  |   ~  | Allows quick "`+" and "+`" (golang)
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |             |             |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
-
 [_SYM1] = LAYOUT_preonic_2x2u(
-  _______, CB_CIRC, A(KC_4),   _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,
-  _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE, CB_HASH, CB_QUES, KC_EXLM, BSP_WRD, KC_UP,   DEL_WRD,
-  _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,   _______, CB_QUOT, CB_DQUO, KC_LEFT, KC_DOWN, KC_RGHT,
-  _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, _______, CB_ASTR, CB_AMPR, CB_GRV,  CB_ACUT, CB_TILD,
+  _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_PIPE, _______, CB_QUES, KC_EXLM, BSP_WRD, DEL_WRD, KC_DEL,
+  _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, CB_AT,   _______, CB_DQUO, CB_QUOT, LFT_WRD, KC_UP,   RGT_WRD,
+  _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC, _______, CB_ASTR, CB_AMPR, KC_LEFT, KC_DOWN, KC_RGHT,
+  _______, CB_CIRC,   A(KC_4), _______, _______, _______, _______, CB_HASH, KC_PPLS, CB_GRV,  CB_ACUT, CB_TILD,
   _______, _______,   _______, _______, _______,          _______,          _______, _______, _______, _______
 ),
 [_SYM2] = LAYOUT_preonic_2x2u(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, BSP_WRD, KC_UP,   DEL_WRD,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, LFT_WRD, KC_DOWN, RGT_WRD,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, BSP_LNE, DEL_LNE, _______,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, LFT_LNE, KC_PGUP, RGT_LNE,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PGDN, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______,          _______,          _______, _______, _______, _______
 ),
-[_SYM3] = LAYOUT_preonic_2x2u(
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, BSP_LNE, KC_PGUP, DEL_LNE,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, LFT_LNE, KC_PGDN, RGT_LNE,
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______,          _______,          _______, _______, _______, _______
+
+/* Numpad
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      | Show    To    Cont |Screen|      |   7  |   8  |   9  |   +  |      |
+ * |------+------|                    | shot |------+------+------+------+------+------|
+ * |      |      |  Out    In    Step |      |      |   4  |   5  |   6  |   -  |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |   1  |   2  |   3  |   *  |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |   0  |   .  |   ,  |   /  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |             |             |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_NUM] = LAYOUT_preonic_2x2u(
+  _______, _______, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, _______, KC_P7,   KC_P8,   KC_P9,   KC_PPLS, _______,
+  _______, _______, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, _______, KC_P4,   KC_P5,   KC_P6,   KC_PMNS, _______,
+  _______, _______, _______, _______, _______, _______, _______, KC_P1,   KC_P2,   KC_P3,   KC_PAST, _______,
+  _______, _______, _______, _______, _______, _______, _______, KC_P0,   KC_PDOT, CB_COMM, KC_PSLS, _______,
+  _______, _______, _______, _______, _______,          _______,          GIT_CMP, _______, _______, _______
 ),
 
 /* Fn = Symbol with different arrows
  * ,-----------------------------------------------------------------------------------.
- * |  F12 |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      | Show    To    Cont |Screen| 1/2   Bottom   1/2 | Prev   Play   Next |
+ * |      |      | Show    To    Cont |Screen| 1/3     1/3    1/3 | Prev   Play   Next |
  * |------+------|                    | shot |                    |                    |
- * | Boot |      |  Out    In    Step |      |Center   Top   Full | Vol-   Mute   Vol+ |
- * |------+------+------+------+------+------|                    |------+------+------|
- * |      |      |      |      |      |      | 1/3     1/3    1/3 | Bri- | PgUp | Bri+ |
+ * | Boot |      |  Out    In    Step |      | 1/2   Center   1/2 | Vol-   Mute   Vol+ |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      | Left screen | Right screen| Diff | Home | PgDn | End  |
+ * |      |      |      |      |      |      |      |      |      | Bri- |      | Bri+ |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      | Left screen | Right screen| Diff | Home | PgDn |  F12 |
  * `-----------------------------------------------------------------------------------'
  */
 [_FN] = LAYOUT_preonic_2x2u(
-  KC_F12,      KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-  TG(_QWERTY), XXXXXXX, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, MAG_CTR, MAG_TOP, MAG_FUL, KC_MPRV, KC_MPLY, KC_MNXT,
-  QK_BOOT,     XXXXXXX, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, MAG_LFT, MAG_BTM, MAG_RGT, KC_VOLD, KC_MUTE, CB_VOLU,
-  _______,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, MAG_1_3, MAG_2_3, MAG_3_3, KC_BRID, KC_PGUP, KC_BRIU,
-  _______,     _______, _______, _______, LCAG(KC_LEFT),    LCAG(KC_RGHT),    GIT_CMP, XXXXXXX, KC_PGDN, XXXXXXX
+  _______, _______, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, MAG_1_3, MAG_2_3, MAG_3_3, KC_MPRV, KC_MPLY, KC_MNXT,
+  CB_BOOT, _______, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, MAG_LFT, MAG_CTR, MAG_RGT, KC_VOLD, KC_MUTE, CB_VOLU,
+  _______, _______, QWERTY,  _______, _______, _______, _______, _______, _______, KC_BRID, XXXXXXX, KC_BRIU,
+  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+  _______, _______, _______, _______, LCAG(KC_LEFT),    LCAG(KC_RGHT),    GIT_CMP, _______, _______, KC_F12
 )
 
 };
+// clang-format on
 
 // Magnet ----------------------------------------------------------------------
 
@@ -180,7 +196,10 @@ uint8_t magnet_state;
 
 // Process input ---------------------------------------------------------------
 
-bool symbol1_pressed;
+bool    sym1down;
+uint8_t fn_down;
+#define LFN_DOWN 1
+#define RFN_DOWN 2
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
@@ -231,17 +250,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             }
 
             case SYM1:
-                symbol1_pressed = true;
+                sym1down = true;
                 layer_on(_SYM1);
                 break;
             case SYM2:
                 layer_on(_SYM1);
                 layer_on(_SYM2);
                 break;
-            case SYM3:
-                layer_on(_SYM1);
-                layer_on(_SYM3);
+            case LFN:
+                fn_down |= LFN_DOWN;
+                layer_on(_FN);
                 break;
+            case RFN:
+                fn_down |= RFN_DOWN;
+                layer_on(_FN);
+                break;
+            case QWERTY:
+                if (fn_down == (LFN_DOWN | RFN_DOWN)) {
+                    layer_on(_QWERTY);
+                    fn_down = 0;
+                }
+                break;
+            case CB_BOOT:
+                if (fn_down == (LFN_DOWN | RFN_DOWN)) {
+                    reset_keyboard();
+                }
+                return false;
 
             // clang-format off
             case MAG_LFT: magnet_state |=  1; break;
@@ -256,22 +290,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     } else {
         switch (keycode) {
             case SYM1:
-                symbol1_pressed = false;
-                if (!layer_state_is(_SYM2) && !layer_state_is(_SYM3)) {
+                sym1down = false;
+                if (!layer_state_is(_SYM2)) {
                     layer_off(_SYM1);
                 }
-                 break;
+                break;
             case SYM2:
-                if (!symbol1_pressed && !layer_state_is(_SYM3)) {
+                if (!sym1down) {
                     layer_off(_SYM1);
                 }
                 layer_off(_SYM2);
                 break;
-            case SYM3:
-                if (!symbol1_pressed && !layer_state_is(_SYM2)) {
-                    layer_off(_SYM1);
+            case LFN:
+                fn_down &= ~LFN_DOWN;
+                if (!fn_down) {
+                    layer_off(_FN);
                 }
-                layer_off(_SYM3);
+                break;
+            case RFN:
+                fn_down &= ~RFN_DOWN;
+                if (!fn_down) {
+                    layer_off(_FN);
+                }
                 break;
 
             case MAG_LFT:
@@ -288,4 +328,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
     return true;
 };
-
