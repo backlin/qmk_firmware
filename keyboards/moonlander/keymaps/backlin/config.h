@@ -90,6 +90,8 @@
 #define MAG_LEFT_13    8
 #define MAG_CENTER_13 16
 #define MAG_RIGHT_13  32
+#define MAG_S_L LCAG(KC_LEFT) // Move to left screen
+#define MAG_S_R LCAG(KC_RGHT) // Move to left screen
 
 #define MAG_FULL (MAG_LEFT_12 | MAG_RIGHT_12)
 
