@@ -18,7 +18,9 @@
 
 #pragma once
 
-//#define ORYX_CONFIGURATOR
+#include "keymap_swedish.h"
+
+enum layers { _SVORAK, _NUM, _SYM1, _SYM2, _FN, _RGB };
 
 #define TAPPING_TOGGLE 2
 #define CB_NUM TT(_NUM)
@@ -76,37 +78,45 @@
 #define GL_SHOW A(KC_F10)
 #define GL_CONT A(G(KC_R))
 
-//  Magnet keys
-//         Left Center Right
-//      ┌──────┬──────┬──────┐
-//  1/3 │      |      |      |
-//      ├──────┼──────┼──────┤
-//  1/2 │      |      |      |
-//      └──────┴──────┴──────┘
+enum custom_keycodes {
+    // CLEVER DIACRITIC MARKS:
+    // Default: Behaves like macro mark+space.
+    // Shift: Behaves like mark alone.
+    //
+    // This simplifies entering them in terminal and code, at the expense of writing
+    // French etc. (which I rarely do).
+    CB_CIRC = SAFE_RANGE, // ^
+    CB_TILD,              // ~
+    CB_GRV,               // `
 
-#define MAG_LEFT_12    1
-#define MAG_CENTER     2 // Not resizing on its own but just moving
-#define MAG_RIGHT_12   4
-#define MAG_LEFT_13    8
-#define MAG_CENTER_13 16
-#define MAG_RIGHT_13  32
-#define MAG_S_L LCAG(KC_LEFT) // Move to left screen
-#define MAG_S_R LCAG(KC_RGHT) // Move to left screen
+    GIT_CMP, // GoLand compare with branch (default: master, shifted: user chooses)
 
-#define MAG_FULL (MAG_LEFT_12 | MAG_RIGHT_12)
+    // Tmux
+    TX_SESS, // {List, create} sessions
+    TX_NEXT, // {Next, create} window
+    TX_PREV, // {Previous, create} window
+    TX_UP,   // {Up, create} pane
+    TX_DOWN, // {Down, create} pane
+    TX_JOIN, // Join window into pane
+    TX_BREK, // Break pane into window
 
-#define MAG_TOP_LEFT     (MAG_LEFT_12  | MAG_CENTER_13)
-#define MAG_TOP_RIGHT    (MAG_RIGHT_12 | MAG_CENTER_13)
-#define MAG_BOTTOM_LEFT  (MAG_LEFT_13  | MAG_CENTER)
-#define MAG_BOTTOM_RIGHT (MAG_RIGHT_13 | MAG_CENTER)
+    // Layers
+    SYM1,
+    SYM2,
+    LFN,
+    RFN,
 
-#define MAG_CENTER_12_1 (MAG_LEFT_12  | MAG_CENTER)
-#define MAG_CENTER_12_2 (MAG_RIGHT_12 | MAG_CENTER)
-#define MAG_LEFT_23     (MAG_LEFT_13  | MAG_CENTER_13)
-#define MAG_RIGHT_23    (MAG_RIGHT_13 | MAG_CENTER_13)
-#define MAG_CENTER_23   (MAG_LEFT_13  | MAG_RIGHT_13)
+    // Magnet
+    MAG_CTR,
+    MAG_LFT,
+    MAG_RGT,
+    MAG_1_3,
+    MAG_2_3,
+    MAG_3_3,
 
-#define MAG_TOP    (MAG_LEFT_13 | MAG_CENTER_13 | MAG_RIGHT_13)
-#define MAG_BOTTOM (MAG_LEFT_12 | MAG_CENTER    | MAG_RIGHT_12)
-// clang-format on
+    RGB_SEL
+};
 
+#define LFN_DOWN 1
+#define RFN_DOWN 2
+#define BOTH_FN_DOWN (LFN_DOWN | RFN_DOWN)
