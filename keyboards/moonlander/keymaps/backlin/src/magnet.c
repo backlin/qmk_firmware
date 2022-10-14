@@ -1,9 +1,7 @@
+#include "magnet.h"
 #include QMK_KEYBOARD_H
 
-#include "config.h"
-#include "magnet.h"
-
-uint8_t magnet_down(uint8_t state, uint16_t keycode) {
+uint8_t magnet_pressed(uint8_t state, uint16_t keycode) {
     // clang-format off
     switch (keycode) {
         case MAG_CTR: return state |= MAG_CENTER;
@@ -18,7 +16,7 @@ uint8_t magnet_down(uint8_t state, uint16_t keycode) {
     return state;
 }
 
-void magnet_up(uint8_t state) {
+void magnet_released(uint8_t state) {
     uint8_t original_mods = get_mods();
     set_mods(MOD_MASK_CTRL | MOD_MASK_ALT);
 
@@ -57,9 +55,9 @@ uint8_t magnet_state;
 
 void process_magnet(uint16_t keycode, bool down) {
     if (down) {
-        magnet_state = magnet_down(magnet_state, keycode);
+        magnet_state = magnet_pressed(magnet_state, keycode);
     } else {
-        magnet_up(magnet_state);
+        magnet_released(magnet_state);
         magnet_state = 0;
     }
 }

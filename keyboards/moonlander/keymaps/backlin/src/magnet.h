@@ -1,3 +1,6 @@
+#pragma once
+#include "backlin.h"
+
 /* Magnet keys
  *
  *         Left Center Right
@@ -8,11 +11,9 @@
  *      └──────┴──────┴──────┘
  */
 
-#pragma once
-
-uint8_t magnet_down(uint8_t state, uint16_t keycode);
-void magnet_up(uint8_t state);
 void process_magnet(uint16_t keycode, bool down);
+uint8_t magnet_pressed(uint8_t state, uint16_t keycode);
+void magnet_released(uint8_t state);
 
 // clang-format off
 #define MAG_LEFT_12    1

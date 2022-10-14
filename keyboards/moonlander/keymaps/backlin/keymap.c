@@ -16,33 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include QMK_KEYBOARD_H
-
-#include "config.h"
-#include "magnet.h"
-#include "rgbmatrix.h"
-
-bool    sym1down;
-uint8_t fn_down;
+#include "src/backlin.h"
 
 // clang-format off
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SVORAK] = LAYOUT_moonlander(
-        XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    TX_JOIN,  TX_BREK, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-        KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,  TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_PPLS,
-        KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,    TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
-        KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                       KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
-        KC_LCTL, LFN,     CB_NUM,  KC_LALT, KC_LGUI,          TX_SESS,    KC_MUTE,        SYM1,    SYM2,    MO(_NUM),RFN,     KC_RGUI,
+        XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    TX_JOIN,    TX_BREK, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+        KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,    TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_PPLS,
+        KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,      TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
+        KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
+        KC_LCTL, LFN,     TT(_NUM),KC_LALT, KC_LGUI,          TX_SESS,    KC_MUTE,          SYM1,    SYM2,    MO(_NUM),RFN,     KC_RGUI,
                                             KC_SPC,  TX_PREV, TX_NEXT,    C(KC_PGUP), C(KC_PGDN), KC_ENT
     ),
 
     [_SYM1] = LAYOUT_moonlander(
-        _______, _______,   _______, _______, _______, _______, _______,    _______, _______, CB_ACUT, _______, _______, _______, KC_DEL,
-        _______, CB_SLSH,   CB_BSLS, CB_LBRC, CB_RBRC, CB_QUES, CB_DLR,     _______, CB_AMPR, CB_QUOT, BSP_WRD, DEL_WRD, RGT_WRD, CB_CIRC,
-        _______, CB_LCBR,   CB_RCBR, CB_LPRN, CB_RPRN, KC_EXLM, CB_PIPE,    _______, CB_ASTR, CB_DQUO, LFT_WRD, KC_UP,   KC_RGHT, CB_TILD,
-        _______, S(CB_DOT), CB_EQL,  CB_LABK, CB_RABK, KC_PERC,                      KC_PPLS, CB_GRV,  KC_LEFT, KC_DOWN, KC_F2,   _______,
-        _______, _______,   _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
-                                              _______, _______, _______,    _______, _______, _______
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, CB_ACUT, _______, _______, _______, KC_DEL,
+        _______, CB_SLSH, CB_BSLS, CB_LBRC, CB_RBRC, CB_QUES, CB_DLR,     _______, CB_AMPR, CB_QUOT, BSP_WRD, DEL_WRD, RGT_WRD, CB_CIRC,
+        _______, CB_LCBR, CB_RCBR, CB_LPRN, CB_RPRN, KC_EXLM, CB_PIPE,    _______, CB_ASTR, CB_DQUO, LFT_WRD, KC_UP,   KC_RGHT, CB_TILD,
+        _______, CB_COLN, CB_EQL,  CB_LABK, CB_RABK, KC_PERC,                      KC_PPLS, CB_GRV,  KC_LEFT, KC_DOWN, KC_F2,   _______,
+        _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
+                                            _______, _______, _______,    _______, _______, _______
     ),
     [_SYM2] = LAYOUT_moonlander(
         _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______,
@@ -54,19 +47,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUM] = LAYOUT_moonlander(
-        _______,  _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______,
-        _______,  _______, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, _______,    _______, _______, KC_P7,   KC_P8,   KC_P9,   _______, KC_PPLS,
-        TG(_NUM), _______, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, _______,    _______, _______, KC_P4,   KC_P5,   KC_P6,   _______, KC_PMNS,
-        _______,  _______, _______, KC_LEFT, KC_RGHT, GIT_CMP,                      _______, KC_P1,   KC_P2,   KC_P3,   _______, KC_PAST,
-        _______,  _______, _______, _______, _______,          RGB_SEL,    RGB_MOD,          KC_P0,   CB_DOT,  CB_COMM, _______, KC_PSLS,
+        _______,  _______, _______, _______, _______, _______, JB_PRVF,    JB_NXTF, _______, _______, _______, _______, _______, _______,
+        _______,  _______, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, _______,    JB_PRVC, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
+        TG(_NUM), _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, _______,    JB_NXTC, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
+        _______,  _______, _______, KC_LEFT, KC_RGHT, JB_DIFF,                      _______, KC_P1,   KC_P2,   KC_P3,   _______, _______,
+        _______,  _______, _______, _______, _______,          RGB_SEL,    RGB_MOD,          KC_P0,   CB_DOT,  CB_COMM, CB_COLN, _______,
                                              _______, G(KC_C), G(KC_V),    RGB_VAD, RGB_VAI, _______
     ),
 
     [_FN] = LAYOUT_moonlander(
         QK_RBT,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-        EE_CLR,  _______, GL_SHOW, GL_TO,   GL_CONT, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, G(KC_PPLS),
-        QK_BOOT, _______, GL_OUT,  GL_IN,   GL_STEP, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, G(CB_MINS),
-        _______, _______, _______, KC_LEFT, KC_RGHT, GIT_CMP,                      KC_BRID, KC_BRIU, _______, _______, _______, _______,
+        EE_CLR,  _______, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, G(KC_PPLS),
+        QK_BOOT, _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, G(CB_MINS),
+        _______, _______, _______, KC_LEFT, KC_RGHT, JB_DIFF,                      KC_BRID, KC_BRIU, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             MAG_S_L, G(KC_C), G(KC_V),    _______, _______, MAG_S_R
     ),
@@ -81,227 +74,124 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-// RGB matrix ------------------------------------------------------------------
+#define OFF { 0, 0, 0 }
+#define WHT { 255, 255, 255 }
+#define RED { 245, 0, 0 }
+// https://coolors.co/c847ff-ff855c-fee43e-00f5d4-1fb0ff
+#define PUR { 130, 0, 255 }
+#define ORN { 255, 68, 0 }
+#define YLW { 248, 215, 0 }
+#define GRN { 0, 245, 40 }
+#define BLU { 0, 80, 255 }
 
-extern rgb_config_t rgb_matrix_config;
+LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
+    [_SYM1] = {
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF,
+                  OFF, OFF, OFF,
+                            OFF,
 
-void keyboard_post_init_user(void) {
-    rgb_matrix_enable();
-    rgb_matrix_mode(1);
-    // rgb_matrix_set_flags(LED_FLAG_NONE);
-    // rgb_matrix_set_color_all(0, 0, 0);
-}
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, YLW, WHT, ORN, OFF,
+        OFF, PUR, WHT, WHT, OFF,
+        OFF, PUR, YLW, WHT, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF,
+                  OFF, OFF, OFF,
+                            OFF
+    },
 
-void rgb_matrix_indicators_user(void) {
-    if (keyboard_config.disable_layer_led) return;
+    [_SYM2] = {
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF,
+                  OFF, OFF, OFF,
+                            OFF,
 
-    // assign colors if the matrix is on and the current mode
-    // is SOLID COLORS => No animations running
-    if (rgb_matrix_get_mode() != 1) return;
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, ORN, WHT, ORN, OFF,
+        OFF, BLU, YLW, YLW, OFF,
+        OFF, BLU, ORN, WHT, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF,
+                  OFF, OFF, OFF,
+                            OFF
+    },
 
-    uint8_t layer = biton32(layer_state);
-    if (layer > 5) return;
+    [_NUM] = {
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, GRN, GRN, OFF, OFF,
+        OFF, GRN, GRN, WHT, OFF,
+        OFF, GRN, GRN, WHT, OFF,
+        OFF, BLU, BLU, YLW,
+        YLW, OFF, OFF,
+                  OFF, WHT, WHT,
+                            RED,
 
-    if (layer == 0)
-        rgb_matrix_set_color_all(0, 0, 0);
-    else
-        set_layer_color(layer, layer == _FN && fn_down != BOTH_FN_DOWN);
-}
+        OFF, ORN, ORN, OFF, OFF,
+        OFF, ORN, ORN, OFF, YLW,
+        OFF, WHT, WHT, WHT, YLW,
+        OFF, WHT, WHT, WHT, YLW,
+        OFF, WHT, WHT, WHT, WHT,
+        OFF, OFF, OFF, OFF,
+        YLW, YLW, YLW,
+                  OFF, GRN, BLU,
+                            RED
+    },
 
+    [_FN] = {
+        YLW, ORN, RED, OFF, OFF, // all OFF unless BOTH_FN_DOWN
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, GRN, GRN, OFF, OFF,
+        OFF, GRN, GRN, WHT, OFF,
+        OFF, GRN, GRN, WHT, OFF,
+        OFF, BLU, BLU, YLW,
+        OFF, OFF, OFF,
+                  ORN, WHT, WHT,
+                            OFF,
 
-// Tmux ------------------------------------------------------------------------
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, ORN, ORN, OFF, OFF,
+        OFF, ORN, ORN, OFF, OFF,
+        OFF, ORN, ORN, OFF, OFF,
+        OFF, PUR, YLW, WHT, OFF,
+        OFF, PUR, YLW, WHT,
+        OFF, PUR, YLW,
+                  ORN, OFF, OFF,
+                            OFF
+    },
 
-void tmux_command(uint8_t mods, uint16_t keycode) {
-    uint8_t original_mods = get_mods();
-    set_mods(MOD_MASK_CTRL);
-    tap_code(KC_B);
-    set_mods(mods);
-    tap_code(keycode);
-    set_mods(original_mods);
-}
+    [_RGB] = {
+        OFF, OFF, OFF, OFF, OFF,
+        WHT, YLW, ORN, RED, PUR,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED,
+        OFF, OFF, OFF,
+                  OFF, OFF, OFF,
+                            OFF,
 
-void process_tmux(uint16_t keycode) {
-    switch (keycode) {
-        case TX_PREV:
-            if (get_mods())
-                tmux_command(0, KC_C); // Create window
-            else
-                tmux_command(0, KC_P); // Previous window
-            return;
-        case TX_NEXT:
-            if (get_mods())
-                tmux_command(0, KC_C); // Create window
-            else
-                tmux_command(0, KC_N); // Next window
-            return;
-        case TX_SESS: {
-            uint8_t original_mods = get_mods();
-            if (original_mods) {
-                set_mods(MOD_MASK_CTRL);
-                tap_code(KC_B);
-                set_mods(MOD_MASK_SHIFT);
-                tap_code(KC_DOT);
-                set_mods(0);
-                SEND_STRING("new" SS_TAP(X_ENT)); // New session
-                set_mods(original_mods);
-            } else
-                tmux_command(MOD_MASK_SHIFT, KC_S); // List sessions
-            return;
-        }
-        case TX_UP:
-            if (get_mods()) tmux_command(MOD_MASK_SHIFT, KC_2);
-            tmux_command(0, KC_UP);
-            return;
-        case TX_DOWN:
-            if (get_mods())
-                tmux_command(MOD_MASK_SHIFT, KC_2);
-            else
-                tmux_command(0, KC_DOWN);
-            return;
-        case TX_JOIN:
-            tmux_command(0, KC_J);
-            return;
-        case TX_BREK:
-            tmux_command(0, KC_B);
-            return;
-    }
-}
-
-// Macros ----------------------------------------------------------------------
-
-void simple_macro(uint16_t modcode, uint16_t keycode) {
-    if (get_mods() & MOD_MASK_SHIFT) {
-        tap_code(keycode);
-    } else {
-        // This is implemented as exact stroke sequences and not using using
-        // set_mod_mask because the latter does not produce the desired result
-        register_code(modcode);
-        tap_code(keycode);
-        unregister_code(modcode);
-        tap_code(KC_SPC);
-    }
-}
-
-void process_macro(uint16_t keycode) {
-    switch (keycode) {
-        case CB_CIRC:
-            simple_macro(KC_LSFT, KC_RBRC);
-            return;
-        case CB_TILD:
-            simple_macro(KC_RALT, KC_RBRC);
-            return;
-        case CB_GRV:
-            simple_macro(KC_LSFT, KC_EQL);
-            return;
-
-        case GIT_CMP: {
-            uint8_t original_mods = get_mods();
-            set_mods(MOD_MASK_CSAG);
-            tap_code(KC_G);
-            if (!(original_mods & MOD_MASK_SHIFT)) {
-                set_mods(0);
-                SEND_STRING(SS_DELAY(300) "master" SS_TAP(X_ENT));
-            }
-            set_mods(original_mods);
-            return;
-        }
-    }
-}
-
-// Process input ---------------------------------------------------------------
-
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    if (biton32(layer_state) == _RGB) {
-        if (keycode == 1) { // To test conversion from code in layout to uint8_t
-            rgb_matrix_mode(1);
-        } else if (keycode > 0) {
-            rgb_matrix_mode((uint8_t)keycode);
-        } else {
-            rgb_matrix_mode(1);
-        }
-        layer_off(_RGB);
-        return false;
-    }
-
-    switch (keycode) {
-        case CB_CIRC ... GIT_CMP:
-            if (record->event.pressed) {
-                process_macro(keycode);
-            }
-            return false;
-        case MAG_CTR ... MAG_3_3:
-            process_magnet(keycode, record->event.pressed);
-            return false;
-        case TX_SESS ... TX_BREK:
-            process_tmux(keycode);
-            return false;
-    }
-
-    if (record->event.pressed) {
-        switch (keycode) {
-            case SYM1:
-                sym1down = true;
-                layer_on(_SYM1);
-                return false;
-            case SYM2:
-                layer_on(_SYM1);
-                layer_on(_SYM2);
-                return false;
-            case LFN:
-                fn_down |= LFN_DOWN;
-                layer_on(_FN);
-                return false;
-            case RFN:
-                fn_down |= RFN_DOWN;
-                layer_on(_FN);
-                return false;
-
-            case QK_RBT:
-            case EE_CLR:
-            case QK_BOOT:
-                if (fn_down != BOTH_FN_DOWN) {
-                    return false;
-                }
-                return true;
-
-            case RGB_SEL:
-                rgb_matrix_mode(1);
-                if (rgb_matrix_is_enabled())
-                    layer_on(_RGB);
-                else
-                    rgb_matrix_enable();
-                return false;
-            case RGB_MOD:
-                rgb_matrix_enable();
-                return true;
-        }
-    } else {
-        switch (keycode) {
-            case SYM1:
-                sym1down = false;
-                if (!layer_state_is(_SYM2)) {
-                    layer_off(_SYM1);
-                }
-                return false;
-            case SYM2:
-                if (!sym1down) {
-                    layer_off(_SYM1);
-                }
-                layer_off(_SYM2);
-                return false;
-            case LFN:
-                fn_down &= ~LFN_DOWN;
-                if (!fn_down) {
-                    layer_off(_FN);
-                }
-                return false;
-            case RFN:
-                fn_down &= ~RFN_DOWN;
-                if (!fn_down) {
-                    layer_off(_FN);
-                }
-                return false;
-        }
-    }
-    return true;
+        OFF, OFF, OFF, OFF, OFF,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED, OFF,
+        WHT, YLW, ORN, RED,
+        OFF, OFF, OFF,
+                  OFF, OFF, OFF,
+                            OFF,
+    },
 };
