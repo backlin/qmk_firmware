@@ -24,10 +24,17 @@ void tmux_command(uint8_t mods, uint16_t keycode) {
     set_mods(original_mods);
 }
 
-bool jb_debug;
+void enter_tmux_copy_mode() {
+    tmux_command(MOD_MASK_ALT, KC_8);
+}
 
 void macro_pressed(uint16_t keycode) {
     switch (keycode) {
+#ifdef CB_SECRET_1
+        case CB_MCRO:
+            SEND_STRING(CB_SECRET_1);
+            return;
+#endif
         case CB_CIRC:
             reverse_diacritic(KC_LSFT, KC_RBRC);
             return;
@@ -57,9 +64,7 @@ void macro_pressed(uint16_t keycode) {
             wait_ms(50);
             tap_code(KC_RGHT);
             if (original_mods & MOD_MASK_SHIFT)
-                jb_debug = !jb_debug;
-            if (jb_debug)
-                tap_code(KC_DOWN);
+                tap_code(KC_DOWN); // Run in debug
             tap_code(KC_ENT);
             set_mods(original_mods);
             return;
@@ -123,12 +128,6 @@ void macro_pressed(uint16_t keycode) {
             return;
         case TX_BREK:
             tmux_command(0, KC_B);
-            return;
-
-        case KC_PGUP:
-        case KC_PGDN:
-        case CB_QUES:
-            tmux_command(MOD_MASK_ALT, KC_8);
             return;
     }
 }

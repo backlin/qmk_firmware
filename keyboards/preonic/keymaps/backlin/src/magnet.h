@@ -16,12 +16,13 @@ uint8_t magnet_pressed(uint8_t state, uint16_t keycode);
 void magnet_released(uint8_t state);
 
 // clang-format off
-#define MAG_LEFT_12    1
-#define MAG_CENTER     2 // Not resizing on its own but just moving
-#define MAG_RIGHT_12   4
-#define MAG_LEFT_13    8
-#define MAG_CENTER_13 16
-#define MAG_RIGHT_13  32
+#define MAG_LEFT_12   STATE_BIT1
+#define MAG_CENTER    STATE_BIT2 // Not resizing on its own but just moving
+#define MAG_RIGHT_12  STATE_BIT3
+#define MAG_LEFT_13   STATE_BIT4
+#define MAG_CENTER_13 STATE_BIT5
+#define MAG_RIGHT_13  STATE_BIT6
+
 #define MAG_S_L LCAG(KC_LEFT) // Move to left screen
 #define MAG_S_R LCAG(KC_RGHT) // Move to left screen
 

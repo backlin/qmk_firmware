@@ -1,7 +1,9 @@
 #include "backlin.h"
 
-bool    sym1down;
-uint8_t fn_down;
+// State of layer keys
+bool    symbol_state;
+uint8_t fn_state;
+uint8_t layer_key_state;
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #ifdef RGB_MATRIX_ENABLE
@@ -20,9 +22,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     switch (keycode) {
         case CB_CIRC ... JB_DIFF:
-            if (record->event.pressed) {
+            if (record->event.pressed)
                 macro_pressed(keycode);
-            }
             return false;
         case MAG_CTR ... MAG_3_3:
             process_magnet(keycode, record->event.pressed);
@@ -30,37 +31,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     }
 
     if (record->event.pressed) {
+        // Done separately since they overlap with keys in next switch
         switch (keycode) {
-            case SYM1:
-                sym1down = true;
-                layer_on(_SYM1);
+        case BOOT_LOCK1:
+            layer_key_state |= BOOT_LOCK1_PRESSED;
+            break;
+        case BOOT_LOCK2:
+            layer_key_state |= BOOT_LOCK2_PRESSED;
+            break;
+        }
+
+        switch (keycode) {
+            case SYMBOLS:
+                layer_key_state |= SYMBOLS_PRESSED;
+                layer_on(_SYMBOLS);
                 return false;
-            case SYM2:
-                layer_on(_SYM1);
-                layer_on(_SYM2);
+            case SYM_ALT:
+                layer_on(_SYMBOLS);
+                layer_on(_SYM_ALT);
                 return false;
-            case LFN:
-                fn_down |= LFN_DOWN;
+            case FN_LEFT:
+                layer_key_state |= FN_LEFT_PRESSED;
                 layer_on(_FN);
                 return false;
-            case RFN:
-                fn_down |= RFN_DOWN;
+            case FN_RGHT:
+                layer_key_state |= FN_RGHT_PRESSED;
                 layer_on(_FN);
                 return false;
 
-            case KC_PGUP:
-            case KC_PGDN:
-            case CB_QUES:
-                if (get_mods() && biton32(_SYM2))
-                    macro_pressed(keycode);
+            case KC_PGUP: // Tmux scroll up
+            case KC_PGDN: // Tmux scroll down
+            case CB_QUES: // Tmux search up
+                if (get_mods() & MOD_MASK_SHIFT)
+                    // If already in copy mode this is a no-op
+                    enter_tmux_copy_mode();
                 return true;
+
             case QK_RBT:
             case EE_CLR:
             case QK_BOOT:
-                if (fn_down != BOTH_FN_DOWN) {
+                if ((layer_key_state & BOOT_LOCK_OPEN) != BOOT_LOCK_OPEN) {
                     return false;
                 }
                 return true;
+
+            case CB_AT: {
+                uint8_t mods = get_mods();
+                if (mods & MOD_MASK_SHIFT) {
+                    set_mods(0);
+                    SEND_STRING( SS_LALT("2") "christofer.backlin.se" );
+                    set_mods(mods);
+                    return false;
+                }
+                return true;
+            }
 
 #ifdef RGB_MATRIX_ENABLE
             case RGB_SEL:
@@ -77,29 +101,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
     } else {
         switch (keycode) {
-            case SYM1:
-                sym1down = false;
-                if (!layer_state_is(_SYM2)) {
-                    layer_off(_SYM1);
-                }
+        case BOOT_LOCK1:
+            layer_key_state &= ~BOOT_LOCK1_PRESSED;
+            break;
+        case BOOT_LOCK2:
+            layer_key_state &= ~BOOT_LOCK2_PRESSED;
+            break;
+        }
+
+        switch (keycode) {
+            case SYMBOLS:
+                layer_key_state &= ~SYMBOLS_PRESSED;
+                if (!layer_state_is(_SYM_ALT))
+                    layer_off(_SYMBOLS);
                 return false;
-            case SYM2:
-                if (!sym1down) {
-                    layer_off(_SYM1);
-                }
-                layer_off(_SYM2);
+            case SYM_ALT:
+                if (!(layer_key_state & SYMBOLS_PRESSED))
+                    layer_off(_SYMBOLS);
+                layer_off(_SYM_ALT);
                 return false;
-            case LFN:
-                fn_down &= ~LFN_DOWN;
-                if (!fn_down) {
+            case FN_LEFT:
+                layer_key_state &= ~FN_LEFT_PRESSED;
+                if (!(layer_key_state & FN_PRESSED))
                     layer_off(_FN);
-                }
                 return false;
-            case RFN:
-                fn_down &= ~RFN_DOWN;
-                if (!fn_down) {
+            case FN_RGHT:
+                layer_key_state &= ~FN_RGHT_PRESSED;
+                if (!(layer_key_state & FN_PRESSED))
                     layer_off(_FN);
-                }
                 return false;
         }
     }
