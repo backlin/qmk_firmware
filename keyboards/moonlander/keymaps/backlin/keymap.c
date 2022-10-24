@@ -25,7 +25,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,    TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_PPLS,
         KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,      TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
         KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
-        KC_LCTL, LFN,     TT(_NUM),KC_LALT, KC_LGUI,          TX_SESS,    KC_MUTE,          SYM1,    SYM2,    MO(_NUM),RFN,     KC_RGUI,
+        KC_LCTL, LFN,     MO(_NUM),KC_LALT, KC_LGUI,          TX_SESS,    KC_MUTE,          SYM1,    SYM2,    TT(_NUM),RFN,     KC_RGUI,
                                             KC_SPC,  TX_PREV, TX_NEXT,    C(KC_PGUP), C(KC_PGDN), KC_ENT
     ),
 
@@ -38,18 +38,18 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, _______, _______,    _______, _______, _______
     ),
     [_SYM2] = LAYOUT_moonlander(
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, BSP_LNE, DEL_LNE, RGT_LNE, _______,
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, LFT_LNE, KC_PGUP, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, JB_PRVF, JB_NXTF,
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, BSP_LNE, DEL_LNE, RGT_LNE, JB_PRVC,
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, LFT_LNE, KC_PGUP, _______, JB_NXTC,
         _______, _______, _______, _______, _______, _______,                      _______, _______, _______, KC_PGDN, _______, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             _______, _______, _______,    _______, _______, _______
     ),
 
     [_NUM] = LAYOUT_moonlander(
-        _______,  _______, _______, _______, _______, _______, JB_PRVF,    JB_NXTF, _______, _______, _______, _______, _______, _______,
-        _______,  _______, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, _______,    JB_PRVC, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
-        TG(_NUM), _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, _______,    JB_NXTC, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
+        _______,  _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______,
+        _______,  JB_BREK, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, JB_EDRN,    _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
+        TG(_NUM), _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, JB_RUN,     _______, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
         _______,  _______, _______, KC_LEFT, KC_RGHT, JB_DIFF,                      _______, KC_P1,   KC_P2,   KC_P3,   _______, _______,
         _______,  _______, _______, _______, _______,          RGB_SEL,    RGB_MOD,          KC_P0,   CB_DOT,  CB_COMM, CB_COLN, _______,
                                              _______, G(KC_C), G(KC_V),    RGB_VAD, RGB_VAI, _______
@@ -57,8 +57,8 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FN] = LAYOUT_moonlander(
         QK_RBT,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-        EE_CLR,  _______, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, G(KC_PPLS),
-        QK_BOOT, _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, G(CB_MINS),
+        EE_CLR,  JB_BREK, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, JB_EDRN,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, G(KC_PPLS),
+        QK_BOOT, _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, JB_RUN,     KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, G(CB_MINS),
         _______, _______, _______, KC_LEFT, KC_RGHT, JB_DIFF,                      KC_BRID, KC_BRIU, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             MAG_S_L, G(KC_C), G(KC_V),    _______, _______, MAG_S_R
@@ -118,8 +118,8 @@ LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
                   OFF, OFF, OFF,
                             OFF,
 
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, ORN, WHT, ORN, OFF,
+        GRN, GRN, GRN, OFF, OFF,
+        GRN, ORN, WHT, ORN, OFF,
         OFF, BLU, YLW, YLW, OFF,
         OFF, BLU, ORN, WHT, OFF,
         OFF, OFF, OFF, OFF, OFF,
@@ -131,12 +131,12 @@ LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
 
     [_NUM] = {
         OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
+        OFF, ORN, OFF, OFF, OFF,
         OFF, GRN, GRN, OFF, OFF,
         OFF, GRN, GRN, WHT, OFF,
         OFF, GRN, GRN, WHT, OFF,
         OFF, BLU, BLU, YLW,
-        YLW, OFF, OFF,
+        OFF, YLW, YLW,
                   OFF, WHT, WHT,
                             RED,
 
@@ -146,19 +146,19 @@ LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
         OFF, WHT, WHT, WHT, YLW,
         OFF, WHT, WHT, WHT, WHT,
         OFF, OFF, OFF, OFF,
-        YLW, YLW, YLW,
+        OFF, OFF, OFF,
                   OFF, GRN, BLU,
                             RED
     },
 
     [_FN] = {
         YLW, ORN, RED, OFF, OFF, // all OFF unless BOTH_FN_DOWN
-        OFF, OFF, OFF, OFF, OFF,
+        OFF, ORN, OFF, OFF, OFF,
         OFF, GRN, GRN, OFF, OFF,
         OFF, GRN, GRN, WHT, OFF,
         OFF, GRN, GRN, WHT, OFF,
         OFF, BLU, BLU, YLW,
-        OFF, OFF, OFF,
+        OFF, YLW, YLW,
                   ORN, WHT, WHT,
                             OFF,
 

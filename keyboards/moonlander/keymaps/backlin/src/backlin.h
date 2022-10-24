@@ -45,6 +45,8 @@ enum custom_keycodes {
     TX_DOWN, // {Down, create} pane
     TX_JOIN, // Join window into pane
     TX_BREK, // Break pane into window
+    JB_RUN,  // Run or debgu (shifted)
+    JB_EDRN, // Edit run configuration
     JB_DIFF, // JetBrains compare with branch (default: master, shifted: user chooses)
 
 #ifdef RGB_MATRIX_ENABLE
@@ -122,3 +124,4 @@ enum custom_keycodes {
 #define JB_PRVC LCAG(KC_UP)
 #define JB_NXTF S(C(KC_RGHT))
 #define JB_PRVF S(C(KC_LEFT))
+#define JB_BREK G(KC_F8)

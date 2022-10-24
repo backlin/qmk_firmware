@@ -24,6 +24,8 @@ void tmux_command(uint8_t mods, uint16_t keycode) {
     set_mods(original_mods);
 }
 
+bool jb_debug;
+
 void macro_pressed(uint16_t keycode) {
     switch (keycode) {
         case CB_CIRC:
@@ -44,6 +46,38 @@ void macro_pressed(uint16_t keycode) {
                 set_mods(0);
                 SEND_STRING(SS_DELAY(300) "master" SS_TAP(X_ENT));
             }
+            set_mods(original_mods);
+            return;
+        }
+        case JB_RUN: {
+            uint8_t original_mods = get_mods();
+            set_mods(MOD_MASK_CA);
+            tap_code(KC_R);
+            set_mods(0);
+            wait_ms(50);
+            tap_code(KC_RGHT);
+            if (original_mods & MOD_MASK_SHIFT)
+                jb_debug = !jb_debug;
+            if (jb_debug)
+                tap_code(KC_DOWN);
+            tap_code(KC_ENT);
+            set_mods(original_mods);
+            return;
+        }
+        case JB_EDRN: {
+            uint8_t original_mods = get_mods();
+            set_mods(MOD_MASK_CA);
+            tap_code(KC_R);
+            set_mods(0);
+            wait_ms(50);
+            tap_code(KC_RGHT);
+            tap_code(KC_UP);
+            tap_code(KC_UP);
+            tap_code(KC_UP);
+            tap_code(KC_ENT);
+            wait_ms(300);
+            set_mods(MOD_MASK_CA);
+            tap_code(KC_P);
             set_mods(original_mods);
             return;
         }
