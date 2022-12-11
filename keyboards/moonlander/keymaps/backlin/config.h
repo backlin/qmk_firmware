@@ -19,3 +19,4 @@
 #pragma once
 
 #define TAPPING_TOGGLE 2
+#define CB_BOXDRAW_ENABLE

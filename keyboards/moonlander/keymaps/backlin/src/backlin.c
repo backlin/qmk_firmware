@@ -1,7 +1,9 @@
 #include "backlin.h"
 
-bool    sym1down;
-uint8_t fn_down;
+// State of layer keys
+bool    symbol_state;
+uint8_t fn_state;
+uint8_t layer_key_state;
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #ifdef RGB_MATRIX_ENABLE
@@ -19,45 +21,78 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #endif
 
     switch (keycode) {
-        case CB_CIRC ... JB_DIFF:
-            if (record->event.pressed) {
-                macro_pressed(keycode);
-            }
+#ifdef CB_BOXDRAW_ENABLE
+        case BOXDRAW:
+            layer_invert(_BOX);
+            // Switch input source
+            register_code(KC_LCTL);
+            tap_code(KC_SPC);
+            unregister_code(KC_LCTL);
             return false;
-        case MAG_CTR ... MAG_3_3:
+#endif
+        case CB_AT:
+            if (!get_mods())
+                break; // Parse as normal
+            // else fallthrough
+        case MACRO_RANGE_START ... MACRO_RANGE_END:
+            process_macro(keycode, record->event.pressed);
+            return false;
+        case MAGNET_RANGE_START ... MAGNET_RANGE_END:
             process_magnet(keycode, record->event.pressed);
             return false;
     }
 
     if (record->event.pressed) {
+        // Done separately since they overlap with keys in next switch
         switch (keycode) {
-            case SYM1:
-                sym1down = true;
-                layer_on(_SYM1);
+        case BOOT_LOCK1:
+            layer_key_state |= BOOT_LOCK1_PRESSED;
+            break;
+        case BOOT_LOCK2:
+            layer_key_state |= BOOT_LOCK2_PRESSED;
+            break;
+        }
+
+        switch (keycode) {
+            case SYMBOLS:
+                layer_key_state |= SYMBOLS_PRESSED;
+                layer_on(_SYMBOLS);
                 return false;
-            case SYM2:
-                layer_on(_SYM1);
-                layer_on(_SYM2);
+            case SYM_ALT:
+                layer_on(_SYMBOLS);
+                layer_on(_SYM_ALT);
                 return false;
-            case LFN:
-                fn_down |= LFN_DOWN;
+            case NUMPAD:
+                layer_key_state |= NUMPAD_PRESSED;
+                layer_on(_JETBRAINS);
+                layer_on(_NUMPAD);
+                return false;
+            case MAGNET:
+                layer_key_state |= MAGNET_PRESSED;
+                layer_on(_JETBRAINS);
+                layer_on(_MAGNET);
+                return false;
+            case FN_LEFT:
+                layer_key_state |= FN_LEFT_PRESSED;
                 layer_on(_FN);
                 return false;
-            case RFN:
-                fn_down |= RFN_DOWN;
+            case FN_RGHT:
+                layer_key_state |= FN_RGHT_PRESSED;
                 layer_on(_FN);
                 return false;
 
-            case KC_PGUP:
-            case KC_PGDN:
-            case CB_QUES:
-                if (get_mods() && biton32(_SYM2))
-                    macro_pressed(keycode);
+            case KC_PGUP: // Tmux scroll up
+            case KC_PGDN: // Tmux scroll down
+            case CB_QUES: // Tmux search up
+                if (get_mods() & MOD_MASK_SHIFT)
+                    // If already in copy mode this is a no-op
+                    enter_tmux_copy_mode();
                 return true;
+
             case QK_RBT:
             case EE_CLR:
             case QK_BOOT:
-                if (fn_down != BOTH_FN_DOWN) {
+                if ((layer_key_state & BOOT_LOCK_OPEN) != BOOT_LOCK_OPEN) {
                     return false;
                 }
                 return true;
@@ -77,31 +112,58 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
     } else {
         switch (keycode) {
-            case SYM1:
-                sym1down = false;
-                if (!layer_state_is(_SYM2)) {
-                    layer_off(_SYM1);
-                }
+        case BOOT_LOCK1:
+            layer_key_state &= ~BOOT_LOCK1_PRESSED;
+            break;
+        case BOOT_LOCK2:
+            layer_key_state &= ~BOOT_LOCK2_PRESSED;
+            break;
+        }
+
+        switch (keycode) {
+            case SYMBOLS:
+                layer_key_state &= ~SYMBOLS_PRESSED;
+                if (!layer_state_is(_SYM_ALT))
+                    layer_off(_SYMBOLS);
                 return false;
-            case SYM2:
-                if (!sym1down) {
-                    layer_off(_SYM1);
-                }
-                layer_off(_SYM2);
+            case SYM_ALT:
+                if (!(layer_key_state & SYMBOLS_PRESSED))
+                    layer_off(_SYMBOLS);
+                layer_off(_SYM_ALT);
                 return false;
-            case LFN:
-                fn_down &= ~LFN_DOWN;
-                if (!fn_down) {
+            case NUMPAD:
+                layer_key_state &= ~NUMPAD_PRESSED;
+                if (!(layer_key_state & JETBRAINS_PRESSED))
+                    layer_off(_JETBRAINS);
+                layer_off(_NUMPAD);
+                return false;
+            case MAGNET:
+                layer_key_state &= ~MAGNET_PRESSED;
+                if (!(layer_key_state & JETBRAINS_PRESSED))
+                    layer_off(_JETBRAINS);
+                layer_off(_MAGNET);
+                return false;
+            case FN_LEFT:
+                layer_key_state &= ~FN_LEFT_PRESSED;
+                if (!(layer_key_state & FN_PRESSED))
                     layer_off(_FN);
-                }
                 return false;
-            case RFN:
-                fn_down &= ~RFN_DOWN;
-                if (!fn_down) {
+            case FN_RGHT:
+                layer_key_state &= ~FN_RGHT_PRESSED;
+                if (!(layer_key_state & FN_PRESSED))
                     layer_off(_FN);
-                }
                 return false;
         }
     }
     return true;
 };
+
+void keyboard_post_init_user(void) {
+    jetbrains_reset();
+
+  // Customise these values to desired behaviour
+  debug_enable=true;
+  //debug_matrix=true;
+  //debug_keyboard=true;
+  //debug_mouse=true;
+}
