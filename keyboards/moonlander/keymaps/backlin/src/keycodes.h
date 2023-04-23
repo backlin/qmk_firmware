@@ -84,6 +84,9 @@ enum custom_keycodes {
     MAG_3_3
 };
 
+#define NUM_ON  TG(_NUMPAD)
+#define NUM_OFF TG(_NUMPAD)
+
 #define MACRO_RANGE_START  CB_CIRC
 #define MACRO_RANGE_END    JB_NONE
 #define JB_RUN_RANGE_START JB_RUN

@@ -64,50 +64,49 @@ void jetbrains_reset(void) {
     jetbrains_state = 0;
 }
 
-#define _JB_RUN  1UL
+#define _JB_RUN 1UL
 #define _JB_DBUG (1 << 1)
-#define _JB_NEW  (1 << 2)
-#define _JB_REC  (1 << 3)
+#define _JB_NEW (1 << 2)
+#define _JB_REC (1 << 3)
 #define _JB_UPDT (1 << 4)
 #define _JB_NONE (1 << 5)
 
 void jetbrains_pressed(uint16_t keycode) {
     switch (keycode) {
-    case JB_RUN:
-        if (jetbrains_state & _JB_DBUG){
-            jetbrains_reset();
+        case JB_RUN:
+            if (jetbrains_state & _JB_DBUG) {
+                jetbrains_reset();
+                return;
+            }
+            jetbrains_state |= _JB_RUN;
             return;
-        }
-        jetbrains_state |= _JB_RUN;
-        return;
-    case JB_DBUG:
-        if (jetbrains_state & _JB_RUN){
-            jetbrains_reset();
+        case JB_DBUG:
+            if (jetbrains_state & _JB_RUN) {
+                jetbrains_reset();
+                return;
+            }
+            jetbrains_state |= _JB_DBUG;
             return;
-        }
-        jetbrains_state |= _JB_DBUG;
-        return;
     }
 
-    if (!(jetbrains_state & (_JB_RUN | _JB_DBUG)))
-        return;
+    if (!(jetbrains_state & (_JB_RUN | _JB_DBUG))) return;
 
     switch (keycode) {
-    case JB_NEW:
-        jetbrains_state |= _JB_NEW;
-        return;
-    case JB_REC:
-        jetbrains_state &= ~_JB_NONE;
-        jetbrains_state |= _JB_REC;
-        return;
-    case JB_UPDT:
-        jetbrains_state &= ~_JB_NONE;
-        jetbrains_state |= _JB_UPDT;
-        return;
-    case JB_NONE:
-        jetbrains_state &= ~(_JB_REC | _JB_UPDT);
-        jetbrains_state |= _JB_NONE;
-        return;
+        case JB_NEW:
+            jetbrains_state |= _JB_NEW;
+            return;
+        case JB_REC:
+            jetbrains_state &= ~_JB_NONE;
+            jetbrains_state |= _JB_REC;
+            return;
+        case JB_UPDT:
+            jetbrains_state &= ~_JB_NONE;
+            jetbrains_state |= _JB_UPDT;
+            return;
+        case JB_NONE:
+            jetbrains_state &= ~(_JB_REC | _JB_UPDT);
+            jetbrains_state |= _JB_NONE;
+            return;
     }
 }
 
@@ -135,29 +134,33 @@ void jetbrains_released(uint16_t keycode) {
     return;
 }
 
+#define ADD_AND_APPLY(str) SEND_STRING(SS_LGUI(SS_TAP(X_BSPC)) str SS_LALT(SS_LCTL("a")) SS_DELAY(1000) SS_LALT(SS_LCTL("c")));
+
 void jetbrains_run(bool new_test, bool debug) {
     enum flag_state flags = jetbrains_parse_flags();
 
-    if (debug) print("debug");
-    else print("run");
+    if (debug)
+        print("debug");
+    else
+        print("run");
     if (new_test) print(" new");
 
     switch (flags) {
-    case None:
-        print(" clear");
-        break;
-    case Record:
-        print(" record");
-        break;
-    case Update:
-        print(" update");
-        break;
-    case RecordUpdate:
-        print(" record");
-        break;
-    case Unchanged:
-        print(" unchanged");
-        break;
+        case None:
+            print(" clear");
+            break;
+        case Record:
+            print(" record");
+            break;
+        case Update:
+            print(" update");
+            break;
+        case RecordUpdate:
+            print(" record");
+            break;
+        case Unchanged:
+            print(" unchanged");
+            break;
     }
     print("\n");
 
@@ -190,32 +193,22 @@ void jetbrains_run(bool new_test, bool debug) {
 
         set_mods(MOD_MASK_CA);
         tap_code(KC_P); // Program arguments
+        set_mods(0);
         wait_ms(500);
-
-        SEND_STRING(SS_LGUI(SS_TAP(X_BSPC)));
 
         switch (flags) {
-        case Record:
-            set_mods(0);
-            SEND_STRING("-test.record");
-            break;
-        case Update:
-            set_mods(0);
-            SEND_STRING("-test.update");
-            break;
-        case RecordUpdate:
-            set_mods(0);
-            SEND_STRING("-test.record -test.update");
-            break;
-        default: {}
+            case Record:
+                ADD_AND_APPLY("-test.record");
+                break;
+            case Update:
+                ADD_AND_APPLY("-test.update");
+                break;
+            case RecordUpdate:
+                ADD_AND_APPLY("-test.record -test.update");
+                break;
+            default: {
+            }
         }
-
-        wait_ms(500);
-        set_mods(MOD_MASK_CA);
-        tap_code(KC_A); // Apply
-        wait_ms(500);
-        tap_code(KC_C); // Close
-        wait_ms(500);
     }
 
     // Open context menu
@@ -238,7 +231,6 @@ void jetbrains_run(bool new_test, bool debug) {
     set_mods(mods);
     jetbrains_reset();
 }
-
 
 void process_macro(uint16_t keycode, bool pressed) {
     if (keycode >= JB_RUN_RANGE_START && keycode <= JB_RUN_RANGE_END) {
@@ -266,11 +258,11 @@ void process_macro(uint16_t keycode, bool pressed) {
             uint8_t mods = get_mods();
             set_mods(0);
             if (mods & MOD_MASK_CTRL) {
-                SEND_STRING( "@christofer.backlin.se" );
+                SEND_STRING("@christofer.backlin.se");
             } else if (mods & MOD_MASK_GUI) {
-                SEND_STRING( "christofer.backlin@relexsolutions.com" );
+                SEND_STRING("christofer.backlin@relexsolutions.com");
             } else if (mods & MOD_MASK_ALT) {
-                SEND_STRING( "christofer.backlin@formulate.app" );
+                SEND_STRING("christofer.backlin@formulate.app");
             }
             set_mods(mods);
             return;
@@ -332,22 +324,22 @@ void process_macro(uint16_t keycode, bool pressed) {
         case BOX_ALL: // ┼
             send_unicode(KC_2, KC_5, KC_3, KC_C);
             return;
-        case BOX_BL:  // ┐
+        case BOX_BL: // ┐
             send_unicode(KC_2, KC_5, KC_1, KC_0);
             return;
         case BOX_BLR: // ┬
             send_unicode(KC_2, KC_5, KC_2, KC_C);
             return;
-        case BOX_BR:  // ┌
+        case BOX_BR: // ┌
             send_unicode(KC_2, KC_5, KC_0, KC_C);
             return;
-        case BOX_L:  // ╴
+        case BOX_L: // ╴
             send_unicode(KC_2, KC_5, KC_7, KC_4);
             return;
-        case BOX_LR:  // ─
+        case BOX_LR: // ─
             send_unicode(KC_2, KC_5, KC_0, KC_0);
             return;
-        case BOX_TB:  // │
+        case BOX_TB: // │
             send_unicode(KC_2, KC_5, KC_0, KC_2);
             return;
         case BOX_TBL: // ┤
@@ -356,20 +348,14 @@ void process_macro(uint16_t keycode, bool pressed) {
         case BOX_TBR: // ├
             send_unicode(KC_2, KC_5, KC_1, KC_C);
             return;
-        case BOX_TL:  // ┘
+        case BOX_TL: // ┘
             send_unicode(KC_2, KC_5, KC_1, KC_8);
             return;
         case BOX_TLR: // ┴
             send_unicode(KC_2, KC_5, KC_3, KC_4);
             return;
-        case BOX_TR:  // └
+        case BOX_TR: // └
             send_unicode(KC_2, KC_5, KC_1, KC_4);
-            return;
-#endif
-
-#ifdef CB_SECRET_1
-        case CB_MCRO:
-            SEND_STRING(xor_cipher(CB_SECRET_1);
             return;
 #endif
     }
@@ -384,17 +370,5 @@ void send_unicode(uint16_t k1, uint16_t k2, uint16_t k3, uint16_t k4) {
     tap_code(k3);
     tap_code(k4);
     set_mods(original_mods);
-}
-#endif
-
-#ifdef CB_SECRET_1
-char* xor_cipher(char* data, char* key, int dataLen, int keyLen) {
-	char* output = (char*)malloc(sizeof(char) * dataLen);
-
-	for (int i = 0; i < dataLen; ++i) {
-		output[i] = data[i] ^ key[i % keyLen];
-	}
-
-	return output;
 }
 #endif

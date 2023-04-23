@@ -31,8 +31,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return false;
 #endif
         case CB_AT:
-            if (!get_mods())
-                break; // Parse as normal
+            if (!get_mods()) break; // Parse as normal
             // else fallthrough
         case MACRO_RANGE_START ... MACRO_RANGE_END:
             process_macro(keycode, record->event.pressed);
@@ -45,12 +44,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     if (record->event.pressed) {
         // Done separately since they overlap with keys in next switch
         switch (keycode) {
-        case BOOT_LOCK1:
-            layer_key_state |= BOOT_LOCK1_PRESSED;
-            break;
-        case BOOT_LOCK2:
-            layer_key_state |= BOOT_LOCK2_PRESSED;
-            break;
+            case BOOT_LOCK1:
+                layer_key_state |= BOOT_LOCK1_PRESSED;
+                break;
+            case BOOT_LOCK2:
+                layer_key_state |= BOOT_LOCK2_PRESSED;
+                break;
         }
 
         switch (keycode) {
@@ -112,46 +111,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
     } else {
         switch (keycode) {
-        case BOOT_LOCK1:
-            layer_key_state &= ~BOOT_LOCK1_PRESSED;
-            break;
-        case BOOT_LOCK2:
-            layer_key_state &= ~BOOT_LOCK2_PRESSED;
-            break;
+            case BOOT_LOCK1:
+                layer_key_state &= ~BOOT_LOCK1_PRESSED;
+                break;
+            case BOOT_LOCK2:
+                layer_key_state &= ~BOOT_LOCK2_PRESSED;
+                break;
         }
 
         switch (keycode) {
             case SYMBOLS:
                 layer_key_state &= ~SYMBOLS_PRESSED;
-                if (!layer_state_is(_SYM_ALT))
-                    layer_off(_SYMBOLS);
+                if (!layer_state_is(_SYM_ALT)) layer_off(_SYMBOLS);
                 return false;
             case SYM_ALT:
-                if (!(layer_key_state & SYMBOLS_PRESSED))
-                    layer_off(_SYMBOLS);
+                if (!(layer_key_state & SYMBOLS_PRESSED)) layer_off(_SYMBOLS);
                 layer_off(_SYM_ALT);
                 return false;
             case NUMPAD:
                 layer_key_state &= ~NUMPAD_PRESSED;
-                if (!(layer_key_state & JETBRAINS_PRESSED))
-                    layer_off(_JETBRAINS);
+                if (!(layer_key_state & JETBRAINS_PRESSED)) layer_off(_JETBRAINS);
                 layer_off(_NUMPAD);
                 return false;
             case MAGNET:
                 layer_key_state &= ~MAGNET_PRESSED;
-                if (!(layer_key_state & JETBRAINS_PRESSED))
-                    layer_off(_JETBRAINS);
+                if (!(layer_key_state & JETBRAINS_PRESSED)) layer_off(_JETBRAINS);
                 layer_off(_MAGNET);
                 return false;
             case FN_LEFT:
                 layer_key_state &= ~FN_LEFT_PRESSED;
-                if (!(layer_key_state & FN_PRESSED))
-                    layer_off(_FN);
+                if (!(layer_key_state & FN_PRESSED)) layer_off(_FN);
                 return false;
             case FN_RGHT:
                 layer_key_state &= ~FN_RGHT_PRESSED;
-                if (!(layer_key_state & FN_PRESSED))
-                    layer_off(_FN);
+                if (!(layer_key_state & FN_PRESSED)) layer_off(_FN);
                 return false;
         }
     }
@@ -161,9 +154,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 void keyboard_post_init_user(void) {
     jetbrains_reset();
 
-  // Customise these values to desired behaviour
-  debug_enable=true;
-  //debug_matrix=true;
-  //debug_keyboard=true;
-  //debug_mouse=true;
+    rgb_matrix_enable();
+    rgb_matrix_mode(1);
+    // rgb_matrix_set_flags(LED_FLAG_NONE);
+    // rgb_matrix_set_color_all(0, 0, 0);
+
+    // Customise these values to desired behaviour
+    debug_enable = true;
+    // debug_matrix=true;
+    // debug_keyboard=true;
+    // debug_mouse=true;
 }

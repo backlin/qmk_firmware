@@ -3,7 +3,7 @@
 
 #ifdef RGB_MATRIX_ENABLE
 
-#include "rgbmatrix.h"
+#    include "rgbmatrix.h"
 
 extern rgb_config_t rgb_matrix_config;
 
@@ -23,13 +23,6 @@ void set_layer_color(int layer, bool show_qmk) {
             rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
         }
     }
-}
-
-void keyboard_post_init_user(void) {
-    rgb_matrix_enable();
-    rgb_matrix_mode(1);
-    // rgb_matrix_set_flags(LED_FLAG_NONE);
-    // rgb_matrix_set_color_all(0, 0, 0);
 }
 
 void rgb_matrix_indicators_user(void) {
