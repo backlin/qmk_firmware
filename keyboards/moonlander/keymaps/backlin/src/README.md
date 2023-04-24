@@ -21,6 +21,9 @@ Compile, flash.
 
 Configure MacOS to recognize keyboard as a standard Swedish ISO keyboard with input source "Swedish".
 
+### GoLand
+Check the head of `src/macro.c` for keyboard shortcut setup.
+
 
 ## Optional features
 
@@ -34,9 +37,3 @@ Anything else won't work properly.
 ```
 
 This runs as a macro hack to avoid having to plow through https://github.com/qmk/qmk_firmware/blob/master/docs/feature_unicode.md 
-
-### Secrets manager
-
-```
-#define CB_SECRET_1 testtest
-```

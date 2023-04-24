@@ -11,10 +11,7 @@ void enter_tmux_copy_mode(void);
 
 enum flag_state {Unchanged, None, Record, Update, RecordUpdate};
 
-void jetbrains_reset(void);
-void jetbrains_pressed(uint16_t keycode);
-void jetbrains_released(uint16_t keycode);
-void jetbrains_run(bool new_test, bool debug);
+void jetbrains_run(enum flag_state flags, bool debug);
 
 void process_macro(uint16_t keycode, bool pressed);
 

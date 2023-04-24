@@ -64,10 +64,10 @@ enum custom_keycodes {
     // Run macros
     JB_RUN,
     JB_DBUG,
-    JB_NEW,
+    JB_NONE,
     JB_REC,
     JB_UPDT,
-    JB_NONE,
+    JB_RCUP,
 
     // Macro keys end
 
@@ -88,9 +88,7 @@ enum custom_keycodes {
 #define NUM_OFF TG(_NUMPAD)
 
 #define MACRO_RANGE_START  CB_CIRC
-#define MACRO_RANGE_END    JB_NONE
-#define JB_RUN_RANGE_START JB_RUN
-#define JB_RUN_RANGE_END   JB_NONE
+#define MACRO_RANGE_END    JB_RCUP
 #define MAGNET_RANGE_START MAG_CTR
 #define MAGNET_RANGE_END   MAG_3_3
 

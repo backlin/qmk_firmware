@@ -152,15 +152,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 };
 
 void keyboard_post_init_user(void) {
-    jetbrains_reset();
-
     rgb_matrix_enable();
     rgb_matrix_mode(1);
     // rgb_matrix_set_flags(LED_FLAG_NONE);
     // rgb_matrix_set_color_all(0, 0, 0);
 
     // Customise these values to desired behaviour
+#ifdef DEBUG_ENABLE
     debug_enable = true;
+#endif
     // debug_matrix=true;
     // debug_keyboard=true;
     // debug_mouse=true;

@@ -47,28 +47,28 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NUMPAD] = LAYOUT_moonlander(
         _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10, _______,
-        _______, JB_SHOW, JB_TO,   JB_CONT, JB_REC,  JB_UPDT, JB_NONE,    _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
-        NUM_OFF, JB_OUT,  JB_IN,   JB_STEP, JB_RUN,  JB_DBUG, JB_NEW,     _______, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
-        _______, _______, _______, JB_DIFF, _______, _______,                      _______, KC_P1,   KC_P2,   KC_P3,   KC_RGHT, _______,
+        _______, JB_SHOW, JB_TO,   JB_CONT, JB_DBUG, JB_UPDT, JB_NONE,    _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
+        NUM_OFF, JB_OUT,  JB_IN,   JB_STEP, JB_RUN,  JB_RCUP, JB_REC,     _______, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
+        _______, _______, _______, JB_BREK, JB_DIFF, _______,                      _______, KC_P1,   KC_P2,   KC_P3,   KC_RGHT, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          KC_P0,   KC_LEFT, KC_DOWN, _______, _______,
                                             _______, _______, _______,    _______, _______, _______
     ),
 
     [_FN] = LAYOUT_moonlander(
         QK_RBT,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-        EE_CLR,  JB_BREK, JB_SHOW, JB_TO,   JB_CONT, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, _______,
-        QK_BOOT, _______, JB_OUT,  JB_IN,   JB_STEP, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, _______,
-        _______, _______, _______, KC_LEFT, KC_RGHT, JB_DIFF,                      KC_BRID, KC_BRIU, _______, _______, _______, _______,
+        EE_CLR,  _______, _______, _______, _______, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, _______,
+        QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, _______,
+        _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             MAG_S_L, _______, _______,    RGB_VAD, RGB_VAI, MAG_S_R
     )
     /*,
 
     [_BOX] = LAYOUT_moonlander(
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, BOX_BR,  BOX_BLR, BOX_BL,  _______, _______,
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, BOX_TBR, BOX_TLR, BOX_ALL, BOX_BL,  BOX_L,
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, BOX_TB,  _______, BOX_TBR, BOX_TBL, _______,
-        _______, _______, _______, _______, _______, _______,                      _______, BOX_TR,  BOX_LR,  BOX_TLR, BOX_TL,  _______,
+        _______, _______, BOX_BR,  BOX_BLR, BOX_BL,  _______, _______,    _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, BOX_TBR, BOX_TLR, BOX_ALL, BOX_BL,  BOX_L,      _______, _______, _______, BSP_WRD, DEL_WRD, RGT_WRD, _______,
+        _______, _______, BOX_TB,  _______, BOX_TBR, BOX_TBL, _______,    _______, _______, _______, LFT_WRD, KC_UP,   KC_RGHT, _______,
+        _______, _______, BOX_TR,  BOX_LR,  BOX_TLR, BOX_TL,                       _______, _______, KC_LEFT, KC_DOWN, _______, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             _______, _______, _______,    _______, _______, _______
     ),
@@ -141,10 +141,10 @@ LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
 
     [_NUMPAD] = {
         OFF, OFF, OFF, OFF, OFF,
-        OFF, GRN, GRN, WHT, OFF,
-        OFF, GRN, GRN, WHT, OFF,
-        OFF, GRN, GRN, YLW, OFF,
-        OFF, YLW, YLW, OFF, OFF,
+        OFF, GRN, GRN, OFF, OFF,
+        OFF, GRN, GRN, OFF, OFF,
+        OFF, GRN, GRN, ORN, OFF,
+        OFF, YLW, YLW, BLU, OFF,
         OFF, YLW, YLW, OFF,
         OFF, YLW, YLW,
                   OFF, OFF, OFF,
@@ -163,11 +163,11 @@ LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
 
     [_FN] = {
         YLW, ORN, RED, OFF, OFF, // all OFF unless BOTH_FN_DOWN
-        OFF, ORN, OFF, OFF, OFF,
-        OFF, GRN, GRN, OFF, OFF,
-        OFF, GRN, GRN, WHT, OFF,
-        OFF, GRN, GRN, WHT, OFF,
-        OFF, BLU, BLU, YLW,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, OFF, OFF, OFF, OFF,
+        OFF, BLU, BLU, OFF,
         OFF, OFF, OFF,
                   ORN, OFF, OFF,
                             OFF,
@@ -206,7 +206,7 @@ LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
                             OFF,
     },
 
-    [_BOX] = {
+    [_BOX] = { // FIX!
         OFF, OFF, OFF, OFF, OFF,
         OFF, OFF, OFF, OFF, OFF,
         OFF, OFF, OFF, OFF, OFF,

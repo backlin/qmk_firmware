@@ -2,6 +2,16 @@
 #include "sendstring_swedish.h"
 #include "print.h" // For console debugging
 
+/*
+    GoLand keymap setup
+
+    The following keybindings are used:
+
+    Run context configuration:   Ctrl + Shift + R (default)
+    Debug context configuration: Ctrl + Shift + D (default)
+    Edit configurations...:      Ctrl + Shift + C (not default)
+*/
+
 // Makes the default behaviour of ~, ^, etc. to print the charater on its own.
 // If shifted it is added to the following character, i.e. what is normally the default.
 void reverse_diacritic(uint16_t modcode, uint16_t keycode) {
@@ -49,96 +59,8 @@ void enter_tmux_copy_mode() {
 
 uint8_t jetbrains_state;
 
-void print_state(void) {
-    for (int i = 0; i < 8; i++) {
-        if (jetbrains_state & 1 << i)
-            print("1");
-        else
-            print(".");
-    }
-    print("\n");
-}
-
-void jetbrains_reset(void) {
-    print("reset\n");
-    jetbrains_state = 0;
-}
-
-#define _JB_RUN 1UL
-#define _JB_DBUG (1 << 1)
-#define _JB_NEW (1 << 2)
-#define _JB_REC (1 << 3)
-#define _JB_UPDT (1 << 4)
-#define _JB_NONE (1 << 5)
-
-void jetbrains_pressed(uint16_t keycode) {
-    switch (keycode) {
-        case JB_RUN:
-            if (jetbrains_state & _JB_DBUG) {
-                jetbrains_reset();
-                return;
-            }
-            jetbrains_state |= _JB_RUN;
-            return;
-        case JB_DBUG:
-            if (jetbrains_state & _JB_RUN) {
-                jetbrains_reset();
-                return;
-            }
-            jetbrains_state |= _JB_DBUG;
-            return;
-    }
-
-    if (!(jetbrains_state & (_JB_RUN | _JB_DBUG))) return;
-
-    switch (keycode) {
-        case JB_NEW:
-            jetbrains_state |= _JB_NEW;
-            return;
-        case JB_REC:
-            jetbrains_state &= ~_JB_NONE;
-            jetbrains_state |= _JB_REC;
-            return;
-        case JB_UPDT:
-            jetbrains_state &= ~_JB_NONE;
-            jetbrains_state |= _JB_UPDT;
-            return;
-        case JB_NONE:
-            jetbrains_state &= ~(_JB_REC | _JB_UPDT);
-            jetbrains_state |= _JB_NONE;
-            return;
-    }
-}
-
-enum flag_state jetbrains_parse_flags(void) {
-    if (jetbrains_state & _JB_NONE) {
-        return None;
-    } else if (jetbrains_state & _JB_REC) {
-        if (jetbrains_state & _JB_UPDT) {
-            return RecordUpdate;
-        } else {
-            return Record;
-        }
-    } else if (jetbrains_state & _JB_UPDT) {
-        return Update;
-    }
-    return Unchanged;
-}
-
-void jetbrains_released(uint16_t keycode) {
-    if (keycode == JB_RUN && jetbrains_state & _JB_RUN) {
-        jetbrains_run(jetbrains_state & _JB_NEW, false);
-    } else if (keycode == JB_DBUG && jetbrains_state & _JB_DBUG) {
-        jetbrains_run(jetbrains_state & _JB_NEW, true);
-    }
-    return;
-}
-
-#define ADD_AND_APPLY(str) SEND_STRING(SS_LGUI(SS_TAP(X_BSPC)) str SS_LALT(SS_LCTL("a")) SS_DELAY(1000) SS_LALT(SS_LCTL("c")));
-
-void jetbrains_run(bool new_test, bool debug) {
-    enum flag_state flags = jetbrains_parse_flags();
-
+#ifdef DEBUG_ENABLE
+void jb_debug(bool debug, enum flag_state flags) {
     if (debug)
         print("debug");
     else
@@ -163,84 +85,74 @@ void jetbrains_run(bool new_test, bool debug) {
             break;
     }
     print("\n");
+}
+#endif
 
-    uint8_t mods = get_mods();
-
-    if (flags != Unchanged) {
-        if (new_test) {
-            // Open context actions (Cursor must be on first line of test function)
-            set_mods(MOD_MASK_ALT);
-            tap_code(KC_ENT);
-            tap_code(KC_ENT);
-
-            // Modify run configuration
-            tap_code(KC_DOWN);
-            set_mods(0);
-            tap_code(KC_ENT);
-
-            new_test = false;
-        } else {
-            // Open run context menu
-            set_mods(MOD_MASK_CA);
-            tap_code(KC_R);
-            set_mods(0);
-            wait_ms(500);
-
-            // Edit config
-            tap_code(KC_0);
-        }
-        wait_ms(500);
-
-        set_mods(MOD_MASK_CA);
-        tap_code(KC_P); // Program arguments
-        set_mods(0);
-        wait_ms(500);
-
-        switch (flags) {
-            case Record:
-                ADD_AND_APPLY("-test.record");
-                break;
-            case Update:
-                ADD_AND_APPLY("-test.update");
-                break;
-            case RecordUpdate:
-                ADD_AND_APPLY("-test.record -test.update");
-                break;
-            default: {
-            }
-        }
-    }
-
-    // Open context menu
+void run_existing(bool debug) {
+    set_mods(MOD_MASK_CS);
     if (debug) {
-        // Can't use Ctrl+Alt+D since that is used by Magnet
-        set_mods(MOD_MASK_AG);
+        tap_code(KC_D);
     } else {
-        set_mods(MOD_MASK_CA);
+        tap_code(KC_R);
     }
-    tap_code(KC_R);
+}
 
-    // Pick entry
+const uint64_t MACRO_DELAY = 1000;
+
+void edit_run_configurations(enum flag_state flags) {
+    // Open window "Edit run configurations"
+    set_mods(MOD_MASK_CS);
+    tap_code(KC_C);
+    wait_ms(MACRO_DELAY);
+
+    // Focus textbox "Program arguments"
+    set_mods(MOD_MASK_CA);
+    tap_code(KC_P);
+    wait_ms(200);
+
+    // Clear existing content
     set_mods(0);
-    if (new_test) {
-        tap_code(KC_2);
-    } else {
-        tap_code(KC_1);
-    }
+    register_code(KC_LGUI); // Send key to OS, don't just alter keyboard's mods
+    tap_code(KC_BSPC);
+    unregister_code(KC_LGUI);
 
+    switch (flags) {
+        case Record:
+            SEND_STRING("-test.record");
+            break;
+        case Update:
+            SEND_STRING("-test.update");
+            break;
+        case RecordUpdate:
+            SEND_STRING("-test.record -test.update");
+            break;
+        default: {
+            // Otherwise leave empty.
+            // This no-op case is required to not error on "unhandled enumeration value 'None'".
+        }
+    }
+    wait_ms(200);
+
+    // save
+    register_code(KC_LGUI); // See above
+    tap_code(KC_ENT);
+    unregister_code(KC_LGUI);
+    wait_ms(MACRO_DELAY);
+}
+
+void jetbrains_run(enum flag_state flags, bool debug) {
+#ifdef DEBUG_ENABLE
+    jb_debug(debug, flags);
+#endif
+    uint8_t mods = get_mods();
+    if (flags != Unchanged) {
+        edit_run_configurations(flags);
+    }
+    run_existing(debug);
     set_mods(mods);
-    jetbrains_reset();
 }
 
 void process_macro(uint16_t keycode, bool pressed) {
-    if (keycode >= JB_RUN_RANGE_START && keycode <= JB_RUN_RANGE_END) {
-        if (pressed)
-            jetbrains_pressed(keycode);
-        else
-            jetbrains_released(keycode);
-        print_state();
-        return;
-    }
     if (!pressed) {
         return;
     }
@@ -268,6 +180,24 @@ void process_macro(uint16_t keycode, bool pressed) {
             return;
         }
 
+        case JB_RUN:
+            jetbrains_run(Unchanged, false);
+            return;
+        case JB_DBUG:
+            jetbrains_run(Unchanged, true);
+            return;
+        case JB_NONE:
+            jetbrains_run(None, false);
+            return;
+        case JB_REC:
+            jetbrains_run(Record, false);
+            return;
+        case JB_UPDT:
+            jetbrains_run(Update, false);
+            return;
+        case JB_RCUP:
+            jetbrains_run(RecordUpdate, false);
+            return;
         case JB_DIFF: {
             uint8_t original_mods = get_mods();
             set_mods(MOD_MASK_CSAG);
