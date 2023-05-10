@@ -51,7 +51,6 @@ enum custom_keycodes {
     BOX_TR,  // └
 #endif
     // Tmux
-    TX_SESS, // {List, create} sessions
     TX_NEXT, // {Next, create} window
     TX_PREV, // {Previous, create} window
     TX_UP,   // {Up, create} pane
@@ -153,3 +152,4 @@ enum custom_keycodes {
 #define JB_NXTF S(C(KC_RGHT))
 #define JB_PRVF S(C(KC_LEFT))
 #define JB_BREK G(KC_F8)
+#define JB_CPLT S(A(G(KC_O))) // GitHub co-pilot

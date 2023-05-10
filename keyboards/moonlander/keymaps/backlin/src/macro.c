@@ -211,7 +211,7 @@ void process_macro(uint16_t keycode, bool pressed) {
         }
 
         case TX_PREV:
-            if (get_mods() & MOD_MASK_GUI) {
+            if (get_mods()) {
                 tmux_command(KC_LSFT, KC_S); // List sessions
                 return;
             }
@@ -226,12 +226,6 @@ void process_macro(uint16_t keycode, bool pressed) {
                 tmux_command(0, KC_C); // Create window
             else
                 tmux_command(0, KC_N); // Next window
-            return;
-        case TX_SESS:
-            if (get_mods())
-                tmux_new_session();
-            else
-                tmux_command(KC_LSFT, KC_S); // List sessions
             return;
         case TX_UP:
             if (get_mods()) tmux_command(KC_LSFT, KC_2);

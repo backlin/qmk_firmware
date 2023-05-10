@@ -24,7 +24,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,    TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_PPLS,
         KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,      TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
         KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
-        KC_LCTL, NUMPAD,  FN_LEFT, KC_LALT, KC_LGUI,          TX_SESS,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  KC_RGUI,
+        KC_LCTL, NUMPAD,  FN_LEFT, KC_LALT, KC_LGUI,          JB_CPLT,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  KC_RGUI,
                                             KC_SPC,  TX_PREV, TX_NEXT,    C(KC_PGUP), C(KC_PGDN), KC_ENT
     ),
 
@@ -37,18 +37,18 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, _______, _______,    _______, _______, _______
     ),
     [_SYM_ALT] = LAYOUT_moonlander(
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, JB_PRVF, JB_NXTF,
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, BSP_LNE, DEL_LNE, RGT_LNE, JB_PRVC,
-        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, LFT_LNE, KC_PGUP, _______, JB_NXTC,
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, BSP_LNE, DEL_LNE, RGT_LNE, _______,
+        _______, _______, _______, _______, _______, _______, _______,    _______, _______, _______, LFT_LNE, KC_PGUP, _______, _______,
         _______, _______, _______, _______, _______, _______,                      _______, _______, _______, KC_PGDN, _______, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             _______, _______, _______,    _______, _______, _______
     ),
 
     [_NUMPAD] = LAYOUT_moonlander(
-        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10, _______,
-        _______, JB_SHOW, JB_TO,   JB_CONT, JB_DBUG, JB_UPDT, JB_NONE,    _______, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
-        NUM_OFF, JB_OUT,  JB_IN,   JB_STEP, JB_RUN,  JB_RCUP, JB_REC,     _______, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
+        _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   JB_PRVF,    JB_NXTF,  KC_F6,  KC_F7,   KC_F8,   KC_F9,   KC_F10, _______,
+        _______, JB_SHOW, JB_TO,   JB_CONT, JB_DBUG, JB_UPDT, JB_NONE,    JB_PRVC, _______, KC_P7,   KC_P8,   KC_P9,   KC_PAST, KC_PPLS,
+        NUM_OFF, JB_OUT,  JB_IN,   JB_STEP, JB_RUN,  JB_RCUP, JB_REC,     JB_NXTC, _______, KC_P4,   KC_P5,   KC_P6,   KC_PSLS, KC_PMNS,
         _______, _______, _______, JB_BREK, JB_DIFF, _______,                      _______, KC_P1,   KC_P2,   KC_P3,   KC_RGHT, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          KC_P0,   KC_LEFT, KC_DOWN, _______, _______,
                                             _______, _______, _______,    _______, _______, _______
@@ -58,9 +58,9 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_RBT,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
         EE_CLR,  _______, _______, _______, _______, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, _______,
         QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, _______,
-        _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, MAG_S_L, _______, MAG_S_R, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
-                                            MAG_S_L, _______, _______,    RGB_VAD, RGB_VAI, MAG_S_R
+                                            _______, _______, _______,    RGB_VAD, RGB_VAI, _______
     )
     /*,
 
@@ -89,7 +89,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define RED { 245, 0, 0 }
 // https://coolors.co/c847ff-ff855c-fee43e-00f5d4-1fb0ff
 #define PUR { 130, 0, 255 }
-#define ORN { 255, 68, 0 }
+#define ORN { 255, 100, 0 }
 #define YLW { 248, 215, 0 }
 #define GRN { 0, 245, 40 }
 #define BLU { 0, 80, 255 }
@@ -97,89 +97,89 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
     [_SYMBOLS] = {
         OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF,
+        BLU, OFF, OFF,
                   OFF, OFF, OFF,
                             OFF,
 
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, YLW, WHT, ORN, OFF,
-        OFF, PUR, WHT, WHT, OFF,
-        OFF, PUR, YLW, WHT, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF,
+        RED, OFF, OFF, OFF, OFF,
+        BLU, YLW, WHT, BLU, OFF,
+        BLU, RED, WHT, WHT, OFF,
+        BLU, RED, YLW, WHT, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF,
+        BLU, OFF, OFF,
                   OFF, OFF, OFF,
                             OFF
     },
 
     [_SYM_ALT] = {
         OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF,
+        BLU, OFF, OFF,
                   OFF, OFF, OFF,
                             OFF,
 
-        GRN, GRN, GRN, OFF, OFF,
-        GRN, ORN, WHT, ORN, OFF,
-        OFF, BLU, YLW, YLW, OFF,
-        OFF, BLU, ORN, WHT, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF,
+        RED, OFF, OFF, OFF, OFF,
+        BLU, ORN, WHT, BLU, OFF,
+        BLU, PUR, ORN, ORN, OFF,
+        BLU, PUR, ORN, WHT, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF,
+        BLU, OFF, OFF,
                   OFF, OFF, OFF,
                             OFF
     },
 
     [_NUMPAD] = {
         OFF, OFF, OFF, OFF, OFF,
-        OFF, GRN, GRN, OFF, OFF,
-        OFF, GRN, GRN, OFF, OFF,
-        OFF, GRN, GRN, ORN, OFF,
-        OFF, YLW, YLW, BLU, OFF,
-        OFF, YLW, YLW, OFF,
-        OFF, YLW, YLW,
+        BLU, ORN, ORN, OFF, OFF,
+        BLU, ORN, ORN, OFF, OFF,
+        BLU, ORN, ORN, RED, OFF,
+        BLU, WHT, WHT, GRN, OFF,
+        BLU, YLW, YLW, OFF,
+        GRN, WHT, YLW,
                   OFF, OFF, OFF,
                             OFF,
 
-        OFF, ORN, ORN, OFF, OFF,
-        OFF, ORN, ORN, WHT, OFF,
-        OFF, YLW, YLW, YLW, WHT,
-        OFF, YLW, YLW, YLW, WHT,
-        OFF, YLW, YLW, YLW, YLW,
-        OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF,
+        BLU, ORN, ORN, OFF, OFF,
+        BLU, ORN, ORN, WHT, OFF,
+        BLU, YLW, YLW, YLW, WHT,
+        BLU, YLW, YLW, YLW, WHT,
+        BLU, YLW, YLW, YLW, YLW,
+        BLU, OFF, OFF, OFF,
+        GRN, GRN, GRN,
                   OFF, OFF, OFF,
                             OFF
     },
 
     [_FN] = {
         YLW, ORN, RED, OFF, OFF, // all OFF unless BOTH_FN_DOWN
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, BLU, BLU, OFF,
-        OFF, OFF, OFF,
-                  ORN, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, WHT, WHT, OFF,
+        BLU, OFF, OFF,
+                  OFF, OFF, OFF,
                             OFF,
 
-        OFF, OFF, OFF, OFF, OFF,
-        OFF, ORN, ORN, OFF, OFF,
-        OFF, ORN, ORN, OFF, OFF,
-        OFF, ORN, ORN, OFF, OFF,
-        OFF, PUR, YLW, WHT, OFF,
-        OFF, PUR, YLW, WHT,
-        OFF, PUR, YLW,
-                  ORN, WHT, WHT,
+        BLU, OFF, OFF, OFF, OFF,
+        BLU, RED, RED, RED, OFF,
+        BLU, RED, RED, OFF, OFF,
+        BLU, RED, RED, RED, OFF,
+        BLU, ORN, YLW, WHT, OFF,
+        BLU, ORN, YLW, WHT,
+        OFF, ORN, YLW,
+                  OFF, WHT, WHT,
                             OFF
     }
     /*,
