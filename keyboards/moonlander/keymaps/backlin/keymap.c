@@ -25,7 +25,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,      TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
         KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
         KC_LCTL, NUMPAD,  FN_LEFT, KC_LALT, KC_LGUI,          JB_CPLT,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  KC_RGUI,
-                                            KC_SPC,  TX_PREV, TX_NEXT,    C(KC_PGUP), C(KC_PGDN), KC_ENT
+                                       KC_SPC, C(KC_PGUP), C(KC_PGDN),    G(KC_PGUP), C(KC_PGDN), KC_ENT
     ),
 
     [_SYMBOLS] = LAYOUT_moonlander(

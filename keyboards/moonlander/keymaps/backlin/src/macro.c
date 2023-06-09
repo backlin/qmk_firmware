@@ -147,6 +147,7 @@ void jetbrains_run(enum flag_state flags, bool debug) {
     uint8_t mods = get_mods();
     if (flags != Unchanged) {
         edit_run_configurations(flags);
+        // TODO: Run previously executed test, not the one under the cursor, which run_existing does
     }
     run_existing(debug);
     set_mods(mods);
