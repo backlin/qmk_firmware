@@ -51,4 +51,6 @@
 #define TAPPING_TOGGLE 2
 
 #define BOOT_LOCK1 FN_LEFT
-#define BOOT_LOCK2 SYMBOLS
+#define BOOT_LOCK2 NUMPAD
+
+// #include "secrets.h"
