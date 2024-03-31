@@ -191,13 +191,25 @@ void process_macro(uint16_t keycode, bool pressed) {
             jetbrains_run(None, false);
             return;
         case JB_REC:
-            jetbrains_run(Record, false);
+            if (get_mods()) {
+                SEND_STRING("-test.record");
+            } else {
+                jetbrains_run(Record, false);
+            }
             return;
         case JB_UPDT:
-            jetbrains_run(Update, false);
+            if (get_mods()) {
+                SEND_STRING("-test.update");
+            } else {
+                jetbrains_run(Update, false);
+            }
             return;
         case JB_RCUP:
-            jetbrains_run(RecordUpdate, false);
+            if (get_mods()) {
+                SEND_STRING("-test.record -test.update");
+            } else {
+                jetbrains_run(RecordUpdate, false);
+            }
             return;
         case JB_DIFF: {
             uint8_t original_mods = get_mods();
