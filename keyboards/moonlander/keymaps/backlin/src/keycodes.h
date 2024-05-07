@@ -1,5 +1,6 @@
 #pragma once
 #include "keymap_swedish.h"
+#include "keycodes_iso.h"
 
 enum layers {
     _SVORAK,
@@ -91,24 +92,11 @@ enum custom_keycodes {
 #define MAGNET_RANGE_START MAG_CTR
 #define MAGNET_RANGE_END   MAG_3_3
 
-#define CB_SCRC S(C(G(KC_4))) // Print screen region to clipboard
-#define CB_SCRF S(G(KC_4))    // Print screen region to file
-#define CB_VOLU LSA(KC_VOLU)  // Small volume increment
-#define CB_VOLD LSA(KC_VOLD)
-#define BSP_WRD A(KC_BSPC)
-#define BSP_LNE G(KC_BSPC)
-#define DEL_WRD A(KC_DEL)
-#define DEL_LNE C(KC_K)
-#define LFT_WRD A(KC_LEFT)
-#define LFT_LNE G(KC_LEFT)
-#define RGT_WRD A(KC_RGHT)
-#define RGT_LNE G(KC_RGHT)
 #define TAB_PRV C(KC_PGUP)
 #define TAB_NXT C(KC_PGDN)
 
 // clang-format off
 #define CB_APRX A(KC_X)
-#define CB_DGRE SE_RABK
 #define CB_DOT  SE_DOT
 #define CB_COLN S(SE_DOT)
 #define CB_ACUT SE_ACUT
@@ -125,20 +113,13 @@ enum custom_keycodes {
 #define CB_HASH SE_HASH
 #define CB_LABK KC_NUBS
 #define CB_RABK S(KC_NUBS)
-#define CB_LBRC A(KC_8)    //SE_LBRC
-#define CB_RBRC A(KC_9)    //SE_RBRC
-#define CB_LCBR S(A(KC_8)) //SE_LCBR
-#define CB_RCBR S(A(KC_9)) //SE_RCBR
 #define CB_LPRN S(KC_8)    //SE_LPRN
 #define CB_RPRN S(KC_9)    //SE_RPRN
 #define CB_MINS SE_MINS
 #define CB_ODIA SE_ODIA
-#define CB_PIPE A(KC_7) //SE_PIPE
 #define CB_PRGF SE_LABK
 #define CB_QUES SE_QUES
 #define CB_QUOT SE_QUOT
-#define CB_SLSH SE_SLSH
-#define CB_BSLS S(A(KC_7))
 
 // JetBrains
 #define JB_IN   S(KC_F7)
@@ -153,3 +134,4 @@ enum custom_keycodes {
 #define JB_PRVF S(C(KC_LEFT))
 #define JB_BREK G(KC_F8)
 #define JB_CPLT S(A(G(KC_O))) // GitHub co-pilot
+
