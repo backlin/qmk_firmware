@@ -21,11 +21,11 @@
 KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SVORAK] = LAYOUT_moonlander(
         BOXDRAW, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    TX_JOIN,    TX_BREK, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
-        KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,    TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_PPLS,
+        KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,    TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    CB_PLUS,
         KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,      TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
         KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
-        KC_LCTL, NUMPAD,  FN_LEFT, KC_LALT, KC_LGUI,          JB_CPLT,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  KC_RGUI,
-                                       KC_SPC, C(KC_PGUP), C(KC_PGDN),    C(KC_PGUP), C(KC_PGDN), KC_ENT
+        CB_SCND, NUMPAD,  FN_LEFT, KC_LALT, CB_LPRM,          JB_CPLT,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  CB_RPRM,
+                                             KC_SPC, CB_TABP, CB_TABN,    CB_TABP, CB_TABN, KC_ENT
     ),
 
     [_SYMBOLS] = LAYOUT_moonlander(
@@ -56,9 +56,9 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FN] = LAYOUT_moonlander(
         QK_RBT,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
-        EE_CLR,  _______, _______, _______, _______, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, MAG_1_3, MAG_2_3, MAG_3_3, _______,
-        QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, MAG_LFT, MAG_CTR, MAG_RGT, _______,
-        _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, MAG_S_L, _______, MAG_S_R, _______,
+        EE_CLR,  _______, _______, _______, _______, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, CB_M_NW, CB_M_N,  CB_M_NE, _______,
+        QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, CB_M_E,  CB_M_C,  CB_M_E,  _______,
+        _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, CB_M_SW, _______, CB_M_SE, _______,
         _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
                                             _______, _______, _______,    RGB_VAD, RGB_VAI, _______
     )
