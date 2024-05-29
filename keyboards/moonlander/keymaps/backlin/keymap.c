@@ -57,9 +57,9 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FN] = LAYOUT_moonlander(
         QK_RBT,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F11,     KC_F12,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  _______,
         EE_CLR,  _______, _______, _______, _______, CB_SCRF, _______,    KC_MPRV, KC_MPLY, KC_MNXT, CB_M_NW, CB_M_N,  CB_M_NE, _______,
-        QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, CB_M_E,  CB_M_C,  CB_M_E,  _______,
+        QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, CB_M_W,  CB_M_C,  CB_M_E,  _______,
         _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, CB_M_SW, _______, CB_M_SE, _______,
-        _______, _______, _______, _______, _______,          _______,    _______,          _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______,          _______,    SECRET,           _______, _______, _______, _______, _______,
                                             _______, _______, _______,    RGB_VAD, RGB_VAI, _______
     )
     /*,

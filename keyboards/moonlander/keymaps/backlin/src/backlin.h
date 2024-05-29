@@ -2,6 +2,7 @@
 
 #include "keycodes.h"
 #include "macro.h"
+#include "secret.h"
 #include "magnet.h"
 #ifdef RGB_MATRIX_ENABLE
 #   include "rgbmatrix.h"

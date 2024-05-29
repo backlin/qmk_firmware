@@ -1,4 +1,5 @@
 #include "macro.h"
+#include "secret.h"
 #include "sendstring_swedish.h"
 #include "print.h" // For console debugging
 
@@ -171,12 +172,20 @@ void process_macro(uint16_t keycode, bool pressed) {
             uint8_t mods = get_mods();
             set_mods(0);
             if (mods & MOD_MASK_CTRL) {
-                SEND_STRING("@christofer.backlin.se");
+                SEND_STRING("christofer.backlin@postnord.com");
             } else if (mods & MOD_MASK_GUI) {
-                SEND_STRING("christofer.backlin@relexsolutions.com");
+                SEND_STRING("christofer.backlin@adage.se");
             } else if (mods & MOD_MASK_ALT) {
-                SEND_STRING("christofer.backlin@formulate.app");
+                SEND_STRING("@christofer.backlin.se");
             }
+            set_mods(mods);
+            return;
+        }
+
+        case SECRET: {
+            uint8_t mods = get_mods();
+            set_mods(0);
+            send_secret();
             set_mods(mods);
             return;
         }

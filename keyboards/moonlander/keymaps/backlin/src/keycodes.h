@@ -69,6 +69,8 @@ enum custom_keycodes {
     JB_UPDT,
     JB_RCUP,
 
+    SECRET,
+
     // Macro keys end
 
 #ifdef RGB_MATRIX_ENABLE
@@ -88,7 +90,7 @@ enum custom_keycodes {
 #define NUM_OFF TG(_NUMPAD)
 
 #define MACRO_RANGE_START  CB_CIRC
-#define MACRO_RANGE_END    JB_RCUP
+#define MACRO_RANGE_END    SECRET
 #define MAGNET_RANGE_START MAG_CTR
 #define MAGNET_RANGE_END   MAG_3_3
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "backlin.h"
+#include "secret.h"
 #include <stdlib.h>
 #include <string.h>
 
