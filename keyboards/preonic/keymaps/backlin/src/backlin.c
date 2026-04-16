@@ -152,10 +152,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 };
 
 void keyboard_post_init_user(void) {
+#ifdef RGB_MATRIX_ENABLE
     rgb_matrix_enable();
     rgb_matrix_mode(1);
     // rgb_matrix_set_flags(LED_FLAG_NONE);
     // rgb_matrix_set_color_all(0, 0, 0);
+#endif
 
     // Customise these values to desired behaviour
 #ifdef DEBUG_ENABLE

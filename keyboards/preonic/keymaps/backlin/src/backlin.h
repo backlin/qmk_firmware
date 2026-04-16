@@ -1,5 +1,6 @@
 #pragma once
 
+#include QMK_KEYBOARD_H
 #include "keycodes.h"
 #include "macro.h"
 #include "secret.h"
@@ -7,7 +8,6 @@
 #ifdef RGB_MATRIX_ENABLE
 #   include "rgbmatrix.h"
 #endif
-#include QMK_KEYBOARD_H
 
 #define KEYMAP const uint16_t PROGMEM
 extern KEYMAP keymaps [][MATRIX_ROWS][MATRIX_COLS];

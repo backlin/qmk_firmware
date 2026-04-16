@@ -9,7 +9,8 @@ enum layers {
     _JETBRAINS,
     _NUMPAD,
     _MAGNET,
-    _FN
+    _FN,
+    _NUMBERS
 #ifdef RGB_MATRIX_ENABLE
     , _RGB
 #endif
@@ -88,6 +89,7 @@ enum custom_keycodes {
 
 #define NUM_ON  TG(_NUMPAD)
 #define NUM_OFF TG(_NUMPAD)
+#define NUMBERS MO(_NUMBERS)
 
 #define MACRO_RANGE_START  CB_CIRC
 #define MACRO_RANGE_END    SECRET
