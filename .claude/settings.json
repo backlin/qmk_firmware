@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(just compile-moonlander:*)",
+      "Bash(just compile-preonic:*)",
+      "Bash(qmk compile:*)",
+      "Bash(qmk --version)",
+      "Bash(pip3 show:*)",
+      "Edit(keyboards/preonic/keymaps/backlin/**)",
+      "Edit(keyboards/moonlander/keymaps/backlin/**)",
+      "Write(keyboards/preonic/keymaps/backlin/**)",
+      "Write(keyboards/moonlander/keymaps/backlin/**)"
+    ]
+  }
+}
