@@ -60,7 +60,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_BOOT, _______, _______, _______, _______, CB_SCRC, _______,    KC_VOLD, KC_MUTE, CB_VOLU, CB_M_W,  CB_M_C,  CB_M_E,  _______,
         _______, _______, _______, _______, _______, _______,                      KC_BRID, KC_BRIU, CB_M_SW, _______, CB_M_SE, _______,
         _______, _______, _______, _______, _______,          _______,    SECRET,           _______, _______, _______, _______, _______,
-                                            _______, _______, _______,    RGB_VAD, RGB_VAI, _______
+                                            _______, _______, _______,    RM_VALD, RM_VALU, _______
     )
     /*,
 
@@ -94,7 +94,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #define GRN { 0, 245, 40 }
 #define BLU { 0, 80, 255 }
 
-LEDMAP ledmap[][DRIVER_LED_TOTAL][3] = {
+LEDMAP ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [_SYMBOLS] = {
         OFF, OFF, OFF, OFF, OFF,
         BLU, OFF, OFF, OFF, OFF,

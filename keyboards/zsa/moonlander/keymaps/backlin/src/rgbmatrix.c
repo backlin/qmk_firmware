@@ -10,7 +10,7 @@ extern rgb_config_t rgb_matrix_config;
 // clang-format on
 
 void set_layer_color(int layer, bool show_qmk) {
-    for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
+    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
         RGB rgb = {
             .r = pgm_read_byte(&ledmap[layer][i][0]),
             .g = pgm_read_byte(&ledmap[layer][i][1]),
@@ -25,18 +25,19 @@ void set_layer_color(int layer, bool show_qmk) {
     }
 }
 
-void rgb_matrix_indicators_user(void) {
-    if (keyboard_config.disable_layer_led) return;
+bool rgb_matrix_indicators_user(void) {
+    if (keyboard_config.disable_layer_led) return true;
 
     // assign colors if the matrix is on and the current mode
     // is SOLID COLORS => No animations running
-    if (rgb_matrix_get_mode() != 1) return;
+    if (rgb_matrix_get_mode() != 1) return true;
 
     uint8_t layer = biton32(layer_state);
     if (layer == 0)
         rgb_matrix_set_color_all(0, 0, 0);
     else
         set_layer_color(layer, layer == _FN && (layer_key_state & FN_PRESSED) == FN_PRESSED);
+    return true;
 }
 
 #endif
