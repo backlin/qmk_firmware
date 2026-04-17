@@ -24,7 +24,7 @@ KEYMAP keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  CB_ARNG, CB_ADIA, CB_ODIA, KC_P,    KC_Y,    CB_HASH,    TX_UP,   KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    CB_PLUS,
         KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    CB_AT,      TX_DOWN, KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    CB_MINS,
         KC_LSFT, CB_DOT,  KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    CB_COMM,
-        CB_LPRM, NUMPAD,  FN_LEFT, KC_LALT, CB_LPRM,          KC_LGUI,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  CB_RPRM,
+        CB_LPRM, NUMPAD,  FN_LEFT, KC_LALT, KC_LGUI,          KC_LGUI,    KC_MUTE,          SYMBOLS, SYM_ALT, FN_RGHT, NUM_ON,  CB_RPRM,
                                              KC_SPC, CB_TABP, CB_TABN,    CB_BACK, CB_FRWD, KC_ENT
     ),
 

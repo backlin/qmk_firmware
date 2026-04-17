@@ -14,3 +14,7 @@ flash-preonic:
 
 compile-moonlander:
     qmk compile -kb moonlander -km backlin
+    
+flash-moonlander:
+    qmk flash moonlander_backlin.bin
+
