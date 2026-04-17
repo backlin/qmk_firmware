@@ -10,11 +10,10 @@ compile-preonic:
     qmk compile -kb preonic/rev3 -km backlin
 
 flash-preonic:
-    qmk flash preonic_rev3_backlin.bin
+    qmk flash -kb preonic/rev3 -km backlin
 
 compile-moonlander:
-    qmk compile -kb moonlander -km backlin
-    
-flash-moonlander:
-    qmk flash moonlander_backlin.bin
+    qmk compile -kb zsa/moonlander -km backlin
 
+flash-moonlander:
+    qmk flash -kb zsa/moonlander -km backlin
