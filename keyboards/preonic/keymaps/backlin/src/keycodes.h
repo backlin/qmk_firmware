@@ -1,6 +1,10 @@
 #pragma once
 #include "keymap_swedish.h"
-#include "keycodes_iso.h"
+#ifdef CB_MAC_KEYCODES
+#    include "keycodes_mac.h"
+#else
+#    include "keycodes_iso.h"
+#endif
 
 enum layers {
     _SVORAK,
@@ -52,14 +56,6 @@ enum custom_keycodes {
     BOX_TLR, // ┴
     BOX_TR,  // └
 #endif
-    // Tmux
-    TX_NEXT, // {Next, create} window
-    TX_PREV, // {Previous, create} window
-    TX_UP,   // {Up, create} pane
-    TX_DOWN, // {Down, create} pane
-    TX_JOIN, // Join window into pane
-    TX_BREK, // Break pane into window
-
     // JetBrains
     JB_DIFF, // compare with branch (default: master, shifted: user chooses)
     // Run macros

@@ -21,15 +21,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #endif
 
     switch (keycode) {
-#ifdef CB_BOXDRAW_ENABLE
-        case BOXDRAW:
-            layer_invert(_BOX);
-            // Switch input source
-            register_code(KC_LCTL);
-            tap_code(KC_SPC);
-            unregister_code(KC_LCTL);
-            return false;
-#endif
         case CB_AT:
             if (!get_mods()) break; // Parse as normal
             // else fallthrough

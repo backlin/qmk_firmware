@@ -15,7 +15,3 @@ enum flag_state {Unchanged, None, Record, Update, RecordUpdate};
 void jetbrains_run(enum flag_state flags, bool debug);
 
 void process_macro(uint16_t keycode, bool pressed);
-
-#ifdef CB_BOXDRAW_ENABLE
-void send_unicode(uint16_t k1, uint16_t k2, uint16_t k3, uint16_t k4);
-#endif

@@ -6,6 +6,10 @@ setup_macos:
     curl -fsSL https://install.qmk.fm | sh
     qmk setup
 
+link:
+    ln -sf keyboards/zsa/moonlander/keymaps/backlin moonlander
+    ln -sf keyboards/preonic/keymaps/backlin preonic
+
 compile-preonic:
     qmk compile -kb preonic/rev3 -km backlin
 

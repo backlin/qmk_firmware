@@ -23,17 +23,3 @@ Configure MacOS to recognize keyboard as a standard Swedish ISO keyboard with in
 
 ### GoLand
 Check the head of `src/macro.c` for keyboard shortcut setup.
-
-
-## Optional features
-
-### Box drawing layer
-Add a second input source "Unicode Hex Input".
-You should now have 2 sources: Swedish and Unicode.
-Anything else won't work properly.
-
-```
-#define CB_BOXDRAW_ENABLE
-```
-
-This runs as a macro hack to avoid having to plow through https://github.com/qmk/qmk_firmware/blob/master/docs/feature_unicode.md 

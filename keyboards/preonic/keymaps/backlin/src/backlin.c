@@ -104,7 +104,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 else
                     rgb_matrix_enable();
                 return false;
-            case RGB_MOD:
+            case RM_NEXT:
                 rgb_matrix_enable();
                 return true;
 #endif

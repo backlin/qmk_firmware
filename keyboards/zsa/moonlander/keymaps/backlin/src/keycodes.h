@@ -1,6 +1,10 @@
 #pragma once
 #include "keymap_swedish.h"
-#include "keycodes_iso.h"
+#ifdef CB_MAC_KEYCODES
+#    include "keycodes_mac.h"
+#else
+#    include "keycodes_iso.h"
+#endif
 
 enum layers {
     _SVORAK,
@@ -13,9 +17,7 @@ enum layers {
 #ifdef RGB_MATRIX_ENABLE
     , _RGB
 #endif
-#ifdef CB_BOXDRAW_ENABLE
-    , _BOX
-#endif
+
 };
 
 enum custom_keycodes {
@@ -27,37 +29,12 @@ enum custom_keycodes {
     MAGNET,
     FN_LEFT, // F keys, media brightness etc.
     FN_RGHT, // (not used in all layouts)
-#ifdef CB_BOXDRAW_ENABLE
-    BOXDRAW,
-#endif
 
     // Macro keys start
 
     CB_CIRC, // ^
     CB_TILD, // ~
     CB_GRV,  // `
-#ifdef CB_BOXDRAW_ENABLE
-    // Box drawing
-    BOX_ALL, // ┼
-    BOX_BL,  // ┐
-    BOX_BLR, // ┬
-    BOX_BR,  // ┌
-    BOX_L,   // ╴
-    BOX_LR,  // ─
-    BOX_TB,  // │
-    BOX_TBL, // ┤
-    BOX_TBR, // ├
-    BOX_TL,  // ┘
-    BOX_TLR, // ┴
-    BOX_TR,  // └
-#endif
-    // Tmux
-    TX_NEXT, // {Next, create} window
-    TX_PREV, // {Previous, create} window
-    TX_UP,   // {Up, create} pane
-    TX_DOWN, // {Down, create} pane
-    TX_JOIN, // Join window into pane
-    TX_BREK, // Break pane into window
 
     // JetBrains
     JB_DIFF, // compare with branch (default: master, shifted: user chooses)

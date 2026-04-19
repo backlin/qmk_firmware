@@ -24,13 +24,17 @@
 #define RGT_LNE G(KC_RGHT)
 
 // OS
+#define CB_LNCH G(KC_SPACE) // Launcher
 #define CB_SCRC S(C(G(KC_4))) // Print screen region to clipboard
 #define CB_SCRF S(G(KC_4))    // Print screen region to file
+#define CB_SCSC S(C(G(KC_3))) // Print screen to clipboard
+#define CB_SCSF S(G(KC_3))    // Print screen to file
+#define CB_SCM  S(G(KC_5))    // Print screen modal
 #define CB_VOLU LSA(KC_VOLU)  // Small volume increment
 #define CB_VOLD LSA(KC_VOLD)
 
-#define CB_TABN C(KC_PGUP) // Next tab
-#define CB_TABP C(KC_PGDN) // Previous tab
+#define CB_TABN C(KC_TAB)    // Next tab
+#define CB_TABP C(S(KC_TAB)) // Previous tab
 #define CB_M_NW MAG_1_3
 #define CB_M_N  MAG_2_3
 #define CB_M_NE MAG_3_3
@@ -41,13 +45,9 @@
 // South not mapped
 #define CB_M_SE MAG_S_R
 
-    /*
-      Magnet section on Mac:
-      MAG_1_3, MAG_2_3, MAG_3_3,
-      MAG_LFT, MAG_CTR, MAG_RGT,
-      MAG_S_L, _______, MAG_S_R,
-    */
-// Modifier layout
-#define CB_LPRM KC_LCMD // Left primary
-#define CB_RPRM KC_RCMD // Right primary
-#define CB_SCND KC_LCTL // Secondary
+/*
+    Magnet section on Mac:
+    MAG_1_3, MAG_2_3, MAG_3_3,
+    MAG_LFT, MAG_CTR, MAG_RGT,
+    MAG_S_L, _______, MAG_S_R,
+*/
