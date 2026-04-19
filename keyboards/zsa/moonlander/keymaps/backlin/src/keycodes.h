@@ -1,0 +1,116 @@
+#pragma once
+#include "keymap_swedish.h"
+#ifdef CB_MAC_KEYCODES
+#    include "keycodes_mac.h"
+#else
+#    include "keycodes_iso.h"
+#endif
+
+enum layers {
+    _SVORAK,
+    _SYMBOLS,
+    _SYM_ALT,
+    _JETBRAINS,
+    _NUMPAD,
+    _MAGNET,
+    _FN
+#ifdef RGB_MATRIX_ENABLE
+    , _RGB
+#endif
+
+};
+
+enum custom_keycodes {
+    // Layers
+    LOCK = SAFE_RANGE, // Lock currently active layers. Press again to deactivate all but default layer.
+    SYMBOLS, // Symbols (optionally including arrows)
+    SYM_ALT, // Symbols with alternative arrows (not used in all layouts).
+    NUMPAD,
+    MAGNET,
+    FN_LEFT, // F keys, media brightness etc.
+    FN_RGHT, // (not used in all layouts)
+
+    // Macro keys start
+
+    CB_CIRC, // ^
+    CB_TILD, // ~
+    CB_GRV,  // `
+
+    // JetBrains
+    JB_DIFF, // compare with branch (default: master, shifted: user chooses)
+    // Run macros
+    JB_RUN,
+    JB_DBUG,
+    JB_NONE,
+    JB_REC,
+    JB_UPDT,
+    JB_RCUP,
+
+    SECRET,
+
+    // Macro keys end
+
+#ifdef RGB_MATRIX_ENABLE
+    RGB_SEL,
+#endif
+
+    // Magnet
+    MAG_CTR,
+    MAG_LFT,
+    MAG_RGT,
+    MAG_1_3,
+    MAG_2_3,
+    MAG_3_3
+};
+
+#define NUM_ON  TG(_NUMPAD)
+#define NUM_OFF TG(_NUMPAD)
+
+#define MACRO_RANGE_START  CB_CIRC
+#define MACRO_RANGE_END    SECRET
+#define MAGNET_RANGE_START MAG_CTR
+#define MAGNET_RANGE_END   MAG_3_3
+
+#define CB_BACK A(KC_LEFT) // Back in Arc history
+#define CB_FRWD A(KC_RGHT) // Forward in Arc history
+
+// clang-format off
+#define CB_APRX A(KC_X)
+#define CB_DOT  SE_DOT
+#define CB_COLN S(SE_DOT)
+#define CB_ACUT SE_ACUT
+#define CB_ADIA SE_ADIA
+#define CB_AMPR SE_AMPR
+#define CB_ARNG SE_ARNG
+#define CB_ASTR SE_ASTR
+#define CB_AT   SE_AT
+#define CB_COMM SE_COMM
+#define CB_DLR  SE_DLR
+#define CB_DOT  SE_DOT
+#define CB_DQUO SE_DQUO
+#define CB_EQL  SE_EQL
+#define CB_HASH SE_HASH
+#define CB_LABK KC_NUBS
+#define CB_RABK S(KC_NUBS)
+#define CB_LPRN S(KC_8)    //SE_LPRN
+#define CB_RPRN S(KC_9)    //SE_RPRN
+#define CB_MINS SE_MINS
+#define CB_ODIA SE_ODIA
+#define CB_PRGF SE_LABK
+#define CB_QUES SE_QUES
+#define CB_QUOT SE_QUOT
+
+// JetBrains
+#define JB_IN   S(KC_F7)
+#define JB_OUT  S(KC_F8)
+#define JB_STEP KC_F8
+#define JB_TO   A(KC_F9)
+#define JB_SHOW A(KC_F10)
+#define JB_CONT A(G(KC_R))
+#define JB_NXTC MEH(KC_DOWN) // Shift,Ctrl,Alt,Down
+#define JB_PRVC MEH(KC_UP)
+#define JB_NXTF S(C(KC_RGHT))
+#define JB_PRVF S(C(KC_LEFT))
+#define JB_BREK G(KC_F8)
+#define JB_CPLT S(A(G(KC_O))) // GitHub co-pilot
+
